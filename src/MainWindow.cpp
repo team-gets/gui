@@ -1,3 +1,7 @@
+#include <filesystem>
+
+#include <QFileDialog>
+
 #include "MainWindow.h"
 
 namespace Gets {
@@ -27,6 +31,15 @@ void MainWindow::SetQMLFromPath(const QUrl& path) {
 	MainQuick->setSource(path);
 }
 
+void MainWindow::OpenQML() {
+	const char* cwd = std::filesystem::current_path().c_str();
+	QUrl qmlPath = QFileDialog::getOpenFileUrl(this,
+		tr("Open QML Source"), QUrl::fromLocalFile(cwd),
+		tr("QML Sources (*.qml)"));
+
+	SetQMLFromPath(qmlPath);
+} // void MainWindow::OpenQML()
+
 void MainWindow::Undo() { } // void MainWindow::Undo()
 
 void MainWindow::Redo() { } // void MainWindow::Undo()
@@ -40,6 +53,7 @@ void MainWindow::About() {
 void MainWindow::CreateMenus() {
     FileMenu = menuBar()->addMenu(tr("&File"));
     FileMenu->addAction(ExitAct);
+    FileMenu->addAction(QMLLoadAct);
 
     EditMenu = menuBar()->addMenu(tr("&Edit"));
     EditMenu->addAction(UndoAct);
@@ -50,6 +64,12 @@ void MainWindow::CreateMenus() {
 } // void MainWindow::CreateMenus()
 
 void MainWindow::CreateActions() {
+	QMLLoadAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::DocumentOpen),
+							 tr("Load QML"), this);
+	QMLLoadAct->setShortcuts(QKeySequence::Open);
+	QMLLoadAct->setStatusTip(tr("Load QML into the viewport."));
+	connect(QMLLoadAct, &QAction::triggered, this, &MainWindow::OpenQML);
+
     ExitAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::ApplicationExit),
                           tr("Exit"), this);
     ExitAct->setShortcuts(QKeySequence::Quit);

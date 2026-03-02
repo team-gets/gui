@@ -22,6 +22,7 @@ public:
 protected:
 
 private slots:
+    void OpenQML();
     void Undo();
     void Redo();
     void About();
@@ -36,6 +37,7 @@ private:
     QMenu* EditMenu;
     QMenu* HelpMenu;
 
+	QAction* QMLLoadAct;
     QAction* ExitAct;
     QAction* UndoAct;
     QAction* RedoAct;

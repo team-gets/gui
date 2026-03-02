@@ -29,6 +29,7 @@ MainWindow::MainWindow() {
 
 void MainWindow::SetQMLFromPath(const QUrl& path) {
 	MainQuick->setSource(path);
+	CurrentQML = path;
 }
 
 void MainWindow::OpenQML() {
@@ -40,24 +41,23 @@ void MainWindow::OpenQML() {
 	SetQMLFromPath(qmlPath);
 } // void MainWindow::OpenQML()
 
-void MainWindow::Undo() { } // void MainWindow::Undo()
-
-void MainWindow::Redo() { } // void MainWindow::Undo()
+void MainWindow::ReloadQML() {
+	SetQMLFromPath(CurrentQML);
+} // void MainWindow::ReloadQML()
 
 void MainWindow::About() {
     QMessageBox::about(this, tr("About Menu"),
-            tr("The <b>Menu</b> example shows how to create "
-               "menu-bar menus and context menus."));
+            tr("Welcome"));
 } // void MainWindow::About()
 
 void MainWindow::CreateMenus() {
     FileMenu = menuBar()->addMenu(tr("&File"));
-    FileMenu->addAction(ExitAct);
     FileMenu->addAction(QMLLoadAct);
+    FileMenu->addSeparator();
+    FileMenu->addAction(ExitAct);
 
     EditMenu = menuBar()->addMenu(tr("&Edit"));
-    EditMenu->addAction(UndoAct);
-    EditMenu->addAction(RedoAct);
+    EditMenu->addAction(ReloadAct);
 
     HelpMenu = menuBar()->addMenu(tr("&Help"));
     HelpMenu->addAction(AboutAct);
@@ -76,17 +76,11 @@ void MainWindow::CreateActions() {
     ExitAct->setStatusTip(tr("Exit the application"));
     connect(ExitAct, &QAction::triggered, this, &QWidget::close);
 
-    UndoAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::EditUndo),
-                          tr("Undo"), this);
-    UndoAct->setShortcuts(QKeySequence::Undo);
-    UndoAct->setStatusTip(tr("Undo the last operation"));
-    connect(UndoAct, &QAction::triggered, this, &MainWindow::Undo);
-
-    RedoAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::EditRedo),
-                          tr("Redo"), this);
-    RedoAct->setShortcuts(QKeySequence::Redo);
-    RedoAct->setStatusTip(tr("Redo the last operation"));
-    connect(RedoAct, &QAction::triggered, this, &MainWindow::Redo);
+    ReloadAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::EditRedo),
+                          tr("Reload"), this);
+    ReloadAct->setShortcuts(QKeySequence::Redo);
+    ReloadAct->setStatusTip(tr("Reload QML sources"));
+    connect(ReloadAct, &QAction::triggered, this, &MainWindow::ReloadQML);
 
 	AboutAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::HelpAbout),
                            tr("&About"), this);

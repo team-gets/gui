@@ -23,12 +23,12 @@ protected:
 
 private slots:
     void OpenQML();
-    void Undo();
-    void Redo();
+    void ReloadQML();
     void About();
 
 private:
 	QQuickWidget* MainQuick;
+	QUrl CurrentQML;
 
     void CreateActions();
     void CreateMenus();
@@ -39,8 +39,7 @@ private:
 
 	QAction* QMLLoadAct;
     QAction* ExitAct;
-    QAction* UndoAct;
-    QAction* RedoAct;
+    QAction* ReloadAct;
     QAction* AboutAct;
 }; // class MainWindow
 } // namespace Gets

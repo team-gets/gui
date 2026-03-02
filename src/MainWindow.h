@@ -1,16 +1,16 @@
 #pragma once
 
-#include <QWidget>
 #include <QMainWindow>
 #include <QMenu>
-#include <QLayout>
 #include <QMenuBar>
-#include <QActionGroup>
-#include <QLabel>
-#include <QContextMenuEvent>
 #include <QMessageBox>
 #include <QStatusBar>
-#include <QApplication>
+
+#include <QWidget>
+#include <QLayout>
+#include <QQuickWidget>
+
+#include <QActionGroup>
 
 namespace Gets {
 class MainWindow : public QMainWindow {
@@ -18,15 +18,17 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow();
 
+    void SetQMLFromPath(const QUrl& path);
 protected:
 
 private slots:
     void Undo();
     void Redo();
     void About();
-    void AboutQt();
 
 private:
+	QQuickWidget* MainQuick;
+
     void CreateActions();
     void CreateMenus();
 
@@ -38,6 +40,5 @@ private:
     QAction* UndoAct;
     QAction* RedoAct;
     QAction* AboutAct;
-    QLabel* InfoLabel;
-};
+}; // class MainWindow
 } // namespace Gets

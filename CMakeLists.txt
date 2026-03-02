@@ -7,7 +7,7 @@ project(rig_gui
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 
 qt_standard_project_setup(REQUIRES 6.10)
 
@@ -21,4 +21,5 @@ target_link_libraries(gui PRIVATE
     Qt6::Qml
     Qt6::Quick
 	Qt6::Widgets
+	Qt6::QuickWidgets
 )

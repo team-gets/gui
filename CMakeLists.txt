@@ -11,9 +11,13 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 
 qt_standard_project_setup(REQUIRES 6.10)
 
-set(SOURCES src/MainWindow.cpp)
+set(SOURCES
+	src/main.cpp)
 
-qt_add_executable(gui WIN32 MACOSX_BUNDLE src/main.cpp ${SOURCES})
+set(WIDGET_SOURCES
+	src/MainWindow.cpp)
+
+qt_add_executable(gui WIN32 MACOSX_BUNDLE ${SOURCES} ${WIDGET_SOURCES})
 
 target_link_libraries(gui PRIVATE
     Qt6::Core

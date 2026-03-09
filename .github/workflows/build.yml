@@ -1,0 +1,49 @@
+name: Build
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/build.yml"
+      - "src/**/*.cpp"
+      - "src/**/*.h"
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/build.yml"
+      - "src/**/*.cpp"
+      - "src/**/*.h"
+
+jobs:
+  linux-build:
+    name: Linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.10.0"
+          target: "desktop"
+          arch: "linux_gcc_64"
+      - name: Run CMake and Build
+        run: |
+          sudo apt install cmake
+          cmake -S . -B build
+          cmake --build build
+
+  windows-build:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.10.0"
+          target: "desktop"
+          arch: "win64_msvc2022_64"
+      - name: Run CMake and Build
+        run: |
+          cmake -S . -B build
+          cmake --build build

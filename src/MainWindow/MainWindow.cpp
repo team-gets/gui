@@ -3,6 +3,8 @@
 #include <QFileDialog>
 
 #include "MainWindow.h"
+#include "NumericTestWidget.h"
+#include "../Widgets/Dial/AttitudeDial.h"
 
 namespace VSCL {
 MainWindow::MainWindow() {
@@ -14,7 +16,12 @@ MainWindow::MainWindow() {
     widget->setLayout(layout);
 
     MainQuick = new QQuickWidget;
-    layout->addWidget(MainQuick);
+    //layout->addWidget(MainQuick);
+
+	AttitudeDial* dial = new AttitudeDial(this);
+	NumericTestWidget* numer = new NumericTestWidget(this, dial);
+	numer->setMinimumSize(160, 160);
+	layout->addWidget(numer);
 
     CreateActions();
     CreateMenus();

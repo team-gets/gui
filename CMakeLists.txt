@@ -16,7 +16,8 @@ set(SOURCES
 
 set(WIDGET_SOURCES
 	src/MainWindow/MainWindow.cpp
-	src/MainWindow/NumericTestWidget.cpp)
+	src/MainWindow/NumericTestWidget.cpp
+	src/Widgets/Dial/AttitudeDial.cpp)
 
 qt_add_executable(gui WIN32 MACOSX_BUNDLE ${SOURCES} ${WIDGET_SOURCES})
 

@@ -1,11 +1,18 @@
 name: Build
 
-on: [pull_request, push]
-  branches: ["main"]
-  paths:
-    - ".github/workflows/build.yml"
-    - "src/**/*.cpp"
-    - "src/**/*.h"
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/build.yml"
+      - "src/**/*.cpp"
+      - "src/**/*.h"
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/build.yml"
+      - "src/**/*.cpp"
+      - "src/**/*.h"
 
 jobs:
   linux-build:

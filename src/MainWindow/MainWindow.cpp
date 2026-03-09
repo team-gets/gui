@@ -19,7 +19,7 @@ MainWindow::MainWindow() {
     //layout->addWidget(MainQuick);
 
 	AttitudeDial* dial = new AttitudeDial(this);
-	NumericTestWidget* numer = new NumericTestWidget(this, dial);
+	NumericTestWidget* numer = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
 	numer->setMinimumSize(160, 160);
 	layout->addWidget(numer);
 

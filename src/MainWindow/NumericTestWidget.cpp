@@ -4,7 +4,10 @@
 
 namespace VSCL {
 
-NumericTestWidget::NumericTestWidget(QWidget* parent, QWidget* whatToTest) {
+NumericTestWidget::NumericTestWidget(
+		QWidget* parent, QWidget* whatToTest,
+		std::function<void(int)> method) : QWidget(parent) {
+
 	setParent(parent);
 
 	QGridLayout* grid = new QGridLayout;
@@ -13,6 +16,9 @@ NumericTestWidget::NumericTestWidget(QWidget* parent, QWidget* whatToTest) {
 	TesterSpinbox = new QSpinBox;
 	TesterSpinbox->setMinimum(0.0);
 	TesterSpinbox->setMaximum(360.0);
+
+	connect(TesterSpinbox, &QSpinBox::valueChanged, whatToTest, method);
+
 	grid->addWidget(TesterSpinbox, 0, 0);
 
 	WidgetBeingTested = whatToTest;

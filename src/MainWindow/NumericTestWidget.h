@@ -12,6 +12,8 @@ public:
 	NumericTestWidget(QWidget* parent, QWidget* whatToTest,
 			std::function<void(int)> method);
 
+	virtual void setVisible(bool visible) override;
+
 private:
 	QDoubleSpinBox* TesterSpinbox;
 	QWidget* WidgetBeingTested;

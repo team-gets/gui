@@ -1,9 +1,9 @@
 #include <filesystem>
+#include <iostream>
 
 #include <QFileDialog>
 
 #include "MainWindow.h"
-#include "NumericTestWidget.h"
 #include "../Widgets/Dial/AttitudeDial.h"
 
 namespace VSCL {
@@ -16,12 +16,13 @@ MainWindow::MainWindow() {
     widget->setLayout(layout);
 
     MainQuick = new QQuickWidget;
-    //layout->addWidget(MainQuick);
+	layout->addWidget(MainQuick);
+	MainQuick->setVisible(false);
 
 	AttitudeDial* dial = new AttitudeDial(this);
-	NumericTestWidget* numer = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
-	numer->setMinimumSize(160, 160);
-	layout->addWidget(numer);
+	NumericTestWidget* NumericDisplaysTest = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
+	layout->addWidget(NumericDisplaysTest);
+	NumericDisplaysTest->setVisible(true);
 
     CreateActions();
     CreateMenus();
@@ -39,6 +40,21 @@ void MainWindow::SetQMLFromPath(const QUrl& path) {
 	CurrentQML = path;
 }
 
+void MainWindow::SwapSetting() {
+	switch (CurrentSetting) {
+	case MainWindow::NumericTesting:
+		NumericDisplaysTest->setVisible(false);
+		MainQuick->setVisible(true);
+		CurrentSetting = MainWindow::QMLView;
+		break;
+	case MainWindow::QMLView:
+		MainQuick->setVisible(false);
+		NumericDisplaysTest->setVisible(true);
+		CurrentSetting = MainWindow::NumericTesting;
+		break;
+	}
+}
+
 void MainWindow::OpenQML() {
 	std::string currentWd = std::filesystem::current_path().string();
 	const char* cwd = currentWd.c_str();
@@ -54,13 +70,14 @@ void MainWindow::ReloadQML() {
 } // void MainWindow::ReloadQML()
 
 void MainWindow::About() {
-    QMessageBox::about(this, tr("About Menu"),
-            tr("Welcome"));
+    QMessageBox::about(this, tr("About"),
+            tr("Currently in development mode."));
 } // void MainWindow::About()
 
 void MainWindow::CreateMenus() {
     FileMenu = menuBar()->addMenu(tr("&File"));
     FileMenu->addAction(QMLLoadAct);
+    FileMenu->addAction(SwapSettingAct);
     FileMenu->addSeparator();
     FileMenu->addAction(ExitAct);
 
@@ -77,6 +94,12 @@ void MainWindow::CreateActions() {
 	QMLLoadAct->setShortcuts(QKeySequence::Open);
 	QMLLoadAct->setStatusTip(tr("Load QML into the viewport."));
 	connect(QMLLoadAct, &QAction::triggered, this, &MainWindow::OpenQML);
+
+	SwapSettingAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::DocumentOpen),
+							 tr("Change Setting"), this);
+	SwapSettingAct->setShortcuts(QKeySequence::NextChild);
+	SwapSettingAct->setStatusTip(tr("Change between QML viewport and numeric testing modes"));
+	connect(SwapSettingAct, &QAction::triggered, this, &MainWindow::SwapSetting);
 
     ExitAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::ApplicationExit),
                           tr("Exit"), this);

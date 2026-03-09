@@ -12,13 +12,22 @@
 
 #include <QActionGroup>
 
+#include "NumericTestWidget.h"
+
 namespace VSCL {
 class MainWindow : public QMainWindow {
 
 public:
     MainWindow();
 
+	enum Setting {
+		QMLView,
+		NumericTesting
+	};
+
     void SetQMLFromPath(const QUrl& path);
+	void SwapSetting();
+
 protected:
 
 private slots:
@@ -27,8 +36,28 @@ private slots:
     void About();
 
 private:
+	Setting CurrentSetting = Setting::NumericTesting;
+
+	/*
+	 *	QML Viewer
+	 */
+
+	// The Main Viewport
 	QQuickWidget* MainQuick;
+
+	// Path to the currently loaded QML
 	QUrl CurrentQML;
+
+	/*
+	 *	Numeric widget display testing
+	 */
+
+	// The main tester view
+	NumericTestWidget* NumericDisplaysTest;
+
+	/*
+	 *	Actions
+	 */
 
     void CreateActions();
     void CreateMenus();
@@ -41,5 +70,6 @@ private:
     QAction* ExitAct;
     QAction* ReloadAct;
     QAction* AboutAct;
+    QAction* SwapSettingAct;
 }; // class MainWindow
 } // namespace VSCL

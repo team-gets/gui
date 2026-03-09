@@ -16,14 +16,20 @@ NumericTestWidget::NumericTestWidget(
 	TesterSpinbox = new QDoubleSpinBox;
 	TesterSpinbox->setMinimum(0.0);
 	TesterSpinbox->setMaximum(360.0);
-
-	connect(TesterSpinbox, &QDoubleSpinBox::valueChanged, whatToTest, method);
-
+	TesterSpinbox->setSuffix("°");
 	grid->addWidget(TesterSpinbox, 0, 0);
 
 	WidgetBeingTested = whatToTest;
 	grid->addWidget(WidgetBeingTested, 0, 1);
+
+	connect(TesterSpinbox, &QDoubleSpinBox::valueChanged, WidgetBeingTested, method);
 } // NumericTestWidget ctor
+
+void NumericTestWidget::setVisible(bool visible) {
+	TesterSpinbox->setVisible(visible);
+	WidgetBeingTested->setVisible(visible);
+	QWidget::setVisible(visible);
+}
 
 QDoubleSpinBox* NumericTestWidget::GetSpinbox() const { return TesterSpinbox; }
 QWidget* NumericTestWidget::GetTestedWidget() const { return WidgetBeingTested; }

@@ -3,11 +3,11 @@
 
 #include <QFileDialog>
 
-#include "MainWindow.h"
+#include "DevWindow.h"
 #include "../Widgets/Dial/AttitudeDial.h"
 
 namespace VSCL {
-MainWindow::MainWindow() {
+DevWindow::DevWindow() {
     QWidget* widget = new QWidget;
     setCentralWidget(widget);
 
@@ -33,29 +33,29 @@ MainWindow::MainWindow() {
     setWindowTitle(tr("VSCL Gyroscopic Test Rig"));
     setMinimumSize(160, 160);
     resize(720, 480);
-} // void MainWindow::MainWindow()
+} // void DevWindow::DevWindow()
 
-void MainWindow::SetQMLFromPath(const QUrl& path) {
+void DevWindow::SetQMLFromPath(const QUrl& path) {
 	MainQuick->setSource(path);
 	CurrentQML = path;
 }
 
-void MainWindow::SwapSetting() {
+void DevWindow::SwapSetting() {
 	switch (CurrentSetting) {
-	case MainWindow::NumericTesting:
+	case DevWindow::NumericTesting:
 		NumericDisplaysTest->setVisible(false);
 		MainQuick->setVisible(true);
-		CurrentSetting = MainWindow::QMLView;
+		CurrentSetting = DevWindow::QMLView;
 		break;
-	case MainWindow::QMLView:
+	case DevWindow::QMLView:
 		MainQuick->setVisible(false);
 		NumericDisplaysTest->setVisible(true);
-		CurrentSetting = MainWindow::NumericTesting;
+		CurrentSetting = DevWindow::NumericTesting;
 		break;
 	}
 }
 
-void MainWindow::OpenQML() {
+void DevWindow::OpenQML() {
 	std::string currentWd = std::filesystem::current_path().string();
 	const char* cwd = currentWd.c_str();
 	QUrl qmlPath = QFileDialog::getOpenFileUrl(this,
@@ -63,18 +63,18 @@ void MainWindow::OpenQML() {
 		tr("QML Sources (*.qml)"));
 
 	SetQMLFromPath(qmlPath);
-} // void MainWindow::OpenQML()
+} // void DevWindow::OpenQML()
 
-void MainWindow::ReloadQML() {
+void DevWindow::ReloadQML() {
 	SetQMLFromPath(CurrentQML);
-} // void MainWindow::ReloadQML()
+} // void DevWindow::ReloadQML()
 
-void MainWindow::About() {
+void DevWindow::About() {
     QMessageBox::about(this, tr("About"),
             tr("Currently in development mode."));
-} // void MainWindow::About()
+} // void DevWindow::About()
 
-void MainWindow::CreateMenus() {
+void DevWindow::CreateMenus() {
     FileMenu = menuBar()->addMenu(tr("&File"));
     FileMenu->addAction(QMLLoadAct);
     FileMenu->addAction(SwapSettingAct);
@@ -86,20 +86,20 @@ void MainWindow::CreateMenus() {
 
     HelpMenu = menuBar()->addMenu(tr("&Help"));
     HelpMenu->addAction(AboutAct);
-} // void MainWindow::CreateMenus()
+} // void DevWindow::CreateMenus()
 
-void MainWindow::CreateActions() {
+void DevWindow::CreateActions() {
 	QMLLoadAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::DocumentOpen),
 							 tr("Load QML"), this);
 	QMLLoadAct->setShortcuts(QKeySequence::Open);
 	QMLLoadAct->setStatusTip(tr("Load QML into the viewport."));
-	connect(QMLLoadAct, &QAction::triggered, this, &MainWindow::OpenQML);
+	connect(QMLLoadAct, &QAction::triggered, this, &DevWindow::OpenQML);
 
 	SwapSettingAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::DocumentOpen),
 							 tr("Change Setting"), this);
 	SwapSettingAct->setShortcuts(QKeySequence::NextChild);
 	SwapSettingAct->setStatusTip(tr("Change between QML viewport and numeric testing modes"));
-	connect(SwapSettingAct, &QAction::triggered, this, &MainWindow::SwapSetting);
+	connect(SwapSettingAct, &QAction::triggered, this, &DevWindow::SwapSetting);
 
     ExitAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::ApplicationExit),
                           tr("Exit"), this);
@@ -111,11 +111,11 @@ void MainWindow::CreateActions() {
                           tr("Reload"), this);
     ReloadAct->setShortcuts(QKeySequence::Redo);
     ReloadAct->setStatusTip(tr("Reload QML sources"));
-    connect(ReloadAct, &QAction::triggered, this, &MainWindow::ReloadQML);
+    connect(ReloadAct, &QAction::triggered, this, &DevWindow::ReloadQML);
 
 	AboutAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::HelpAbout),
                            tr("&About"), this);
     AboutAct->setStatusTip(tr("Show the application's About box"));
-    connect(AboutAct, &QAction::triggered, this, &MainWindow::About);
-} // void MainWindow::CreateActions()
+    connect(AboutAct, &QAction::triggered, this, &DevWindow::About);
+} // void DevWindow::CreateActions()
 } // namespace VSCL

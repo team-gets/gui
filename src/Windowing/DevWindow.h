@@ -15,10 +15,10 @@
 #include "NumericTestWidget.h"
 
 namespace VSCL {
-class MainWindow : public QMainWindow {
+class DevWindow : public QMainWindow {
 
 public:
-    MainWindow();
+    DevWindow();
 
 	enum Setting {
 		QMLView,
@@ -71,5 +71,5 @@ private:
     QAction* ReloadAct;
     QAction* AboutAct;
     QAction* SwapSettingAct;
-}; // class MainWindow
+}; // class DevWindow
 } // namespace VSCL

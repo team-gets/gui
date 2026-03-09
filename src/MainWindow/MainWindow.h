@@ -12,7 +12,7 @@
 
 #include <QActionGroup>
 
-namespace Gets {
+namespace VSCL {
 class MainWindow : public QMainWindow {
 
 public:
@@ -42,4 +42,4 @@ private:
     QAction* ReloadAct;
     QAction* AboutAct;
 }; // class MainWindow
-} // namespace Gets
+} // namespace VSCL

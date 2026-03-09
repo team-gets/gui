@@ -4,7 +4,7 @@
 
 #include "MainWindow.h"
 
-namespace Gets {
+namespace VSCL {
 MainWindow::MainWindow() {
     QWidget* widget = new QWidget;
     setCentralWidget(widget);
@@ -87,4 +87,4 @@ void MainWindow::CreateActions() {
     AboutAct->setStatusTip(tr("Show the application's About box"));
     connect(AboutAct, &QAction::triggered, this, &MainWindow::About);
 } // void MainWindow::CreateActions()
-} // namespace Gets
+} // namespace VSCL

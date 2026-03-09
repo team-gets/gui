@@ -11,12 +11,13 @@ NumericTestWidget::NumericTestWidget(
 	setParent(parent);
 
 	QGridLayout* grid = new QGridLayout;
+	grid->setSpacing(5);
 	setLayout(grid);
 
 	TesterSpinbox = new QDoubleSpinBox;
-	TesterSpinbox->setMinimum(0.0);
-	TesterSpinbox->setMaximum(360.0);
+	TesterSpinbox->setRange(0.0, 360.0);
 	TesterSpinbox->setSuffix("°");
+	TesterSpinbox->setWrapping(true);
 	grid->addWidget(TesterSpinbox, 0, 0);
 
 	WidgetBeingTested = whatToTest;

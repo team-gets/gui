@@ -6,7 +6,7 @@ on:
 
 jobs:
   linux-build:
-    name: Linux Build
+    name: Linux
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -22,7 +22,7 @@ jobs:
           cmake -S . -B build
           cmake --build build
   windows-build:
-    name: Linux Build
+    name: Windows
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v5

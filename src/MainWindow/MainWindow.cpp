@@ -33,7 +33,8 @@ void MainWindow::SetQMLFromPath(const QUrl& path) {
 }
 
 void MainWindow::OpenQML() {
-	const char* cwd = std::filesystem::current_path().c_str();
+	std::string currentWd = std::filesystem::current_path().string();
+	const char* cwd = currentWd.c_str();
 	QUrl qmlPath = QFileDialog::getOpenFileUrl(this,
 		tr("Open QML Source"), QUrl::fromLocalFile(cwd),
 		tr("QML Sources (*.qml)"));

@@ -1,6 +1,6 @@
 # Test Rig GUI Application
 
-Qt Quick-Based Styling + Widgets to assist test rig ops.
+Qt Quick used selectively + Widgets to assist test rig ops.
 
 ## Filesystem Structure
 - `qml`: Qt Quick

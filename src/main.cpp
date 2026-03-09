@@ -2,12 +2,12 @@
 #include <QWindow>
 #include <QWidget>
 
-#include "MainWindow/MainWindow.h"
+#include "Windowing/DevWindow.h"
 
 int main(int argc, char** argv) {
 	QApplication app(argc, argv);
 
-	VSCL::MainWindow window;
+	VSCL::DevWindow window;
 	if (argc > 1) { window.SetQMLFromPath(QUrl::fromLocalFile(argv[1])); }
 
 	window.show();

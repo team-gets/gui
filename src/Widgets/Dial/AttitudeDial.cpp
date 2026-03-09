@@ -17,7 +17,7 @@ AttitudeDial::AttitudeDial(QWidget* parent) {
 	update();
 } // AttitudeDial ctor
 
-void AttitudeDial::paintEvent(QPaintEvent* event) { 
+void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
 	QSize curSize = size();
 	QPoint origin = { curSize.width() / 2, curSize.height() / 2 };
 
@@ -25,11 +25,17 @@ void AttitudeDial::paintEvent(QPaintEvent* event) {
 	double ry = curSize.height() / 2.0 * 0.95;
 	double r = std::min<double>(rx, ry);
 
+	QBrush fillBrush = painter->brush();
+	fillBrush.setStyle(Qt::SolidPattern);
+	fillBrush.setColor(QColorConstants::White);
+
+	painter->setBrush(fillBrush);
+	painter->setRenderHint(QPainter::Antialiasing, true);
+	painter->drawEllipse(origin, (int)r, (int)r);
+} // void PaintCircularBacking
+
+void AttitudeDial::paintEvent(QPaintEvent* event) { 
 	QPainter painter(this);
-	QBrush brush = painter.brush();
-	brush.setStyle(Qt::SolidPattern);
-	brush.setColor(QColorConstants::White);
-	painter.setBrush(brush);
-	painter.drawEllipse(origin, (int)r, (int)r);
+	PaintCircularBacking(event, &painter);
 }
 } // namespace VSCL

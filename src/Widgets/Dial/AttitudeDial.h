@@ -14,6 +14,7 @@ public:
 
 private:
 	double CurrentValue = 0.0;
+	void PaintCircularBacking(QPaintEvent* event, QPainter* painter);
 
 }; // class AttitudeDial
 } // namespace VSCL

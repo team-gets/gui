@@ -10,6 +10,11 @@ To start building, run this in the root directory of this repo:
 ```sh
 cmake -S . -B build
 ```
+then
+```sh
+cmake --build build
+```
+for example.
 
 ## Development Resources
 ### Visual UI Editor

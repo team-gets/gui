@@ -11,6 +11,12 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 
 qt_standard_project_setup(REQUIRES 6.10)
 
+if (MSVC)
+	add_compile_options("/W4")
+else()
+	add_compile_options("-Wall")
+endif()
+
 set(SOURCES
 	src/main.cpp)
 

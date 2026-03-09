@@ -15,7 +15,8 @@ set(SOURCES
 	src/main.cpp)
 
 set(WIDGET_SOURCES
-	src/MainWindow/MainWindow.cpp)
+	src/MainWindow/MainWindow.cpp
+	src/MainWindow/NumericTestWidget.cpp)
 
 qt_add_executable(gui WIN32 MACOSX_BUNDLE ${SOURCES} ${WIDGET_SOURCES})
 

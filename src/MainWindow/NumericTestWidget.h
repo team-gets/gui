@@ -13,11 +13,11 @@ public:
 			std::function<void(int)> method);
 
 private:
-	QSpinBox* TesterSpinbox;
+	QDoubleSpinBox* TesterSpinbox;
 	QWidget* WidgetBeingTested;
 
 public:
-	QSpinBox* GetSpinbox() const;
+	QDoubleSpinBox* GetSpinbox() const;
 	QWidget* GetTestedWidget() const;
 
 }; // class NumericTestWidget

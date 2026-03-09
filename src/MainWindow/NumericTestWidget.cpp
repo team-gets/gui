@@ -13,11 +13,11 @@ NumericTestWidget::NumericTestWidget(
 	QGridLayout* grid = new QGridLayout;
 	setLayout(grid);
 
-	TesterSpinbox = new QSpinBox;
+	TesterSpinbox = new QDoubleSpinBox;
 	TesterSpinbox->setMinimum(0.0);
 	TesterSpinbox->setMaximum(360.0);
 
-	connect(TesterSpinbox, &QSpinBox::valueChanged, whatToTest, method);
+	connect(TesterSpinbox, &QDoubleSpinBox::valueChanged, whatToTest, method);
 
 	grid->addWidget(TesterSpinbox, 0, 0);
 
@@ -25,7 +25,7 @@ NumericTestWidget::NumericTestWidget(
 	grid->addWidget(WidgetBeingTested, 0, 1);
 } // NumericTestWidget ctor
 
-QSpinBox* NumericTestWidget::GetSpinbox() const { return TesterSpinbox; }
+QDoubleSpinBox* NumericTestWidget::GetSpinbox() const { return TesterSpinbox; }
 QWidget* NumericTestWidget::GetTestedWidget() const { return WidgetBeingTested; }
 
 } // namespace VSCL

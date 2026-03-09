@@ -13,7 +13,7 @@ public:
 	virtual void paintEvent(QPaintEvent* event) override;
 
 private:
-	double CurrentAngle = 225.0;
+	double CurrentAngle = 0.0;
 	void PaintCircularBacking(QPaintEvent* event, QPainter* painter);
 	void PaintHand(QPaintEvent* event, QPainter* painter);
 

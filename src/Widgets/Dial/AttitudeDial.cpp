@@ -12,9 +12,6 @@ AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
 	setParent(parent);
 	setMinimumSize(128, 128);
 
-	QVBoxLayout* box = new QVBoxLayout;
-	setLayout(box);
-
 	update();
 } // AttitudeDial ctor
 

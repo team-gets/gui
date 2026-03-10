@@ -4,9 +4,6 @@ project(rig_gui
 	LANGUAGES CXX
 )
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS true)
-set(CMAKE_AUTOMOC ON)
-
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 
 qt_standard_project_setup(REQUIRES 6.10)
@@ -17,6 +14,9 @@ else()
 	add_compile_options("-Wall")
 endif()
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS true)
+set(CMAKE_AUTOMOC ON)
+
 set(SOURCES
 	src/main.cpp)
 
@@ -25,9 +25,9 @@ set(WIDGET_SOURCES
 	src/Windowing/NumericTestWidget.cpp
 	src/Widgets/Dial/AttitudeDial.cpp)
 
-qt_add_executable(gui WIN32 MACOSX_BUNDLE ${SOURCES} ${WIDGET_SOURCES})
+qt_add_executable(guidev WIN32 MACOSX_BUNDLE ${SOURCES} ${WIDGET_SOURCES})
 
-target_link_libraries(gui PRIVATE
+target_link_libraries(guidev PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Qml
@@ -35,3 +35,6 @@ target_link_libraries(gui PRIVATE
 	Qt6::Widgets
 	Qt6::QuickWidgets
 )
+
+target_include_directories(guidev PRIVATE
+	src/Widgets)

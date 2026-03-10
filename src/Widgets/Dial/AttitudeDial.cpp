@@ -10,8 +10,6 @@ namespace VSCL {
 
 AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
 	setParent(parent);
-	setMinimumSize(128, 128);
-
 	update();
 } // AttitudeDial ctor
 

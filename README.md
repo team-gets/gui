@@ -17,6 +17,7 @@ cmake --build build
 for example.
 
 ## Development Resources
+- [Qt Documentation](https://doc.qt.io/)
 ### Visual UI Editor
 - [Qt Widgets](https://doc.qt.io/qt-6/qtdesigner-manual.html)
 - [QML](https://doc.qt.io/qtcreator/creator-qtquickdesigner-plugin.html)

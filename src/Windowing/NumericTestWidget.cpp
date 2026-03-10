@@ -11,7 +11,7 @@ NumericTestWidget::NumericTestWidget(
 	setParent(parent);
 
 	QGridLayout* grid = new QGridLayout;
-	grid->setSpacing(5);
+	grid->setContentsMargins(5, 5, 5, 5);
 	setLayout(grid);
 
 	TesterSpinbox = new QDoubleSpinBox;

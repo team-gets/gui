@@ -11,7 +11,7 @@ NumericTestWidget::NumericTestWidget(
 	setParent(parent);
 
 	QGridLayout* grid = new QGridLayout;
-	grid->setContentsMargins(5, 5, 5, 5);
+	grid->setContentsMargins(25, 25, 25, 25);
 	setLayout(grid);
 
 	TesterSpinbox = new QDoubleSpinBox;
@@ -20,7 +20,12 @@ NumericTestWidget::NumericTestWidget(
 	TesterSpinbox->setWrapping(true);
 	grid->addWidget(TesterSpinbox, 0, 0);
 
+	QSizePolicy sizePolicy;
+	sizePolicy.setHorizontalPolicy(QSizePolicy::Expanding);
+	sizePolicy.setVerticalPolicy(QSizePolicy::Expanding);
+
 	WidgetBeingTested = whatToTest;
+	WidgetBeingTested->setSizePolicy(sizePolicy);
 	grid->addWidget(WidgetBeingTested, 0, 1);
 
 	connect(TesterSpinbox, &QDoubleSpinBox::valueChanged, WidgetBeingTested, method);

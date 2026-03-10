@@ -5,6 +5,7 @@
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QStatusBar>
+#include <QStackedWidget>
 
 #include <QWidget>
 #include <QLayout>
@@ -37,6 +38,7 @@ private slots:
 
 private:
 	Setting CurrentSetting = Setting::NumericTesting;
+	QStackedWidget* Stacker;
 
 	/*
 	 *	QML Viewer

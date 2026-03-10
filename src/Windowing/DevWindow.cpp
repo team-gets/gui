@@ -7,21 +7,18 @@
 
 namespace VSCL {
 DevWindow::DevWindow() {
-    QWidget* widget = new QWidget;
-    setCentralWidget(widget);
+    Stacker = new QStackedWidget;
+    setCentralWidget(Stacker);
 
-    QVBoxLayout* layout = new QVBoxLayout;
+    QLayout* layout = Stacker->layout();
     layout->setContentsMargins(5, 5, 5, 5);
-    widget->setLayout(layout);
 
     MainQuick = new QQuickWidget;
-	layout->addWidget(MainQuick);
-	MainQuick->setVisible(false);
+	Stacker->addWidget(MainQuick);
 
 	AttitudeDial* dial = new AttitudeDial(this);
 	NumericTestWidget* NumericDisplaysTest = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
-	layout->addWidget(NumericDisplaysTest);
-	NumericDisplaysTest->setVisible(true);
+	Stacker->addWidget(NumericDisplaysTest);
 
     CreateActions();
     CreateMenus();
@@ -42,13 +39,11 @@ void DevWindow::SetQMLFromPath(const QUrl& path) {
 void DevWindow::SwapSetting() {
 	switch (CurrentSetting) {
 	case DevWindow::NumericTesting:
-		NumericDisplaysTest->setVisible(false);
-		MainQuick->setVisible(true);
+		Stacker->setCurrentIndex(1);
 		CurrentSetting = DevWindow::QMLView;
 		break;
 	case DevWindow::QMLView:
-		MainQuick->setVisible(false);
-		NumericDisplaysTest->setVisible(true);
+		Stacker->setCurrentIndex(0);
 		CurrentSetting = DevWindow::NumericTesting;
 		break;
 	}

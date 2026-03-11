@@ -21,7 +21,7 @@ DevWindow::DevWindow() {
 	NumericTestWidget* NumericDisplaysTest = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
 	//Stacker->addWidget(NumericDisplaysTest);
 
-	AttitudePlotContainer* plot = new AttitudePlotContainer(this);
+	Plot::PlotContainer* plot = new Plot::PlotContainer(this);
 	Stacker->addWidget(plot);
 	Stacker->setCurrentIndex(1);
 

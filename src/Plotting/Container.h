@@ -3,16 +3,18 @@
 #include <QtWidgets>
 #include "Plot.h"
 
-namespace VSCL {
-class AttitudePlotContainer : public QWidget {
+namespace VSCL::Plot {
+
+// The intent is to put stuff next to the embedded plot
+class PlotContainer : public QWidget {
 
 	Q_OBJECT;
 
 public:
-	AttitudePlotContainer(QWidget* parent);
+	PlotContainer(QWidget* parent);
 
 private:
-	AttitudePlot* Plot;
+	Plot::EmbeddablePlot* Plot;
 
 }; // class AttitudePlotContainer
-} // namespace VSCL
+} // namespace VSCL::Plot

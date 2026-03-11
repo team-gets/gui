@@ -1,28 +1,27 @@
 #pragma once
 
 #include <QWidget>
-#include "grwidget.h"
+#include <vector>
 
-namespace VSCL {
-class AttitudePlot : public GRWidget {
+namespace VSCL::Plot {
 
-	Q_OBJECT;
-
+// Plotting interface
+class EmbeddablePlot {
 public:
-	AttitudePlot(QWidget* parent);
-
 	void AddPoint(const double time, const double angle);
 
-protected:
-	virtual void draw();
+	std::vector<double> GetTimes() const;
+	std::vector<double> GetAngles() const;
+	QWidget* GetWidgetRep() const;
+	void SetWidgetRep(QWidget* newWidgetRep);
 
-	// Mostly here for interaction with GR C API
-	int DoubleVectorToArray(const std::vector<double>& original,
-			double* output, const size_t arrSize);
-	
 private:
 	std::vector<double> Times;
 	std::vector<double> Angles;
 
+	// The underlying widget.
+	// This is potentially going to lead to an obtuse interface when programming?
+	QWidget* WidgetRep;
+
 }; // class AttitudePlot
-} // namespace VSCL
+} // namespace VSCL::Plot

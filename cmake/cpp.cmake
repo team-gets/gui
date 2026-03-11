@@ -12,7 +12,8 @@ set(WIDGET_SOURCES
 
 set(PLOTTING_SOURCES
 	"${PLOTTING_SRC_DIR}/Plot.cpp"
-	"${PLOTTING_SRC_DIR}/Container.cpp")
+	"${PLOTTING_SRC_DIR}/Container.cpp"
+	"${PLOTTING_SRC_DIR}/PlotGR.cpp")
 
 set(STD_APP_INCLUDES
 	"${CMAKE_SOURCE_DIR}/src"

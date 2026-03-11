@@ -1,24 +1,25 @@
 #include <QHBoxLayout>
 
-#include <vector>
 #include <cmath>
+
+#include "PlotGR.h"
 #include "Container.h"
 
-namespace VSCL {
+namespace VSCL::Plot {
 
-AttitudePlotContainer::AttitudePlotContainer(QWidget* parent) : QWidget(parent) {
+PlotContainer::PlotContainer(QWidget* parent) : QWidget(parent) {
 	QHBoxLayout* boxlay = new QHBoxLayout;
 	boxlay->setContentsMargins(5, 5, 5, 5);
 	setLayout(boxlay);
 
-	Plot = new AttitudePlot(this);
+	Plot = new Plot::PlotGR(this);
 
 	QSizePolicy plotSizePolicy;
 	plotSizePolicy.setHorizontalPolicy(QSizePolicy::Expanding);
 	plotSizePolicy.setVerticalPolicy(QSizePolicy::Expanding);
-	Plot->setSizePolicy(plotSizePolicy);
+	Plot->GetWidgetRep()->setSizePolicy(plotSizePolicy);
 
-	boxlay->addWidget(Plot);
+	boxlay->addWidget(Plot->GetWidgetRep());
 
 	// TEMP
 	for (int i = 0; i < 100; i++) {
@@ -26,4 +27,4 @@ AttitudePlotContainer::AttitudePlotContainer(QWidget* parent) : QWidget(parent) 
 	}
 };
 
-} // namespace VSCL
+} // namespace VSCL::Plot

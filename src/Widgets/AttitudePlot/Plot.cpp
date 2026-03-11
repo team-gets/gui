@@ -28,7 +28,7 @@ int AttitudePlot::DoubleVectorToArray(const std::vector<double>& original,
 		stepSize = static_cast<int>(std::floor(vecSize / arrSize));
 	}
 
-	for (int i = 0; i < arrSize + endDelta; i += stepSize) {
+	for (unsigned int i = 0; i < arrSize + endDelta; i += stepSize) {
 		output[i] = original[i];
 	}
 

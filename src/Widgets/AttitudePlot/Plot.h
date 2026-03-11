@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QWidget>
-#include "grwidget.h"
+#include "qtgr/grwidget.h"
 
 namespace VSCL {
 class AttitudePlot : public GRWidget {

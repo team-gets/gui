@@ -8,7 +8,7 @@ endif()
 # Just use FetchContent
 if (NOT GR_FOUND)
 	include(FetchContent)
-	message("-- Did not find system-wide installation of GR in the standard locations. Will use FetchContent to install GR for this project.")
+	message("-- Did not find system-wide installation of GR in the standard locations. Will use FetchContent to grab suitable GR for this project.")
 	FetchContent_Declare(
 		GR
 		GIT_REPOSITORY https://github.com/sciapp/gr.git

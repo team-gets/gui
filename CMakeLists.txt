@@ -4,12 +4,6 @@ project(rig_gui
 	LANGUAGES CXX
 )
 
-if (MSVC)
-	add_compile_options("/W4")
-else()
-	add_compile_options("-Wall")
-endif()
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 set(CMAKE_AUTOMOC ON)
 
@@ -45,7 +39,12 @@ qt_add_qml_module(qml.a_circle
 find_package(GR) # not required yet
 if (GR_FOUND)
 	message("-- Will build plotting capabilities.")
-	target_link_libraries(guidev PRIVATE GR::GR)
-	target_link_libraries(guidev PRIVATE GR::GRM)
 	target_link_libraries(guidev PRIVATE GR::qt6gr)
 endif()
+
+if (MSVC)
+	target_compile_options(guidev PRIVATE "/W4")
+else()
+	target_compile_options(guidev PRIVATE "-Wall")
+endif()
+

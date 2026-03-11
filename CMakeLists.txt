@@ -34,8 +34,9 @@ target_link_libraries(guidev PRIVATE
 )
 
 # Ideally you would quickly iter using the dev gui app
-qt_add_qml_module(a_circle
+qt_add_qml_module(qml.a_circle
 	URI qml.a_circle
+	OUTPUT_DIRECTORY "qml/a_circle"
 	QML_FILES
 		"qml/circle.qml"
 )

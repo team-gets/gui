@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.30...4.0)
 
 project(rig_gui
 	LANGUAGES CXX
@@ -13,9 +13,9 @@ endif()
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 set(CMAKE_AUTOMOC ON)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include("./cmake/cpp.cmake")
 include("./cmake/qml.cmake")
-include(FetchContent)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 
@@ -42,11 +42,7 @@ qt_add_qml_module(qml.a_circle
 		"qml/circle.qml"
 )
 
-FetchContent_Declare(
-	gr
-	GIT_REPOSITORY https://github.com/sciapp/gr.git
-	GIT_TAG v0.73.24
-)
-
-FetchContent_MakeAvailable(gr)
-target_link_libraries(guidev PUBLIC GR::qt6gr)
+find_package(GR) # not required yet
+if (GR_FOUND)
+	target_link_libraries(guidev PUBLIC GR::qt6gr)
+endif()

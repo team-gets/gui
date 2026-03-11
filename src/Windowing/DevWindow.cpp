@@ -21,9 +21,9 @@ DevWindow::DevWindow() {
 	NumericTestWidget* NumericDisplaysTest = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
 	//Stacker->addWidget(NumericDisplaysTest);
 
-
 	AttitudePlotContainer* plot = new AttitudePlotContainer(this);
 	Stacker->addWidget(plot);
+	Stacker->setCurrentIndex(1);
 
     CreateActions();
     CreateMenus();
@@ -44,11 +44,11 @@ void DevWindow::SetQMLFromPath(const QUrl& path) {
 void DevWindow::SwapSetting() {
 	switch (CurrentSetting) {
 	case DevWindow::NumericTesting:
-		Stacker->setCurrentIndex(1);
+		Stacker->setCurrentIndex(0);
 		CurrentSetting = DevWindow::QMLView;
 		break;
 	case DevWindow::QMLView:
-		Stacker->setCurrentIndex(0);
+		Stacker->setCurrentIndex(1);
 		CurrentSetting = DevWindow::NumericTesting;
 		break;
 	}

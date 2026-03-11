@@ -1,12 +1,19 @@
+set(WINDOWING_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Windowing")
+set(WIDGETS_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Widgets")
+set(PLOTTING_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Plotting")
+
 set(APP_SOURCES
 	src/main.cpp)
 
 set(WIDGET_SOURCES
-	src/Windowing/DevWindow.cpp
-	src/Windowing/NumericTestWidget.cpp
-	src/Widgets/Dial/AttitudeDial.cpp
-	src/Widgets/AttitudePlot/Plot.cpp
-	src/Widgets/AttitudePlot/Container.cpp)
+	"${WINDOWING_SRC_DIR}/DevWindow.cpp"
+	"${WINDOWING_SRC_DIR}/NumericTestWidget.cpp"
+	"${WIDGETS_SRC_DIR}/Dial/AttitudeDial.cpp")
 
-set(WIDGET_INCLUDES
-	src/Widgets)
+set(PLOTTING_SOURCES
+	"${PLOTTING_SRC_DIR}/Plot.cpp"
+	"${PLOTTING_SRC_DIR}/Container.cpp")
+
+set(STD_APP_INCLUDES
+	"${CMAKE_SOURCE_DIR}/src"
+	${WIDGETS_SRC_DIR})

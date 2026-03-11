@@ -3,7 +3,7 @@
 #include <QFileDialog>
 
 #include "DevWindow.h"
-#include "AttitudePlot/Container.h"
+#include "Plotting/Container.h"
 #include "Dial/AttitudeDial.h"
 
 namespace VSCL {

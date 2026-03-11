@@ -15,9 +15,10 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 
 qt_standard_project_setup(REQUIRES 6.10)
 
-qt_add_executable(guidev WIN32 MACOSX_BUNDLE ${APP_SOURCES} ${WIDGET_SOURCES})
-target_include_directories(guidev PRIVATE
-	src/Widgets)
+qt_add_executable(guidev WIN32 MACOSX_BUNDLE
+	${APP_SOURCES} ${WIDGET_SOURCES} ${PLOTTING_SOURCES})
+
+target_include_directories(guidev PRIVATE ${STD_APP_INCLUDES})
 
 target_link_libraries(guidev PRIVATE
     Qt6::Core

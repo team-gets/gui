@@ -4,10 +4,6 @@ project(rig_gui
 	LANGUAGES CXX
 )
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
-
-qt_standard_project_setup(REQUIRES 6.10)
-
 if (MSVC)
 	add_compile_options("/W4")
 else()
@@ -17,15 +13,16 @@ endif()
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 set(CMAKE_AUTOMOC ON)
 
-set(SOURCES
-	src/main.cpp)
+include("./cmake/cpp.cmake")
+include("./cmake/qml.cmake")
 
-set(WIDGET_SOURCES
-	src/Windowing/DevWindow.cpp
-	src/Windowing/NumericTestWidget.cpp
-	src/Widgets/Dial/AttitudeDial.cpp)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 
-qt_add_executable(guidev WIN32 MACOSX_BUNDLE ${SOURCES} ${WIDGET_SOURCES})
+qt_standard_project_setup(REQUIRES 6.10)
+
+qt_add_executable(guidev WIN32 MACOSX_BUNDLE ${APP_SOURCES} ${WIDGET_SOURCES})
+target_include_directories(guidev PRIVATE
+	src/Widgets)
 
 target_link_libraries(guidev PRIVATE
     Qt6::Core
@@ -36,5 +33,10 @@ target_link_libraries(guidev PRIVATE
 	Qt6::QuickWidgets
 )
 
-target_include_directories(guidev PRIVATE
-	src/Widgets)
+# Ideally you would quickly iter using the dev gui app
+qt_add_qml_module(qml.a_circle
+	URI qml.a_circle
+	OUTPUT_DIRECTORY "qml/a_circle"
+	QML_FILES
+		"qml/circle.qml"
+)

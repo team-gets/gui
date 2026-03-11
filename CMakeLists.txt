@@ -15,6 +15,7 @@ set(CMAKE_AUTOMOC ON)
 
 include("./cmake/cpp.cmake")
 include("./cmake/qml.cmake")
+include(FetchContent)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 
@@ -41,7 +42,11 @@ qt_add_qml_module(qml.a_circle
 		"qml/circle.qml"
 )
 
-add_subdirectory(lib/gr)
-find_package(qt6gr)
+FetchContent_Declare(
+	gr
+	GIT_REPOSITORY https://github.com/sciapp/gr.git
+	GIT_TAG v0.73.24
+)
 
-target_link_libraries(guidev PRIVATE qt6gr)
+FetchContent_MakeAvailable(gr)
+target_link_libraries(guidev PUBLIC GR::qt6gr)

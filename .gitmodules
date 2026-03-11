@@ -1,3 +1,0 @@
-[submodule "lib/gr"]
-	path = lib/gr
-	url = git@github.com:sciapp/gr.git

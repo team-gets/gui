@@ -44,5 +44,6 @@ qt_add_qml_module(qml.a_circle
 
 find_package(GR) # not required yet
 if (GR_FOUND)
+	target_link_libraries(guidev PUBLIC GR::GR)
 	target_link_libraries(guidev PUBLIC GR::qt6gr)
 endif()

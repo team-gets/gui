@@ -17,5 +17,3 @@ if (NOT GR_FOUND)
 
 	FetchContent_MakeAvailable(GR)
 endif()
-
-set_target_properties(GR PROPERTIES GR_INSTALL OFF)

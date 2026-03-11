@@ -9,7 +9,6 @@
 namespace VSCL {
 
 AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
-	setParent(parent);
 	update();
 } // AttitudeDial ctor
 

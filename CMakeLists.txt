@@ -40,3 +40,8 @@ qt_add_qml_module(qml.a_circle
 	QML_FILES
 		"qml/circle.qml"
 )
+
+add_subdirectory(lib/gr)
+find_package(qt6gr)
+
+target_link_libraries(guidev PRIVATE qt6gr)

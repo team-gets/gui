@@ -50,6 +50,7 @@ void AttitudePlot::draw() {
 	DoubleVectorToArray(Angles, angls, n);
 
 	gr_polyline(n, times, angls);
+	gr_axes(2, 0.2, 0, 0, 0, 0, 0.02);
 }
 
 } // namespace VSCL

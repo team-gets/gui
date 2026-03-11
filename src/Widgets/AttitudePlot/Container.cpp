@@ -12,11 +12,17 @@ AttitudePlotContainer::AttitudePlotContainer(QWidget* parent) : QWidget(parent) 
 	setLayout(boxlay);
 
 	Plot = new AttitudePlot(this);
+
+	QSizePolicy plotSizePolicy;
+	plotSizePolicy.setHorizontalPolicy(QSizePolicy::Expanding);
+	plotSizePolicy.setVerticalPolicy(QSizePolicy::Expanding);
+	Plot->setSizePolicy(plotSizePolicy);
+
 	boxlay->addWidget(Plot);
 
 	// TEMP
 	for (int i = 0; i < 100; i++) {
-		Plot->AddPoint(i, std::sin(3.14 * i / 12));
+		Plot->AddPoint(i, std::cos(i / 12));
 	}
 };
 

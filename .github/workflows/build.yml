@@ -5,12 +5,16 @@ on:
     branches: ["main"]
     paths:
       - ".github/workflows/build.yml"
+      - "CMakeLists.txt"
+      - "cmake/*.cmake"
       - "src/**/*.cpp"
       - "src/**/*.h"
   push:
     branches: ["main"]
     paths:
       - ".github/workflows/build.yml"
+      - "CMakeLists.txt"
+      - "cmake/*.cmake"
       - "src/**/*.cpp"
       - "src/**/*.h"
 

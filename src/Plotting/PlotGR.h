@@ -3,7 +3,7 @@
 #include <QWidget>
 
 #include "Plot.h"
-#include "grwidget.h"
+#include "qtgr/grwidget.h"
 
 namespace VSCL::Plot {
 class PlotGR : public EmbeddablePlot, public GRWidget {

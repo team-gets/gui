@@ -44,6 +44,7 @@ qt_add_qml_module(qml.a_circle
 
 find_package(GR) # not required yet
 if (GR_FOUND)
+	message("-- Will build plotting capabilities.")
 	target_link_libraries(guidev PRIVATE GR::GR)
 	target_link_libraries(guidev PRIVATE GR::GRM)
 	target_link_libraries(guidev PRIVATE GR::qt6gr)

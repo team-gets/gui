@@ -16,5 +16,5 @@ if (NOT GR_FOUND)
 	)
 
 	FetchContent_MakeAvailable(GR)
- set(GR_FOUND)
+	set(GR_FOUND TRUE)
 endif()

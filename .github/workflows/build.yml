@@ -35,6 +35,7 @@ jobs:
           echo Installing CMake...
           sudo apt install cmake -y
           echo Installing GR dependencies...
+          sudo apt install libjpeg9-dev libpng-dev zlib1g-dev libqhull-dev
           sudo apt install libxt6 libxrender1 libxext6 libglx-mesa0 libqt6widgets6 -y
       - name: Run CMake and Build
         run: |
@@ -55,7 +56,8 @@ jobs:
       - name: Install Build Dependencies
         run: |
           echo Installing GR dependencies...
-          vcpkg install libjpeg-turbo libpng zlib qhull
+          winget wget
+          wget https://gr-framework.org/downloads/gr-latest-Windows-x86_64-msvc.tar.gz
       - name: Run CMake and Build
         run: |
           cmake -S . -B build

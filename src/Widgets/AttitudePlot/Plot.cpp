@@ -12,6 +12,7 @@ AttitudePlot::AttitudePlot(QWidget* parent) : GRWidget(parent) { }
 void AttitudePlot::AddPoint(const double time, const double angle) {
 	Times.push_back(time);
 	Angles.push_back(angle);
+	draw();
 }
 
 int AttitudePlot::DoubleVectorToArray(const std::vector<double>& original,
@@ -36,15 +37,17 @@ int AttitudePlot::DoubleVectorToArray(const std::vector<double>& original,
 }
 
 void AttitudePlot::draw() {
+	if (Times.size() < 2 || Angles.size() < 2) { return; }
+
 	// Magic number 512 (arbitrary power of 2)
 	const size_t vecSize = Times.size();
-	const int n = (vecSize < 512) ? vecSize : 512;
+	const size_t n = (vecSize < 512) ? vecSize - 1: 512;
 
 	double times[512] = { 0.0 };
 	double angls[512] = { 0.0 };
 
-	DoubleVectorToArray(Times, times, 512);
-	DoubleVectorToArray(Angles, angls, 512);
+	DoubleVectorToArray(Times, times, n);
+	DoubleVectorToArray(Angles, angls, n);
 
 	gr_polyline(n, times, angls);
 }

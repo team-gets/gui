@@ -6,3 +6,5 @@ set(WIDGET_SOURCES
 	src/Windowing/NumericTestWidget.cpp
 	src/Widgets/Dial/AttitudeDial.cpp)
 
+set(WIDGET_INCLUDES
+	src/Widgets)

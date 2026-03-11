@@ -35,7 +35,7 @@ jobs:
           echo Installing CMake...
           sudo apt install cmake -y
           echo Installing GR dependencies...
-          sudo apt install libjpeg9-dev libpng-dev zlib1g-dev libqhull-dev
+          sudo apt install libjpeg9-dev libpng-dev zlib1g-dev libqhull-dev libcairo2-dev
           sudo apt install libxt6 libxrender1 libxext6 libglx-mesa0 libqt6widgets6 -y
       - name: Run CMake and Build
         run: |

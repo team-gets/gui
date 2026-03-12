@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+#include "Appearance.h"
 #include "Axes.h"
 
 namespace VSCL::Plot {
@@ -19,10 +20,10 @@ public:
 	void AddPoints(const std::vector<double>& times, const std::vector<double>& quantities);
 
 	// Set axis properites based on the struct
-	virtual void SetAxis(Axis axis, AxisInfo& info) { };
+	virtual void SetAxis(Axis axis, AxisInfo& info);
 
 	// Set the main title
-	virtual void SetTitle(const std::string& title) { };
+	virtual void SetTitle(const std::string& title);
 
 	// This is called after all the setup and is a call to (re)draw.
 	virtual void Plot();
@@ -38,6 +39,13 @@ public:
 private:
 	std::vector<double> Times;
 	std::vector<double> Quantities;
+	
+	AxisInfo TimeAxis = { Axis::Time };
+	AxisInfo QuantityAxis = { Axis::Quantity };
+
+	std::string Title;
+	ColorRGB Color;
+	double Alpha;
 
 	// The underlying widget.
 	// This is potentially going to lead to an obtuse interface when programming?

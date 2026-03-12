@@ -9,9 +9,8 @@ PlotGR::PlotGR(QWidget* parent) : GRWidget(parent) {
 	SetWidgetRep(this);
 };
 
-void PlotGR::SetAxis(Axis axis, AxisInfo& info) { }
-
-void PlotGR::SetTitle(const std::string& title) { }
+void PlotGR::SetAxis(Axis axis, AxisInfo& info) { EmbeddablePlot::SetAxis(axis, info); }
+void PlotGR::SetTitle(const std::string& title) { EmbeddablePlot::SetTitle(title); }
 
 void PlotGR::Plot() {
 	EmbeddablePlot::Plot();

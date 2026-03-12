@@ -21,6 +21,19 @@ void EmbeddablePlot::AddPoints(const std::vector<double>& times, const std::vect
 	}
 }
 
+void EmbeddablePlot::SetAxis(Axis axis, AxisInfo& info) {
+	switch (axis) {
+	case Axis::Time:
+		TimeAxis = info;
+		break;
+	case Axis::Quantity:
+		QuantityAxis = info;
+		break;
+	}
+}
+
+void EmbeddablePlot::SetTitle(const std::string& title) { Title = title; }
+
 void EmbeddablePlot::Plot() {
 	if (WidgetRep)
 		WidgetRep->update();

@@ -1,5 +1,3 @@
-#include <filesystem>
-
 #include <QFileDialog>
 
 #include "WidgetsRecreation.h"

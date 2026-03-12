@@ -62,7 +62,8 @@ void PlotGR::draw() {
 	DoubleVectorToArray(times, timeArr, n);
 	DoubleVectorToArray(quantities, quantityArr, n);
 
-	gr_polyline(n, timeArr, quantityArr);
     gr_axes(gr_tick(0, 1), gr_tick(0, 1), 0, 0, 1, 1, -0.01);
+	gr_polyline(n, timeArr, quantityArr);
+	gr_setlinecolorind(static_cast<uint8_t>(ColorGR::Red));
 }
 } // namespace VSCL::Plot

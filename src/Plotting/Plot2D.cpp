@@ -48,6 +48,9 @@ void EmbeddablePlot2D::SetAxis(Axis axis, AxisInfo& info) {
 
 void EmbeddablePlot2D::SetTitle(const std::string& title) { Title = title; }
 
+void EmbeddablePlot2D::SetColor(uint8_t idx, ColorRGB& color) { Series[idx].Color = color; }
+void EmbeddablePlot2D::SetColor(ColorRGB& color) { SetColor(0, color); }
+
 void EmbeddablePlot2D::Plot() {
 	if (WidgetRep)
 		WidgetRep->update();

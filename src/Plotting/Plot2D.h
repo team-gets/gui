@@ -28,6 +28,10 @@ public:
 	// Set the main title
 	virtual void SetTitle(const std::string& title);
 
+	// Set color
+	virtual void SetColor(uint8_t idx, ColorRGB& color);
+	virtual void SetColor(ColorRGB& color);
+
 	// This is called after all the setup and is a call to (re)draw.
 	virtual void Plot();
 

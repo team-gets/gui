@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets>
-#include "Plot.h"
+#include "Plot2D.h"
 
 namespace VSCL::Plot {
 
@@ -14,7 +14,7 @@ public:
 	PlotContainer(QWidget* parent);
 
 private:
-	Plot::EmbeddablePlot* Plot;
+	Plot::EmbeddablePlot2D* Plot;
 
 }; // class AttitudePlotContainer
 } // namespace VSCL::Plot

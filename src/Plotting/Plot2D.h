@@ -4,20 +4,22 @@
 
 #include <string>
 #include <vector>
+#include <cstdint>
 
 #include "Axes.h"
 #include "Series.h"
 
 namespace VSCL::Plot {
 
-// Plotting interface.
-// The embeddable plot has at most, one figure inside of it.
-// Should probably look at typical plotting implementations for scientific programming
-class EmbeddablePlot {
+// 2D plotting interface.
+// The embeddable plot has at most, one figure inside of it. A figure will have multiple serieses.
+//
+// TODO: probably look at typical plotting implementations for scientific programming
+class EmbeddablePlot2D {
 public:
-	void AddPoint(unsigned int idx, double time, double quantity);
+	void AddPoint(uint8_t idx, double time, double quantity);
 	void AddPoint(double time, double quantity);
-	void AddPoints(unsigned int idx, const std::vector<double>& times, const std::vector<double>& quantities);
+	void AddPoints(uint8_t idx, const std::vector<double>& times, const std::vector<double>& quantities);
 	void AddPoints(const std::vector<double>& times, const std::vector<double>& quantities);
 
 	// Set axis properites based on the struct
@@ -32,9 +34,9 @@ public:
 	// Clear data that was being stored.
 	virtual void EraseAllData();
 
-	std::vector<double> GetTimes(unsigned int idx) const;
+	std::vector<double> GetTimes(uint8_t idx) const;
 	std::vector<double> GetTimes() const;
-	std::vector<double> GetQuantities(unsigned int idx) const;
+	std::vector<double> GetQuantities(uint8_t idx) const;
 	std::vector<double> GetQuantities() const;
 	QWidget* GetWidgetRep() const;
 	void SetWidgetRep(QWidget* newWidgetRep);

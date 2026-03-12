@@ -1,6 +1,6 @@
 #include <cmath>
 
-#include "PlotGR.h"
+#include "./GR.h"
 #include "gr.h"
 
 namespace VSCL::Plot {
@@ -9,16 +9,16 @@ PlotGR::PlotGR(QWidget* parent) : GRWidget(parent) {
 	SetWidgetRep(this);
 };
 
-void PlotGR::SetAxis(Axis axis, AxisInfo& info) { EmbeddablePlot::SetAxis(axis, info); }
-void PlotGR::SetTitle(const std::string& title) { EmbeddablePlot::SetTitle(title); }
+void PlotGR::SetAxis(Axis axis, AxisInfo& info) { EmbeddablePlot2D::SetAxis(axis, info); }
+void PlotGR::SetTitle(const std::string& title) { EmbeddablePlot2D::SetTitle(title); }
 
 void PlotGR::Plot() {
-	EmbeddablePlot::Plot();
+	EmbeddablePlot2D::Plot();
 	draw();
 }
 
 void PlotGR::EraseAllData() {
-	EmbeddablePlot::EraseAllData();
+	EmbeddablePlot2D::EraseAllData();
 }
 
 int PlotGR::DoubleVectorToArray(const std::vector<double>& original,

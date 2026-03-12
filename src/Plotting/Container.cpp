@@ -2,9 +2,8 @@
 
 #include <cmath>
 
-#include "PlotGR.h"
+#include "Backend/GR.h"
 #include "Container.h"
-//#include "gr.h"
 
 namespace VSCL::Plot {
 

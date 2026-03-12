@@ -12,9 +12,9 @@ set(WIDGET_SOURCES
 	"${WIDGETS_SRC_DIR}/Dial/AttitudeDial.cpp")
 
 set(PLOTTING_SOURCES
-	"${PLOTTING_SRC_DIR}/Plot.cpp"
+	"${PLOTTING_SRC_DIR}/Plot2D.cpp"
 	"${PLOTTING_SRC_DIR}/Container.cpp"
-	"${PLOTTING_SRC_DIR}/PlotGR.cpp")
+	"${PLOTTING_SRC_DIR}/Backend/GR.cpp")
 
 set(STD_APP_INCLUDES
 	"${CMAKE_SOURCE_DIR}/src"

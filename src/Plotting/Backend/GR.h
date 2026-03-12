@@ -2,14 +2,14 @@
 
 #include <QWidget>
 
-#include "Plot.h"
+#include "Plotting/Plot2D.h"
 #include "qtgr/grwidget.h"
 
 namespace VSCL::Plot {
 
 class PlotContainer;
 
-class PlotGR : public EmbeddablePlot, public GRWidget {
+class PlotGR : public EmbeddablePlot2D, public GRWidget {
 
 	friend class PlotContainer;
 

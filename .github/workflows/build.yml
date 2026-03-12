@@ -56,7 +56,7 @@ jobs:
       - name: Install wget and tar
         run: |
           winget install GNU.Wget2 GnuWin32.Tar --accept-source-agreements --accept-package-agreements
-          . $profile
+          . $PROFILE
       - name: Get GR Binaries
         run: |
           wget2 https://gr-framework.org/downloads/gr-latest-Windows-x86_64-msvc.tar.gz

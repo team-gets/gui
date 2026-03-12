@@ -22,6 +22,9 @@ public:
 	virtual void EraseAllData() override;
 
 protected:
+	void UpdateAxes();
+	void UpdateSeries();
+
 	virtual void draw() override;
 
 	// Mostly here for interaction with GR C API
@@ -54,9 +57,8 @@ public:
 		Apricot =	253,
 		Navy =		254,
 		Grey =		255
-	};
+	}; // enum class PlotGR::ColorGR
 
 	static uint16_t ColorIndex(ColorGR color) { return static_cast<uint16_t>(color); }
-};
-
+}; // class PlotGR
 } // namespace VSCL::Plot

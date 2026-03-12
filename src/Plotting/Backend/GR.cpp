@@ -9,8 +9,8 @@ PlotGR::PlotGR(QWidget* parent) : GRWidget(parent) {
 	SetWidgetRep(this);
 };
 
-void PlotGR::SetAxis(Axis axis, AxisInfo& info) { EmbeddablePlot2D::SetAxis(axis, info); }
-void PlotGR::SetTitle(const std::string& title) { EmbeddablePlot2D::SetTitle(title); }
+void PlotGR::SetAxis(Axis axis, AxisInfo& info) { EmbeddablePlot2D::SetAxis(axis, info); draw(); }
+void PlotGR::SetTitle(const std::string& title) { EmbeddablePlot2D::SetTitle(title); draw(); }
 
 void PlotGR::Plot() {
 	EmbeddablePlot2D::Plot();
@@ -19,6 +19,7 @@ void PlotGR::Plot() {
 
 void PlotGR::EraseAllData() {
 	EmbeddablePlot2D::EraseAllData();
+	draw();
 }
 
 int PlotGR::DoubleVectorToArray(const std::vector<double>& original,
@@ -47,6 +48,39 @@ int PlotGR::DoubleVectorToArray(const std::vector<double>& original,
 	return 0;
 }
 
+void PlotGR::UpdateAxes() {
+	const AxisInfo& taxe = GetAxisInfoView(Axis::Time);
+	double ttick = gr_tick(taxe.Range[0], taxe.Range[1]);
+	AxisScaling tscal = taxe.Scaling;
+
+	switch (tscal) {
+	case AxisScaling::Logarithmic:
+		gr_setscale(GR_OPTION_X_LOG);
+		break;
+	case AxisScaling::Linear:
+	default:
+		gr_setscale(0);
+		break;
+	}
+
+	const AxisInfo& qaxe = GetAxisInfoView(Axis::Quantity);
+	double qtick = gr_tick(qaxe.Range[0], qaxe.Range[1]);
+	AxisScaling qscal = qaxe.Scaling;
+
+	switch (qscal) {
+	case AxisScaling::Logarithmic:
+		gr_setscale(GR_OPTION_Y_LOG);
+		break;
+	case AxisScaling::Linear:
+	default:
+		gr_setscale(0);
+		break;
+	}
+
+	gr_setlinecolorind(ColorIndex(ColorGR::Black));
+    gr_axes(ttick, qtick, 0, 0, taxe.MajorSpacing, qaxe.MajorSpacing, -0.01);
+}
+
 void PlotGR::draw() {
 	const std::vector<double> times = GetTimes(0);
 	const std::vector<double> quantities = GetQuantities(0);
@@ -62,9 +96,9 @@ void PlotGR::draw() {
 	DoubleVectorToArray(times, timeArr, n);
 	DoubleVectorToArray(quantities, quantityArr, n);
 
+	UpdateAxes();
+
 	gr_setlinecolorind(ColorIndex(ColorGR::Red));
 	gr_polyline(n, timeArr, quantityArr);
-	gr_setlinecolorind(ColorIndex(ColorGR::Black));
-    gr_axes(gr_tick(0, 1), gr_tick(0, 1), 0, 0, 1, 1, -0.01);
 }
 } // namespace VSCL::Plot

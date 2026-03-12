@@ -18,10 +18,11 @@ enum class AxisScaling : std::uint8_t {
 
 struct AxisInfo {
 	Axis InfoOf;
-	AxisScaling Scaling;
+	AxisScaling Scaling = AxisScaling::Linear;
 
-	std::array<double, 2> Range;
-	double Spacing;
-	std::string Title;
+	std::array<double, 2> Range = { 0.0, 1.0 };
+	double MajorSpacing = 1;
+	double MinorSpacing = 0.2;
+	std::string Title = "";
 };
 } // namespace VSCL::Plot

@@ -42,6 +42,9 @@ public:
 	std::vector<double> GetTimes() const;
 	std::vector<double> GetQuantities(uint8_t idx) const;
 	std::vector<double> GetQuantities() const;
+
+	const AxisInfo& GetAxisInfoView(Axis axis) const;
+
 	QWidget* GetWidgetRep() const;
 	void SetWidgetRep(QWidget* newWidgetRep);
 

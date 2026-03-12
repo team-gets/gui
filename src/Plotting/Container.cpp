@@ -4,6 +4,7 @@
 
 #include "PlotGR.h"
 #include "Container.h"
+//#include "gr.h"
 
 namespace VSCL::Plot {
 
@@ -23,7 +24,8 @@ PlotContainer::PlotContainer(QWidget* parent) : QWidget(parent) {
 
 	// TEMP
 	for (int i = 0; i < 100; i++) {
-		Plot->AddPoint(i, std::cos(i / 12));
+		//Plot->AddPoint(i, std::cos(i / 12));
+		Plot->AddPoint(i / 100.0, std::cos(0.1 * i) / 2.0 + 0.5);
 	}
 };
 

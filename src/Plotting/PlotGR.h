@@ -6,13 +6,17 @@
 #include "qtgr/grwidget.h"
 
 namespace VSCL::Plot {
+
+class PlotContainer;
+
 class PlotGR : public EmbeddablePlot, public GRWidget {
 
+	friend class PlotContainer;
 public:
 	PlotGR(QWidget* parent);
 
 protected:
-	virtual void draw();
+	virtual void draw() override;
 
 	// Mostly here for interaction with GR C API
 	int DoubleVectorToArray(const std::vector<double>& original,

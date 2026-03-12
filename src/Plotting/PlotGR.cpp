@@ -17,16 +17,21 @@ int PlotGR::DoubleVectorToArray(const std::vector<double>& original,
 	const bool oversized = vecSize > arrSize;
 
 	int stepSize = 1;
-	int endDelta = (!oversized) ? 0 : -1;
+	int endDelta = (oversized) ? -1 : 0;
+	// End delta will change so that it's inclusive of the last point
 
 	// Must take samplings if it's too big to fit
 	if (oversized) {
 		stepSize = static_cast<int>(std::floor(vecSize / arrSize));
+		qDebug() << "I AM HUGE\n" ;
 	}
 
 	for (unsigned int i = 0; i < arrSize + endDelta; i += stepSize) {
 		output[i] = original[i];
 	}
+
+	if (oversized)
+		output[arrSize - 1] = original[arrSize - 1];
 
 	return 0;
 }
@@ -38,7 +43,7 @@ void PlotGR::draw() {
 
 	// Magic number 512 (arbitrary power of 2)
 	const size_t vecSize = times.size();
-	const size_t n = (vecSize < 512) ? vecSize - 1: 512;
+	const size_t n = (vecSize < 512) ? vecSize : 512;
 
 	double timeArr[512] = { 0.0 };
 	double angleArr[512] = { 0.0 };
@@ -47,6 +52,6 @@ void PlotGR::draw() {
 	DoubleVectorToArray(angles, angleArr, n);
 
 	gr_polyline(n, timeArr, angleArr);
-	gr_axes(2, 0.2, 0, 0, 0, 0, 0.02);
+    gr_axes(gr_tick(0, 1), gr_tick(0, 1), 0, 0, 1, 1, -0.01);
 }
 } // namespace VSCL::Plot

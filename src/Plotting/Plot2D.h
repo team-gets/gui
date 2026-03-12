@@ -43,6 +43,7 @@ public:
 	std::vector<double> GetQuantities(uint8_t idx) const;
 	std::vector<double> GetQuantities() const;
 
+	const std::vector<SeriesInfo>& GetSeriesInfosView() const;
 	const AxisInfo& GetAxisInfoView(Axis axis) const;
 
 	QWidget* GetWidgetRep() const;

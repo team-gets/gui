@@ -68,6 +68,7 @@ std::vector<double> EmbeddablePlot2D::GetTimes() const { return GetTimes(0); }
 std::vector<double> EmbeddablePlot2D::GetQuantities(uint8_t idx) const { return Series[idx].Quantities; }
 std::vector<double> EmbeddablePlot2D::GetQuantities() const { return GetQuantities(0); }
 
+const std::vector<SeriesInfo>& EmbeddablePlot2D::GetSeriesInfosView() const { return Series; }
 const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
 	switch (axis) {
 	case Axis::Time:
@@ -78,7 +79,7 @@ const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
 		return QuantityAxis;
 		break;
 	};
-};
+}
 
 QWidget* EmbeddablePlot2D::GetWidgetRep() const { return WidgetRep; }
 void EmbeddablePlot2D::SetWidgetRep(QWidget* newWidgetRep) { WidgetRep = newWidgetRep; }

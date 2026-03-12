@@ -81,24 +81,32 @@ void PlotGR::UpdateAxes() {
     gr_axes(ttick, qtick, 0, 0, taxe.MajorSpacing, qaxe.MajorSpacing, -0.01);
 }
 
+void PlotGR::UpdateSeries() {
+	const std::vector<SeriesInfo> serieses = GetSeriesInfosView();
+	for (const SeriesInfo& series : serieses) {
+		const std::vector<double> times = series.Times;
+		const std::vector<double> quantities = series.Quantities;
+		if (times.size() < 2 || quantities.size() < 2) { return; }
+
+		// Magic number 512 (arbitrary power of 2)
+		const size_t vecSize = times.size();
+		const size_t n = (vecSize < 512) ? vecSize : 512;
+
+		double timeArr[512] = { 0.0 };
+		double quantityArr[512] = { 0.0 };
+
+		DoubleVectorToArray(times, timeArr, n);
+		DoubleVectorToArray(quantities, quantityArr, n);
+
+		gr_setlinecolorind(ColorIndex(ColorGR::Red)); // TODO: convenience fun for
+													  // ColorRGB->ColorIndex
+
+		gr_polyline(n, timeArr, quantityArr);
+	}
+}
+
 void PlotGR::draw() {
-	const std::vector<double> times = GetTimes(0);
-	const std::vector<double> quantities = GetQuantities(0);
-	if (times.size() < 2 || quantities.size() < 2) { return; }
-
-	// Magic number 512 (arbitrary power of 2)
-	const size_t vecSize = times.size();
-	const size_t n = (vecSize < 512) ? vecSize : 512;
-
-	double timeArr[512] = { 0.0 };
-	double quantityArr[512] = { 0.0 };
-
-	DoubleVectorToArray(times, timeArr, n);
-	DoubleVectorToArray(quantities, quantityArr, n);
-
 	UpdateAxes();
-
-	gr_setlinecolorind(ColorIndex(ColorGR::Red));
-	gr_polyline(n, timeArr, quantityArr);
+	UpdateSeries();
 }
 } // namespace VSCL::Plot

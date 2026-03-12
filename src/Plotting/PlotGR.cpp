@@ -48,8 +48,8 @@ int PlotGR::DoubleVectorToArray(const std::vector<double>& original,
 }
 
 void PlotGR::draw() {
-	const std::vector<double> times = GetTimes();
-	const std::vector<double> quantities = GetQuantities();
+	const std::vector<double> times = GetTimes(0);
+	const std::vector<double> quantities = GetQuantities(0);
 	if (times.size() < 2 || quantities.size() < 2) { return; }
 
 	// Magic number 512 (arbitrary power of 2)

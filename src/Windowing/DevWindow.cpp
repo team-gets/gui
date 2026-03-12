@@ -3,7 +3,6 @@
 #include <QFileDialog>
 
 #include "DevWindow.h"
-#include "Plotting/Container.h"
 #include "Dial/AttitudeDial.h"
 
 namespace VSCL {
@@ -19,11 +18,7 @@ DevWindow::DevWindow() {
 
 	AttitudeDial* dial = new AttitudeDial(this);
 	NumericTestWidget* NumericDisplaysTest = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
-	//Stacker->addWidget(NumericDisplaysTest);
-
-	Plot::PlotContainer* plot = new Plot::PlotContainer(this);
-	Stacker->addWidget(plot);
-	Stacker->setCurrentIndex(1);
+	Stacker->addWidget(NumericDisplaysTest);
 
     CreateActions();
     CreateMenus();

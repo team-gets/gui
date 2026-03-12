@@ -7,6 +7,7 @@ set(APP_SOURCES
 
 set(WIDGET_SOURCES
 	"${WINDOWING_SRC_DIR}/DevWindow.cpp"
+	"${WINDOWING_SRC_DIR}/WidgetsRecreation.cpp"
 	"${WINDOWING_SRC_DIR}/NumericTestWidget.cpp"
 	"${WIDGETS_SRC_DIR}/Dial/AttitudeDial.cpp")
 

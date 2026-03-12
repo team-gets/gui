@@ -12,8 +12,14 @@ class PlotContainer;
 class PlotGR : public EmbeddablePlot, public GRWidget {
 
 	friend class PlotContainer;
+
 public:
 	PlotGR(QWidget* parent);
+
+	virtual void SetAxis(Axis axis, AxisInfo& info) override;
+	virtual void SetTitle(const std::string& title) override;
+	virtual void Plot() override;
+	virtual void EraseAllData() override;
 
 protected:
 	virtual void draw() override;

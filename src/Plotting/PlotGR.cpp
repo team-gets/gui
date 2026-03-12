@@ -1,4 +1,3 @@
-
 #include <cmath>
 
 #include "PlotGR.h"
@@ -9,6 +8,19 @@ namespace VSCL::Plot {
 PlotGR::PlotGR(QWidget* parent) : GRWidget(parent) {
 	SetWidgetRep(this);
 };
+
+void PlotGR::SetAxis(Axis axis, AxisInfo& info) { }
+
+void PlotGR::SetTitle(const std::string& title) { }
+
+void PlotGR::Plot() {
+	EmbeddablePlot::Plot();
+	draw();
+}
+
+void PlotGR::EraseAllData() {
+	EmbeddablePlot::EraseAllData();
+}
 
 int PlotGR::DoubleVectorToArray(const std::vector<double>& original,
 		double* output, const size_t arrSize) {
@@ -38,20 +50,20 @@ int PlotGR::DoubleVectorToArray(const std::vector<double>& original,
 
 void PlotGR::draw() {
 	const std::vector<double> times = GetTimes();
-	const std::vector<double> angles = GetAngles();
-	if (times.size() < 2 || angles.size() < 2) { return; }
+	const std::vector<double> quantities = GetQuantities();
+	if (times.size() < 2 || quantities.size() < 2) { return; }
 
 	// Magic number 512 (arbitrary power of 2)
 	const size_t vecSize = times.size();
 	const size_t n = (vecSize < 512) ? vecSize : 512;
 
 	double timeArr[512] = { 0.0 };
-	double angleArr[512] = { 0.0 };
+	double quantityArr[512] = { 0.0 };
 
 	DoubleVectorToArray(times, timeArr, n);
-	DoubleVectorToArray(angles, angleArr, n);
+	DoubleVectorToArray(quantities, quantityArr, n);
 
-	gr_polyline(n, timeArr, angleArr);
+	gr_polyline(n, timeArr, quantityArr);
     gr_axes(gr_tick(0, 1), gr_tick(0, 1), 0, 0, 1, 1, -0.01);
 }
 } // namespace VSCL::Plot

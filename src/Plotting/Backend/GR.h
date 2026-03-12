@@ -33,6 +33,7 @@ public:
 	// Reference gr.h 104-123
 	// The polyline coloring function takes an int < 1024
 	enum class ColorGR : uint16_t {
+		Black =		1,
 		Red =		236,
 		Green = 	237,
 		Yellow =	238,
@@ -54,6 +55,8 @@ public:
 		Navy =		254,
 		Grey =		255
 	};
+
+	static uint16_t ColorIndex(ColorGR color) { return static_cast<uint16_t>(color); }
 };
 
 } // namespace VSCL::Plot

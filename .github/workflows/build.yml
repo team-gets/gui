@@ -46,29 +46,20 @@ jobs:
     name: Windows
     runs-on: windows-latest
     steps:
-      - name: "Install GR: Clone"
-        uses: actions/checkout@v5
-        with:
-          repository: "sciapp/gr"
-          ref: "v0.73.24"
+      - uses: actions/checkout@v5
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
           version: "6.10.0"
           target: "desktop"
           arch: "win64_msvc2022_64"
-      - name: "Install GR: Make and Install Dependencies"
+      - name: "Prepare GR Sources"
         run: |
-          choco install make
-          cd 3rdparty
-          make
-          cd ..
-      - name: "Install GR: Make and Install"
-        run: |
-          cmake -S . -B build
-          cmake --build build
-          cmake --install build
-      - uses: actions/checkout@v5
+          winget install GNU.Wget2 GnuWin32.Tar --accept-source-agreements --accept-package-agreements
+          wget2 https://gr-framework.org/downloads/gr-latest-Windows-x86_64-msvc.tar.gz
+          tar -xf gr-latest-Windows-x86_64-msvc.tar.gz
+          mkdir lib
+          mv gr lib/gr
       - name: Run CMake and Build
         run: |
           cmake -S . -B build

@@ -2,7 +2,9 @@
 # TODO: should we limit versions?
 if (NOT GR_LIBRARY)
 	message("-- Searching for GR...")
-	find_library(GR_LIBRARY NAMES GR gr)
+	find_library(GR_LIBRARY
+		NAMES GR gr
+		HINTS "${CMAKE_SOURCE_DIR}/lib")
 endif()
 
 # Just use FetchContent

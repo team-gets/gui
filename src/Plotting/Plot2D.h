@@ -49,12 +49,16 @@ public:
 	QWidget* GetWidgetRep() const;
 	void SetWidgetRep(QWidget* newWidgetRep);
 
+	constexpr bool GetDrawGridState() { return DrawGrid; };
+	constexpr void SetDrawGridState(bool newState) { DrawGrid = newState; };
+
 private:	
 	std::string Title;
 	AxisInfo TimeAxis = { Axis::Time };
 	AxisInfo QuantityAxis = { Axis::Quantity };
 
 	std::vector<SeriesInfo> Series = { SeriesInfo { } };
+	bool DrawGrid = false;
 
 	// The underlying widget.
 	// This is potentially going to lead to an obtuse interface when programming?

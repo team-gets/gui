@@ -1,8 +1,9 @@
 #include <cmath>
 
+#include "gr.h"
+
 #include "./GR.h"
 #include "./ColorGR.h"
-#include "gr.h"
 
 namespace VSCL::Plot {
 
@@ -76,6 +77,11 @@ void PlotGR::UpdateAxes() {
 	default:
 		gr_setscale(0);
 		break;
+	}
+
+	if (GetDrawGridState()) {
+		gr_setlinecolorind(ColorIndex(ColorGR::Grey));
+		gr_grid(ttick, qtick, 0, 0, taxe.MajorSpacing, qaxe.MajorSpacing);
 	}
 
 	gr_setlinecolorind(ColorIndex(ColorGR::Black));

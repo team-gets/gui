@@ -6,6 +6,7 @@
 namespace VSCL::FromPpt {
 Widgets::Widgets() {
 	Plot::PlotGR* grplotted = new Plot::PlotGR(this);
+	grplotted->SetDrawGridState(true);
 	PlotContainer = new Plot::PlotContainer(this, grplotted);
 	setCentralWidget(PlotContainer);
 

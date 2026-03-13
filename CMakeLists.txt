@@ -52,7 +52,6 @@ else()
 	message("-- Will build GR backend.")
 
 	add_library(gr_backend SHARED ${GR_BKND_SOURCES})
-
 	target_include_directories(gr_backend PUBLIC "${CMAKE_SOURCE_DIR}/src")
 	target_link_libraries(gr_backend PRIVATE plotting_iface)
 	target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)

@@ -2,7 +2,6 @@
 
 #include <cmath>
 
-#include "Backend/GR.h"
 #include "Container.h"
 
 namespace VSCL::Plot {
@@ -12,6 +11,7 @@ PlotContainer::PlotContainer(QWidget* parent) : QWidget(parent) {
 	boxlay->setContentsMargins(5, 5, 5, 5);
 	setLayout(boxlay);
 
+	/*
 	Plot = new Plot::PlotGR(this);
 
 	QSizePolicy plotSizePolicy;
@@ -28,6 +28,7 @@ PlotContainer::PlotContainer(QWidget* parent) : QWidget(parent) {
 	}
 
 	Plot->Plot();
+	*/
 };
 
 } // namespace VSCL::Plot

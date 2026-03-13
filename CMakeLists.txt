@@ -19,6 +19,7 @@ qt_add_executable(guidev WIN32 MACOSX_BUNDLE
 	${APP_SOURCES} ${WIDGET_SOURCES} ${PLOTTING_SOURCES})
 
 target_include_directories(guidev PRIVATE ${STD_APP_INCLUDES})
+target_compile_warn(guidev)
 
 target_link_libraries(guidev PRIVATE
     Qt6::Core
@@ -37,15 +38,26 @@ qt_add_qml_module(qml.a_circle
 		"qml/circle.qml"
 )
 
-find_package(GR) # not required yet
-if (GR_FOUND)
-	message("-- Will build plotting capabilities.")
-	target_link_libraries(guidev PRIVATE GR::qt6gr)
-endif()
+add_library(plotting_iface SHARED ${PLOTTING_SOURCES})
+target_link_libraries(plotting_iface PRIVATE Qt6::Core Qt6::Widgets)
+target_include_directories(plotting_iface PUBLIC ${PLOTTING_SRC_DIR})
 
-if (MSVC)
-	target_compile_options(guidev PRIVATE "/W4")
+if (WIN32)
+	message("-- GR backend will not build on Windows.")
+
 else()
-	target_compile_options(guidev PRIVATE "-Wall")
-endif()
+	find_package(GR REQUIRED) # not required yet
 
+	if (GR_FOUND)
+		message("-- Will build GR backend.")
+		add_library(gr_backend SHARED ${GR_BKND_SOURCES})
+
+		target_include_directories(gr_backend PRIVATE "${CMAKE_SOURCE_DIR}/src")
+		target_link_libraries(gr_backend PRIVATE plotting_iface)
+		target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)
+		target_link_libraries(gr_backend PRIVATE GR::qt6gr)
+		target_link_libraries(guidev PRIVATE gr_backend)
+
+		target_compile_warn(gr_backend)
+	endif()
+endif() # WIN32

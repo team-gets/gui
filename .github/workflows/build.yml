@@ -53,9 +53,6 @@ jobs:
           version: "6.10.0"
           target: "desktop"
           arch: "win64_msvc2022_64"
-      - name: Get GR Binaries
-        run: |
-          python3 lib/collect_dependencies.py
       - name: Run CMake and Build
         run: |
           cmake -S . -B build

@@ -46,7 +46,9 @@ else()
 
 	add_library(gr_backend SHARED ${GR_BKND_SOURCES})
 	get_target_property(QT6GR_INCLUDES GR::GR INTERFACE_INCLUDE_DIRECTORIES)
-	target_include_directories(gr_backend PUBLIC ${QT6GR_INCLUDES} "${CMAKE_SOURCE_DIR}/src")
+	target_include_directories(gr_backend PUBLIC
+		${QT6GR_INCLUDES} "${CMAKE_SOURCE_DIR}/src"
+		"${CMAKE_SOURCE_DIR}/build/_deps/gr-src/lib/gr") #FIXME: this is really bad
 	target_link_libraries(gr_backend PRIVATE plotting_iface)
 	target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)
 	target_link_libraries(gr_backend PUBLIC GR::qt6gr)

@@ -86,7 +86,7 @@ void PlotGR::UpdateSeries() {
 	for (const SeriesInfo& series : serieses) {
 		const std::vector<double> times = series.Times;
 		const std::vector<double> quantities = series.Quantities;
-		if (times.size() < 2 || quantities.size() < 2) { return; }
+		if (times.size() < 2 || quantities.size() < 2) { continue; }
 
 		// Magic number 512 (arbitrary power of 2)
 		const size_t vecSize = times.size();

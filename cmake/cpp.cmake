@@ -25,10 +25,10 @@ set(STD_APP_INCLUDES
 	"${CMAKE_SOURCE_DIR}/src"
 	${WIDGETS_SRC_DIR})
 
-function(target_compile_warn IN_TARGET_NAME)
+function(target_compile_warn_all IN_TARGET_NAME)
 	if (MSVC)
 		target_compile_options(${IN_TARGET_NAME} PRIVATE "/W4")
 	else()
 		target_compile_options(${IN_TARGET_NAME} PRIVATE "-Wall")
 	endif()
-endfunction(target_compile_warn)
+endfunction(target_compile_warn_all)

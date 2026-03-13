@@ -19,7 +19,7 @@ qt_add_executable(guidev WIN32 MACOSX_BUNDLE
 	${APP_SOURCES} ${WIDGET_SOURCES})
 
 target_include_directories(guidev PRIVATE ${STD_APP_INCLUDES})
-target_compile_warn(guidev)
+target_compile_warn_all(guidev)
 
 target_link_libraries(guidev PRIVATE
     Qt6::Core
@@ -38,16 +38,16 @@ qt_add_qml_module(qml.a_circle
 		"qml/circle.qml"
 )
 
+add_library(plotting_iface SHARED ${PLOTTING_SOURCES})
+target_link_libraries(plotting_iface PRIVATE Qt6::Core Qt6::Widgets)
+target_include_directories(plotting_iface PUBLIC ${PLOTTING_SRC_DIR})
+
+target_compile_warn_all(plotting_iface)
+
 if (WIN32)
 	message("-- GR backend will not build on Windows.")
 
 else()
-	add_library(plotting_iface SHARED ${PLOTTING_SOURCES})
-	target_link_libraries(plotting_iface PRIVATE Qt6::Core Qt6::Widgets)
-	target_include_directories(plotting_iface PUBLIC ${PLOTTING_SRC_DIR})
-
-	target_compile_warn(plotting_iface)
-
 	find_package(GR REQUIRED) # not required yet
 	message("-- Will build GR backend.")
 
@@ -58,14 +58,14 @@ else()
 	target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)
 	target_link_libraries(gr_backend PRIVATE GR::qt6gr)
 
-	target_compile_warn(gr_backend)
+	target_compile_warn_all(gr_backend)
 
 	qt_add_executable(widgets_recreation WIN32 MACOSX_BUNDLE
 		"${WINDOWING_SRC_DIR}/WidgetsRecreation.cpp"
 		${OTHER_APP_SOURCES} ${WIDGET_SOURCES} ${PLOTTING_SOURCES})
 
 	target_include_directories(widgets_recreation PRIVATE ${STD_APP_INCLUDES})
-	target_compile_warn(widgets_recreation)
+	target_compile_warn_all(widgets_recreation)
 
 	target_link_libraries(widgets_recreation PRIVATE
 		Qt6::Core

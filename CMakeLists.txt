@@ -56,7 +56,7 @@ else()
 	target_include_directories(gr_backend PUBLIC ${QT6GR_INCLUDES} "${CMAKE_SOURCE_DIR}/src")
 	target_link_libraries(gr_backend PRIVATE plotting_iface)
 	target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)
-	target_link_libraries(gr_backend PRIVATE GR::qt6gr)
+	target_link_libraries(gr_backend PUBLIC GR::qt6gr)
 
 	target_compile_warn_all(gr_backend)
 

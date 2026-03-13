@@ -10,8 +10,8 @@ struct SeriesInfo {
 	std::vector<double> Times;
 	std::vector<double> Quantities;
 
-	ColorRGB Color;
-	double Alpha;
+	ColorRGB Color = {1.0, 0.0, 0.0};
+	double Alpha = 1.0;
 };
 
 } // namespace VSCL::Plot

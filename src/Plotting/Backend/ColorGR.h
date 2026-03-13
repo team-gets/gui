@@ -69,12 +69,13 @@ static const ColorRGB RGBFromColorGR(ColorGR color) {
 };
 
 /*
- *	Find a color that's close enough to matching to the input color.
+ *	Find a color that's close enough to or matching the input color.
  *
  *	Defaults to RED: ColorRGB{0.901960, 0.098040, 0.294120}
  *
  */
-static const ColorGR ColorGRFromRGB(ColorRGB color, double tol = 1e-3) {
+static const ColorGR ColorGRFromRGB(ColorRGB color, double tol = 1e-1) {
+
 	for (std::pair<ColorGR, ColorRGB> colorpair : ColorGRAsRGB) {
 		const ColorRGB& rgb = colorpair.second;
 

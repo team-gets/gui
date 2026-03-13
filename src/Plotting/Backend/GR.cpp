@@ -98,9 +98,7 @@ void PlotGR::UpdateSeries() {
 		DoubleVectorToArray(times, timeArr, n);
 		DoubleVectorToArray(quantities, quantityArr, n);
 
-		gr_setlinecolorind(ColorIndex(ColorGR::Red)); // TODO: convenience fun for
-													  // ColorRGB->ColorIndex
-
+		gr_setlinecolorind(250); // TODO: convenience fun
 		gr_polyline(n, timeArr, quantityArr);
 	}
 }

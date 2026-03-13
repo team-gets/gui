@@ -1,10 +1,12 @@
 #include <QFileDialog>
 
 #include "WidgetsRecreation.h"
+#include "Plotting/Backend/GR.h"
 
 namespace VSCL::FromPpt {
 Widgets::Widgets() {
-	PlotContainer = new Plot::PlotContainer(this);
+	Plot::PlotGR* grplotted = new Plot::PlotGR(this);
+	PlotContainer = new Plot::PlotContainer(this, grplotted);
 	setCentralWidget(PlotContainer);
 
     CreateActions();

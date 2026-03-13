@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-#include "Plot2D.h"
+#include "Plotting/Plot2D.h"
 #include "qtgr/grwidget.h"
 
 namespace VSCL::Plot {

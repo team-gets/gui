@@ -5,9 +5,12 @@ set(PLOTTING_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Plotting")
 set(APP_SOURCES
 	"${CMAKE_SOURCE_DIR}/src/main.cpp")
 
+# sorry
+set(OTHER_APP_SOURCES
+	"${CMAKE_SOURCE_DIR}/src/recreation.cpp")
+
 set(WIDGET_SOURCES
 	"${WINDOWING_SRC_DIR}/DevWindow.cpp"
-	"${WINDOWING_SRC_DIR}/WidgetsRecreation.cpp"
 	"${WINDOWING_SRC_DIR}/NumericTestWidget.cpp"
 	"${WIDGETS_SRC_DIR}/Dial/AttitudeDial.cpp")
 

@@ -25,6 +25,14 @@ set(STD_APP_INCLUDES
 	"${CMAKE_SOURCE_DIR}/src"
 	${WIDGETS_SRC_DIR})
 
+set(STD_APP_QT6_DEPS
+	Qt6::Core
+	Qt6::Gui
+	Qt6::Qml
+	Qt6::Quick
+	Qt6::Widgets
+	Qt6::QuickWidgets)
+
 function(target_compile_warn_all IN_TARGET_NAME)
 	if (MSVC)
 		target_compile_options(${IN_TARGET_NAME} PRIVATE "/W4")

@@ -1,6 +1,7 @@
 #include <cmath>
 
 #include "./GR.h"
+#include "./ColorGR.h"
 #include "gr.h"
 
 namespace VSCL::Plot {
@@ -98,7 +99,7 @@ void PlotGR::UpdateSeries() {
 		DoubleVectorToArray(times, timeArr, n);
 		DoubleVectorToArray(quantities, quantityArr, n);
 
-		gr_setlinecolorind(250); // TODO: convenience fun
+		gr_setlinecolorind(ColorIndex(ColorGRFromRGB(series.Color)));
 		gr_polyline(n, timeArr, quantityArr);
 	}
 }

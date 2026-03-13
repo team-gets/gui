@@ -1,9 +1,10 @@
 #pragma once
 
 #include <map>
+#include <cmath>
 #include <cstdint>
 
-#include "Appearance.h"
+#include "Plotting/Appearance.h"
 
 namespace VSCL::Plot {
 
@@ -35,7 +36,7 @@ enum class ColorGR : uint16_t {
 }; // enum class ColorGR
 
 // Reference gks/util.c 213-463
-static const std::map<ColorGR, ColorRGB> ColorGRasRGB = {
+static const std::map<ColorGR, ColorRGB> ColorGRAsRGB = {
 	{ ColorGR::White, ColorRGB{1.000000, 1.000000, 1.000000} },
 	{ ColorGR::Black, ColorRGB{0.0, 0.0, 0.0} },
 	{ ColorGR::Red, ColorRGB{0.901960, 0.098040, 0.294120} },
@@ -58,6 +59,34 @@ static const std::map<ColorGR, ColorRGB> ColorGRasRGB = {
 	{ ColorGR::Apricot, ColorRGB{1.000000, 0.843140, 0.705880} },
 	{ ColorGR::Navy, ColorRGB{0.000000, 0.000000, 0.501960} },
 	{ ColorGR::Grey, ColorRGB{0.501960, 0.501960, 0.501960} }
+}; // ColorGRAsRGB
+
+/*
+ *	Find the RGB-spaced color from the input GR color name.
+ */
+static const ColorRGB RGBFromColorGR(ColorGR color) {
+	return ColorGRAsRGB.at(color);
+};
+
+/*
+ *	Find a color that's close enough to matching to the input color.
+ *
+ *	Defaults to RED: ColorRGB{0.901960, 0.098040, 0.294120}
+ *
+ */
+static const ColorGR ColorGRFromRGB(ColorRGB color, double tol = 1e-3) {
+	for (std::pair<ColorGR, ColorRGB> colorpair : ColorGRAsRGB) {
+		const ColorRGB& rgb = colorpair.second;
+
+		if (std::abs(rgb[0] - color[0]) > tol) { continue; }
+		if (std::abs(rgb[1] - color[1]) > tol) { continue; }
+		if (std::abs(rgb[2] - color[2]) > tol) { continue; }
+
+		return colorpair.first;
+	}
+
+	// default
+	return ColorGR::Red;
 };
 
 } // VSCL::Plot

@@ -33,7 +33,6 @@ protected:
 			double* output, const size_t arrSize);
 
 public:
-
-	static uint16_t ColorIndex(ColorGR color) { return static_cast<uint16_t>(color); }
+	static constexpr uint16_t ColorIndex(ColorGR color) { return static_cast<uint16_t>(color); }
 }; // class PlotGR
 } // namespace VSCL::Plot

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 #include <QMainWindow>
 #include <QMenu>
 #include <QMenuBar>
@@ -13,6 +15,7 @@
 
 #include <QActionGroup>
 
+#include "Widgets/Dial/AttitudeDial.h"
 #include "Plotting/Container.h"
 
 namespace VSCL::FromPpt {
@@ -23,16 +26,18 @@ public:
 
 protected:
 
+private:
+	QWidget* MajorContainer;
+	QWidget* AttitudeDialRow;
+	std::array<AttitudeDial*, 3> Dials;
+	Plot::PlotContainer* TimeHistory;
+	QWidget* StatusColumn;
+
+// Menubar and Actions {{{
 private slots:
     void About();
 
 private:
-	Plot::PlotContainer* PlotContainer;
-
-	/*
-	 *	Actions
-	 */
-
     void CreateActions();
     void CreateMenus();
 
@@ -42,5 +47,7 @@ private:
 
     QAction* ExitAct;
     QAction* AboutAct;
+// }}}
 }; // class Widgets
 } // namespace VSCL::FromPpt
+// vim: foldmethod=marker

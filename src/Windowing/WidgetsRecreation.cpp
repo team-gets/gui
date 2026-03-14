@@ -1,42 +1,26 @@
-#include <cmath>
-
-#include <QFileDialog>
-
 #include "WidgetsRecreation.h"
-#include "Plotting/Backend/GR.h"
 
 namespace VSCL::FromPpt {
 Widgets::Widgets() {
-
-	Plot::PlotGR* grplotted = new Plot::PlotGR(this);
-	grplotted->SetDrawGridState(true);
-	for (int i = 0; i < 100; i++) {
-		grplotted->AddPoint(i / 100.0, std::cos(0.1 * i) / 2.0 + 0.5);
-	}
-
-	grplotted->AddSeries();
-	Plot::ColorRGB color = Plot::RGBFromColorGR(Plot::ColorGR::Blue);
-	grplotted->SetColor(1, color);
-	for (int i = 0; i < 100; i++) {
-		grplotted->AddPoint(1, i / 100.0, std::sin(0.1 * i) / 2.0 + 0.5);
-	}
-
-	PlotContainer = new Plot::PlotContainer(this, grplotted);
-	setCentralWidget(PlotContainer);
-
+    // Set up menubar and statusbar
     CreateActions();
     CreateMenus();
 
-    QString message = tr("Howdy");
+    QString message = tr("Test Rig Operations");
     statusBar()->showMessage(message);
 
+	// Geometry and window characteristics
     setWindowTitle(tr("VSCL Gyroscopic Test Rig"));
     setMinimumSize(160, 160);
     resize(720, 480);
+
+	// Set up the static layout
 } // void Widgets::Widgets()
+
+// Menubar and Actions {{{
 void Widgets::About() {
     QMessageBox::about(this, tr("About"),
-            tr("Currently in development mode."));
+            tr("This is a recreation of the original UI layout provided."));
 } // void Widgets::About()
 
 void Widgets::CreateMenus() {
@@ -62,4 +46,6 @@ void Widgets::CreateActions() {
     AboutAct->setStatusTip(tr("Show the application's About box"));
     connect(AboutAct, &QAction::triggered, this, &Widgets::About);
 } // void Widgets::CreateActions()
+// }}}
 } // namespace VSCL::FromPpt
+// vim: foldmethod=marker

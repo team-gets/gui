@@ -17,54 +17,51 @@ void AttitudeDial::SetDialAngle(double value) {
 	update();
 }
 
-void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
+void AttitudeDial::UpdateRadius() {
 	QSize curSize = size();
-	QPoint origin = { curSize.width() / 2, curSize.height() / 2 };
 
 	double rx = curSize.width() / 2.0 * 0.95;
 	double ry = curSize.height() / 2.0 * 0.95;
-	double r = std::min<double>(rx, ry);
 
+	Radius = std::min<double>(rx, ry);
+}
+
+void AttitudeDial::UpdateOrigin() {
+	QSize curSize = size();
+	Origin = { curSize.width() / 2, curSize.height() / 2 };
+}
+
+void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
 	QBrush fillBrush = painter->brush();
 	fillBrush.setStyle(Qt::SolidPattern);
 	fillBrush.setColor(QColorConstants::White);
 
 	painter->setBrush(fillBrush);
 	painter->setRenderHint(QPainter::Antialiasing, true);
-	painter->drawEllipse(origin, (int)r, (int)r);
+	painter->drawEllipse(Origin, (int)Radius, (int)Radius);
 } // void AttitudeDial::PaintCircularBacking()
 
 void AttitudeDial::PaintTicks(QPaintEvent* event, QPainter* painter) {
-	QSize curSize = size();
-	QPoint origin = { curSize.width() / 2, curSize.height() / 2 };
-
-	double rx = curSize.width() / 2.0 * 0.95;
-	double ry = curSize.height() / 2.0 * 0.95;
-	double r = std::min<double>(rx, ry);
 
 } // void AttitudeDial::PaintTicks()
 
 void AttitudeDial::PaintHand(QPaintEvent* event, QPainter* painter) {
-	QSize curSize = size();
-	QPoint origin = { curSize.width() / 2, curSize.height() / 2 };
-
-	double rx = curSize.width() / 2.0 * 0.95;
-	double ry = curSize.height() / 2.0 * 0.95;
-	double r = std::min<double>(rx, ry);
-
 	double ang = CurrentAngle * 3.14 / 180.0;
-	int linex = r*std::sin(ang);
-	int liney = -r*std::cos(ang);
-	QPoint end = origin + QPoint{ linex, liney };
+	int linex = Radius*std::sin(ang);
+	int liney = -Radius*std::cos(ang);
+	QPoint end = Origin + QPoint{ linex, liney };
 
 	QPen pen = painter->pen();
 	pen.setColor(QColorConstants::DarkGray);
 
 	painter->setPen(pen);
-	painter->drawLine(origin, end);
+	painter->drawLine(Origin, end);
 } // AttitudeDial::PaintHand()
 
 void AttitudeDial::paintEvent(QPaintEvent* event) { 
+	UpdateRadius();
+	UpdateOrigin();
+
 	QPainter painter(this);
 	PaintCircularBacking(event, &painter);
 	PaintHand(event, &painter);

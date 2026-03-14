@@ -15,8 +15,10 @@ public:
 
 private:
 	double CurrentAngle = 0.0;
+	QPoint Origin = { 0, 0 };
 	double Radius = 1.0;
-	
+	void UpdateOrigin();
+	void UpdateRadius();
 
 	void PaintCircularBacking(QPaintEvent* event, QPainter* painter);
 	void PaintTicks(QPaintEvent* event, QPainter* painter);

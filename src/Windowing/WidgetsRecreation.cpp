@@ -1,6 +1,26 @@
+#include <cstdlib>
+#include <cmath>
+#include <chrono>
 
 #include "WidgetsRecreation.h"
 #include "Plotting/Backend/GR.h"
+
+// stupid temp thing {{{
+static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {
+	double ph1, ph2, ph3;
+
+	std::srand(std::chrono::system_clock::now().time_since_epoch().count());
+	ph1 = std::rand() % 12;
+	ph2 = std::rand() % 12;
+	ph3 = std::rand() % 12;
+
+	for (int i = 0; i < 100; i++) {
+		plot->AddPoint(0, i/100.0, std::cos(0.1 * i + ph1/12) / 2.0 + 0.5);
+		plot->AddPoint(1, i/100.0, std::cos(0.1 * i - ph2/12) / 2.0 + 0.5);
+		plot->AddPoint(2, i/100.0, std::cos(0.1 * i + ph3/12) / 2.0 + 0.5);
+	}
+}
+// }}}
 
 namespace VSCL::FromPpt {
 Widgets::Widgets() {
@@ -84,6 +104,8 @@ void Widgets::SetupTimeHistoryPlot() {
 	Plot->SetSeries(0, rollInfo);
 	Plot->AddSeries(pitchInfo);
 	Plot->AddSeries(yawInfo);
+
+	stupid_make_data(Plot);
 } // void Widgets::SetupTimeHistoryPlot()
 // }}}
 // Menubar and Actions {{{

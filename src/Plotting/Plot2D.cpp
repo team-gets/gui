@@ -77,8 +77,13 @@ QWidget* EmbeddablePlot2D::GetWidgetRep() const { return WidgetRep; }
 void EmbeddablePlot2D::SetWidgetRep(QWidget* newWidgetRep) { WidgetRep = newWidgetRep; }
 
 // Series {{{
-void EmbeddablePlot2D::AddSeries() { Series.push_back(SeriesInfo()); }
-void EmbeddablePlot2D::AddSeries(std::string& name) { Series.push_back(SeriesInfo{ .Name = name }); }
+void EmbeddablePlot2D::AddSeries() { Series.push_back(SeriesInfo()); Plot(); }
+void EmbeddablePlot2D::AddSeries(std::string& name) {
+	SeriesInfo serie;
+	serie.Name = name;
+	Series.push_back(serie);
+	Plot();
+}
 
 SeriesInfo EmbeddablePlot2D::GetSeriesByName(std::string& name) {
 	for (const SeriesInfo& serie : Series) {

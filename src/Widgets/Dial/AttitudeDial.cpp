@@ -9,54 +9,148 @@
 namespace VSCL {
 
 AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
+	NumericDisplayFont = QFont();
+	NumericDisplay = new QLabel(this);
+	NumericDisplay->setBuddy(this);
+	NumericDisplay->setAlignment(Qt::AlignCenter);
+	NumericDisplay->setFrameStyle(QFrame::Panel | QFrame::Raised);
+	NumericDisplay->setFont(NumericDisplayFont);
+	NumericDisplay->setStyleSheet(" QLabel { color: white; background-color: black; border-radius: 3% } ");
+
 	update();
 } // AttitudeDial ctor
+
+AttitudeDial::AttitudeDial(QWidget* parent, bool showNumericDisplay) : AttitudeDial(parent) {
+	NumericDisplayEnabled = showNumericDisplay;
+}
 
 void AttitudeDial::SetDialAngle(double value) {
 	CurrentAngle = value;
 	update();
 }
 
-void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
+void AttitudeDial::UpdateRadius() {
 	QSize curSize = size();
-	QPoint origin = { curSize.width() / 2, curSize.height() / 2 };
 
 	double rx = curSize.width() / 2.0 * 0.95;
 	double ry = curSize.height() / 2.0 * 0.95;
-	double r = std::min<double>(rx, ry);
 
+	Radius = std::min<double>(rx, ry);
+}
+
+void AttitudeDial::UpdateOrigin() {
+	QSize curSize = size();
+	Origin = { curSize.width() / 2, curSize.height() / 2 };
+}
+
+void AttitudeDial::UpdateNumericDisplay() {
+	NumericDisplay->setText(QString::number(CurrentAngle) + "°");
+
+	int w = int(0.2*Radius);
+	int h = int(0.1*Radius);
+
+	NumericDisplay->setFixedSize(w, h);
+	NumericDisplay->move(Origin - QPoint{ w / 2 , h / 2 });
+} // void AttitudeDial::UpdateNumericDisplay()
+
+void AttitudeDial::UpdateNumericFont() {
+	int pts = Radius / 20;
+	pts = (pts < 1) ? 1 : pts;
+
+	NumericDisplayFont.setPointSize(pts);
+	NumericDisplay->setFont(NumericDisplayFont);
+} // void AttitudeDial::UpdateNumericDisplay()
+
+void AttitudeDial::SetNumericDisplayState(bool enabled) {
+	NumericDisplayEnabled = enabled;
+	NumericDisplay->setVisible(enabled);
+	update();
+} // void AttitudeDial::UpdateNumericDisplay()
+
+void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
 	QBrush fillBrush = painter->brush();
 	fillBrush.setStyle(Qt::SolidPattern);
-	fillBrush.setColor(QColorConstants::White);
+	fillBrush.setColor(Palette.Primary);
 
 	painter->setBrush(fillBrush);
 	painter->setRenderHint(QPainter::Antialiasing, true);
-	painter->drawEllipse(origin, (int)r, (int)r);
+	painter->drawEllipse(Origin, (int)Radius, (int)Radius);
 } // void AttitudeDial::PaintCircularBacking()
 
+void AttitudeDial::PaintTicks(QPaintEvent* event, QPainter* painter) {
+	for (int i = 0; i < 12; i++) {
+		QPoint st, ed;
+		QColor tickcolor;
+		const double ci = Radius*Cos30Degs[i];
+		const double si = Radius*Sin30Degs[i];
+		double ticker[2] = { 0.0, 1.0 };
+
+		switch (i) {
+		case 0:
+		case 3:
+		case 6:
+		case 9: // major
+			ticker[0] = 0.85;
+			tickcolor = Palette.MajorTick;
+			break;
+		default: // minor
+			ticker[0] = 0.95;
+			tickcolor = Palette.MinorTick;
+			break;
+		}
+
+		st = Origin + ticker[0] * QPoint{ int(ci), int(si) };
+		ed = Origin + ticker[1] * QPoint{ int(ci), int(si) };
+
+		QPen pen = painter->pen();
+		pen.setColor(tickcolor);
+
+		painter->setPen(pen);
+		painter->drawLine(st, ed);
+	}
+} // void AttitudeDial::PaintTicks()
+
 void AttitudeDial::PaintHand(QPaintEvent* event, QPainter* painter) {
-	QSize curSize = size();
-	QPoint origin = { curSize.width() / 2, curSize.height() / 2 };
-
-	double rx = curSize.width() / 2.0 * 0.95;
-	double ry = curSize.height() / 2.0 * 0.95;
-	double r = std::min<double>(rx, ry);
-
 	double ang = CurrentAngle * 3.14 / 180.0;
-	int linex = r*std::sin(ang);
-	int liney = -r*std::cos(ang);
-	QPoint end = origin + QPoint{ linex, liney };
+	int linex = Radius*std::sin(ang);
+	int liney = -Radius*std::cos(ang);
+	QPoint end = Origin + QPoint{ linex, liney };
 
 	QPen pen = painter->pen();
-	pen.setColor(QColorConstants::DarkGray);
+	pen.setColor(Palette.Hand);
 
 	painter->setPen(pen);
-	painter->drawLine(origin, end);
+	painter->drawLine(Origin, end);
 } // AttitudeDial::PaintHand()
 
+void AttitudeDial::PaintCap(QPaintEvent* event, QPainter* painter) {
+	QBrush fillBrush = painter->brush();
+	fillBrush.setStyle(Qt::SolidPattern);
+	fillBrush.setColor(Palette.Cap);
+
+	int r = (int)(0.02*Radius);
+	painter->setBrush(fillBrush);
+	painter->setRenderHint(QPainter::Antialiasing, true);
+	painter->drawEllipse(Origin, r, r);
+} // AttitudeDial::PaintCap()
+
+void AttitudeDial::SetPalette(AttitudeDialPalette& newPalette) { Palette = newPalette; }
+AttitudeDialPalette AttitudeDial::GetPalette() const { return Palette; }
+const AttitudeDialPalette& AttitudeDial::GetPaletteView() const { return Palette; }
+
 void AttitudeDial::paintEvent(QPaintEvent* event) { 
+	UpdateRadius();
+	UpdateOrigin();
+
 	QPainter painter(this);
 	PaintCircularBacking(event, &painter);
+	PaintTicks(event, &painter);
 	PaintHand(event, &painter);
+	PaintCap(event, &painter);
+
+	if (NumericDisplayEnabled) {
+		UpdateNumericDisplay();
+		UpdateNumericFont();
+	}
 }
 } // namespace VSCL

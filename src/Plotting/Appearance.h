@@ -19,5 +19,6 @@ static const std::map<std::string, ColorRGB> StandardColor = {
 enum class LineStyle : uint8_t {
 	Solid = 1,
 	Dashed = 2,
+	Dotted = 3,
 };
 } // namespace VSCL::Plot

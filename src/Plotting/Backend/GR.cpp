@@ -118,6 +118,20 @@ void PlotGR::UpdateSeries() {
 		DoubleVectorToArray(times, timeArr, n);
 		DoubleVectorToArray(quantities, quantityArr, n);
 
+		// Appearance and drawing
+		switch (series.Style) {
+		case LineStyle::Dashed:
+			gr_setlinetype(2); // LINETYPE_DASHED
+			break;
+		case LineStyle::Dotted:
+			gr_setlinetype(3); // LINETYPE_DOTTED
+			break;
+		case LineStyle::Solid:
+		default:
+			gr_setlinetype(1); // LINETYPE_SOLID
+			break;
+		}
+
 		ColorGR color = ColorGRFromRGB(series.Color);
 		gr_setlinecolorind(ColorIndex(color));
 		gr_polyline(n, timeArr, quantityArr);

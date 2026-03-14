@@ -34,6 +34,16 @@ void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
 	painter->drawEllipse(origin, (int)r, (int)r);
 } // void AttitudeDial::PaintCircularBacking()
 
+void AttitudeDial::PaintTicks(QPaintEvent* event, QPainter* painter) {
+	QSize curSize = size();
+	QPoint origin = { curSize.width() / 2, curSize.height() / 2 };
+
+	double rx = curSize.width() / 2.0 * 0.95;
+	double ry = curSize.height() / 2.0 * 0.95;
+	double r = std::min<double>(rx, ry);
+
+} // void AttitudeDial::PaintTicks()
+
 void AttitudeDial::PaintHand(QPaintEvent* event, QPainter* painter) {
 	QSize curSize = size();
 	QPoint origin = { curSize.width() / 2, curSize.height() / 2 };

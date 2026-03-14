@@ -38,17 +38,27 @@ void Widgets::SetupCentralWidget() {
 
 void Widgets::SetupAttitudeDials() {
 	AttitudeDialRow = new QFrame(MajorContainer);
+	MajorLayout->addWidget(AttitudeDialRow);
 
 	AttitudeDialOrganizer = new QHBoxLayout(AttitudeDialRow);
-	AttitudeDialOrganizer->setAlignment(Qt::AlignHCenter);
 	AttitudeDialOrganizer->setContentsMargins(10, 10, 10, 10);
 	AttitudeDialRow->setLayout(AttitudeDialOrganizer);
 
-	RollDial = new AttitudeDial(AttitudeDialRow);
-	PitchDial = new AttitudeDial(AttitudeDialRow);
-	YawDial = new AttitudeDial(AttitudeDialRow);
-	Dials = { RollDial, PitchDial, YawDial };
+	QSizePolicy dialsPolicy;
+	dialsPolicy.setHorizontalPolicy(QSizePolicy::MinimumExpanding);
+	dialsPolicy.setVerticalPolicy(QSizePolicy::MinimumExpanding);
+	AttitudeDialRow->setSizePolicy(dialsPolicy);
 
+	RollDial = new AttitudeDial(AttitudeDialRow);
+	AttitudeDialOrganizer->addWidget(RollDial);
+
+	PitchDial = new AttitudeDial(AttitudeDialRow);
+	AttitudeDialOrganizer->addWidget(PitchDial);
+
+	YawDial = new AttitudeDial(AttitudeDialRow);
+	AttitudeDialOrganizer->addWidget(YawDial);
+
+	Dials = { RollDial, PitchDial, YawDial };
 } // void Widgets::SetupCentralWidget()
 
 // Menubar and Actions {{{

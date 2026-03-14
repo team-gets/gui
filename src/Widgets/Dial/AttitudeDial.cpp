@@ -42,7 +42,33 @@ void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
 } // void AttitudeDial::PaintCircularBacking()
 
 void AttitudeDial::PaintTicks(QPaintEvent* event, QPainter* painter) {
+	for (int i = 0; i < 12; i++) {
+		QPoint st, ed;
+		const double ci = Radius*Cos30Degs[i];
+		const double si = Radius*Sin30Degs[i];
+		double ticker[2] = { 0.0, 1.0 };
 
+		switch (i) {
+		case 0:
+		case 3:
+		case 7:
+		case 11: // major
+			ticker[0] = 0.85;
+			break;
+		default: // minor
+			ticker[0] = 0.95;
+			break;
+		}
+
+		st = Origin + ticker[0] * QPoint{ int(ci), int(si) };
+		ed = Origin + ticker[1] * QPoint{ int(ci), int(si) };
+
+		QPen pen = painter->pen();
+		pen.setColor(QColorConstants::DarkGray);
+
+		painter->setPen(pen);
+		painter->drawLine(st, ed);
+	}
 } // void AttitudeDial::PaintTicks()
 
 void AttitudeDial::PaintHand(QPaintEvent* event, QPainter* painter) {
@@ -52,7 +78,7 @@ void AttitudeDial::PaintHand(QPaintEvent* event, QPainter* painter) {
 	QPoint end = Origin + QPoint{ linex, liney };
 
 	QPen pen = painter->pen();
-	pen.setColor(QColorConstants::DarkGray);
+	pen.setColor(QColorConstants::Black);
 
 	painter->setPen(pen);
 	painter->drawLine(Origin, end);
@@ -64,6 +90,7 @@ void AttitudeDial::paintEvent(QPaintEvent* event) {
 
 	QPainter painter(this);
 	PaintCircularBacking(event, &painter);
+	PaintTicks(event, &painter);
 	PaintHand(event, &painter);
 }
 } // namespace VSCL

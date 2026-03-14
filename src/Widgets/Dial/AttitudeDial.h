@@ -24,12 +24,12 @@ private:
 	void PaintTicks(QPaintEvent* event, QPainter* painter);
 	void PaintHand(QPaintEvent* event, QPainter* painter);
 
-	static constexpr std::array<double, 12> Cos15Degs = {
+	static constexpr std::array<double, 12> Cos30Degs = {
 		1.0, 0.8660254037844387, 0.5, 0.0,
 		-0.5, -0.8660254037844387, -1.0, -0.8660254037844387, 
 		-0.5, 0.0, 0.5, 0.8660254037844387 
 	};
-	static constexpr std::array<double, 12> Sin15Degs = {
+	static constexpr std::array<double, 12> Sin30Degs = {
 		0.0, 0.5, 0.8660254037844387, 1.0,
 		0.8660254037844387, 0.5, 0.0, -0.5,
 		-0.8660254037844387, -1.0, -0.8660254037844387, -0.5

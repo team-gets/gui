@@ -28,6 +28,7 @@ public:
 
     void SetQMLFromPath(const QUrl& path);
 	void SwapSetting();
+	QStackedWidget* GetStackedWidget();
 
 protected:
 

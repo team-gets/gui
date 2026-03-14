@@ -51,8 +51,8 @@ void AttitudeDial::PaintTicks(QPaintEvent* event, QPainter* painter) {
 		switch (i) {
 		case 0:
 		case 3:
-		case 7:
-		case 11: // major
+		case 6:
+		case 9: // major
 			ticker[0] = 0.85;
 			break;
 		default: // minor

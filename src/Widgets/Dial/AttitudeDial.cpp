@@ -84,6 +84,16 @@ void AttitudeDial::PaintHand(QPaintEvent* event, QPainter* painter) {
 	painter->drawLine(Origin, end);
 } // AttitudeDial::PaintHand()
 
+void AttitudeDial::PaintCap(QPaintEvent* event, QPainter* painter) {
+	QBrush fillBrush = painter->brush();
+	fillBrush.setStyle(Qt::SolidPattern);
+	fillBrush.setColor(QColorConstants::Black);
+
+	painter->setBrush(fillBrush);
+	painter->setRenderHint(QPainter::Antialiasing, true);
+	painter->drawEllipse(Origin, (int)(0.05*Radius), (int)(0.05*Radius));
+} // AttitudeDial::PaintCap()
+
 void AttitudeDial::paintEvent(QPaintEvent* event) { 
 	UpdateRadius();
 	UpdateOrigin();
@@ -92,5 +102,6 @@ void AttitudeDial::paintEvent(QPaintEvent* event) {
 	PaintCircularBacking(event, &painter);
 	PaintTicks(event, &painter);
 	PaintHand(event, &painter);
+	PaintCap(event, &painter);
 }
 } // namespace VSCL

@@ -9,7 +9,14 @@
 namespace VSCL {
 
 AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
+	NumericDisplayFont = QFont();
+	NumericDisplayFont.setPointSize(Radius / 15);
+
 	NumericDisplay = new QLabel(this);
+	NumericDisplay->setBuddy(this);
+	NumericDisplay->setAlignment(Qt::AlignCenter);
+	NumericDisplay->setFont(NumericDisplayFont);
+
 	update();
 } // AttitudeDial ctor
 
@@ -34,15 +41,20 @@ void AttitudeDial::UpdateOrigin() {
 
 void AttitudeDial::UpdateNumericDisplay() {
 	NumericDisplay->setText(QString::number(CurrentAngle));
-	NumericDisplay->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-	NumericDisplay->setAlignment(Qt::AlignCenter);
 
 	int w = int(0.2*Radius);
 	int h = int(0.1*Radius);
 
 	NumericDisplay->setFixedSize(w, h);
 	NumericDisplay->move(Origin - QPoint{ w / 2 , h / 2 });
-}
+} // void AttitudeDial::UpdateNumericDisplay()
+
+void AttitudeDial::UpdateNumericFont() {
+	int pts = Radius / 15;
+	pts = (pts < 1) ? 1 : pts;
+
+	NumericDisplayFont.setPointSize(pts);
+} // void AttitudeDial::UpdateNumericDisplay()
 
 void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
 	QBrush fillBrush = painter->brush();
@@ -125,5 +137,6 @@ void AttitudeDial::paintEvent(QPaintEvent* event) {
 	PaintHand(event, &painter);
 	PaintCap(event, &painter);
 	UpdateNumericDisplay();
+	UpdateNumericFont();
 }
 } // namespace VSCL

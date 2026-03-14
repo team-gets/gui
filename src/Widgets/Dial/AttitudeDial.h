@@ -35,7 +35,9 @@ private:
 
 	AttitudeDialPalette Palette;
 
+	QFont NumericDisplayFont;
 	QLabel* NumericDisplay;
+	void UpdateNumericFont();
 	void UpdateNumericDisplay();
 
 	void PaintCircularBacking(QPaintEvent* event, QPainter* painter);

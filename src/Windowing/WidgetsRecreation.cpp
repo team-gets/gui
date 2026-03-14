@@ -1,5 +1,6 @@
 
 #include "WidgetsRecreation.h"
+#include "Plotting/Backend/GR.h"
 
 namespace VSCL::FromPpt {
 Widgets::Widgets() {
@@ -18,9 +19,11 @@ Widgets::Widgets() {
 	// Set up the static layout
 	SetupCentralWidget();
 	SetupAttitudeDials();
+	SetupTimeHistoryPlot();
 
 } // void Widgets::Widgets()
 
+// Layout and Widgets Setup {{{
 void Widgets::SetupCentralWidget() {
 	MajorContainer = new QWidget(this);
 
@@ -38,7 +41,7 @@ void Widgets::SetupCentralWidget() {
 
 void Widgets::SetupAttitudeDials() {
 	AttitudeDialRow = new QFrame(MajorContainer);
-	MajorLayout->addWidget(AttitudeDialRow);
+	MajorLayout->addWidget(AttitudeDialRow, 0, 0);
 
 	AttitudeDialOrganizer = new QHBoxLayout(AttitudeDialRow);
 	AttitudeDialOrganizer->setContentsMargins(10, 10, 10, 10);
@@ -61,6 +64,15 @@ void Widgets::SetupAttitudeDials() {
 	Dials = { RollDial, PitchDial, YawDial };
 } // void Widgets::SetupCentralWidget()
 
+void Widgets::SetupTimeHistoryPlot() {
+	Plot = new Plot::PlotGR(this);
+	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
+	MajorLayout->addWidget(TimeHistory, 1, 0);
+
+	Plot->AddSeries();
+	Plot->AddSeries();
+} // void Widgets::SetupTimeHistoryPlot()
+// }}}
 // Menubar and Actions {{{
 void Widgets::About() {
     QMessageBox::about(this, tr("About"),

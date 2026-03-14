@@ -26,7 +26,9 @@ private:
 	std::array<AttitudeDial*, 3> Dials;
 	void SetupAttitudeDials();
 
+	Plot::EmbeddablePlot2D* Plot;
 	Plot::PlotContainer* TimeHistory;
+	void SetupTimeHistoryPlot();
 	QFrame* StatusColumn;
 
 // Menubar and Actions {{{

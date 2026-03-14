@@ -105,9 +105,10 @@ void AttitudeDial::PaintCap(QPaintEvent* event, QPainter* painter) {
 	fillBrush.setStyle(Qt::SolidPattern);
 	fillBrush.setColor(Palette.Cap);
 
+	int r = (int)(0.02*Radius);
 	painter->setBrush(fillBrush);
 	painter->setRenderHint(QPainter::Antialiasing, true);
-	painter->drawEllipse(Origin, (int)(0.05*Radius), (int)(0.05*Radius));
+	painter->drawEllipse(Origin, r, r);
 } // AttitudeDial::PaintCap()
 
 void AttitudeDial::SetPalette(AttitudeDialPalette& newPalette) { Palette = newPalette; }

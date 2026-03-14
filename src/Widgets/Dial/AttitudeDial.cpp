@@ -9,6 +9,7 @@
 namespace VSCL {
 
 AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
+	NumericDisplay = new QLabel(this);
 	update();
 } // AttitudeDial ctor
 
@@ -29,6 +30,18 @@ void AttitudeDial::UpdateRadius() {
 void AttitudeDial::UpdateOrigin() {
 	QSize curSize = size();
 	Origin = { curSize.width() / 2, curSize.height() / 2 };
+}
+
+void AttitudeDial::UpdateNumericDisplay() {
+	NumericDisplay->setText(QString::number(CurrentAngle));
+	NumericDisplay->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+	NumericDisplay->setAlignment(Qt::AlignCenter);
+
+	int w = int(0.2*Radius);
+	int h = int(0.1*Radius);
+
+	NumericDisplay->setFixedSize(w, h);
+	NumericDisplay->move(Origin - QPoint{ w / 2 , h / 2 });
 }
 
 void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
@@ -110,5 +123,6 @@ void AttitudeDial::paintEvent(QPaintEvent* event) {
 	PaintTicks(event, &painter);
 	PaintHand(event, &painter);
 	PaintCap(event, &painter);
+	UpdateNumericDisplay();
 }
 } // namespace VSCL

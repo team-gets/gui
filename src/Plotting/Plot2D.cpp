@@ -76,6 +76,7 @@ const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
 QWidget* EmbeddablePlot2D::GetWidgetRep() const { return WidgetRep; }
 void EmbeddablePlot2D::SetWidgetRep(QWidget* newWidgetRep) { WidgetRep = newWidgetRep; }
 
+// Series {{{
 void EmbeddablePlot2D::AddSeries() { Series.push_back(SeriesInfo()); }
 void EmbeddablePlot2D::AddSeries(std::string& name) { Series.push_back(SeriesInfo{ .Name = name }); }
 
@@ -123,5 +124,6 @@ std::vector<double> EmbeddablePlot2D::GetQuantities() const { return GetQuantiti
 
 void EmbeddablePlot2D::SetColor(uint8_t idx, ColorRGB& color) { Series[idx].Color = color; }
 void EmbeddablePlot2D::SetColor(ColorRGB& color) { SetColor(0, color); }
-
+// }}}
 } // namespace VSCL::Plot
+// vim: foldmethod=marker

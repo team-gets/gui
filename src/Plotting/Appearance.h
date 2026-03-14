@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <array>
 #include <string>
 #include <map>
@@ -15,4 +16,8 @@ static const std::map<std::string, ColorRGB> StandardColor = {
 	{ "Blue",	ColorRGB{ 0.0, 0.0, 1.0 } },
 };
 
+enum class LineStyle : uint8_t {
+	Solid = 1,
+	Dashed = 2,
+};
 } // namespace VSCL::Plot

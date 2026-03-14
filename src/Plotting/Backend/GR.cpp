@@ -35,10 +35,8 @@ int PlotGR::DoubleVectorToArray(const std::vector<double>& original,
 	// End delta will change so that it's inclusive of the last point
 
 	// Must take samplings if it's too big to fit
-	if (oversized) {
+	if (oversized)
 		stepSize = static_cast<int>(std::floor(vecSize / arrSize));
-		qDebug() << "I AM HUGE\n" ;
-	}
 
 	for (unsigned int i = 0; i < arrSize + endDelta; i += stepSize) {
 		output[i] = original[i];
@@ -51,33 +49,48 @@ int PlotGR::DoubleVectorToArray(const std::vector<double>& original,
 }
 
 void PlotGR::UpdateAxes() {
+	// Horizontal Axis {{{
 	const AxisInfo& taxe = GetAxisInfoView(Axis::Time);
 	double ttick = gr_tick(taxe.Range[0], taxe.Range[1]);
 	AxisScaling tscal = taxe.Scaling;
 
 	switch (tscal) {
-	case AxisScaling::Logarithmic:
+	case AxisScaling::Log10:
 		gr_setscale(GR_OPTION_X_LOG);
+		break;
+	case AxisScaling::Ln:
+		gr_setscale(GR_OPTION_X_LN);
+		break;
+	case AxisScaling::Inverted:
+		gr_setscale(GR_OPTION_FLIP_X);
 		break;
 	case AxisScaling::Linear:
 	default:
 		gr_setscale(0);
 		break;
 	}
-
+	// }}}
+	// Vertical Axis {{{
 	const AxisInfo& qaxe = GetAxisInfoView(Axis::Quantity);
 	double qtick = gr_tick(qaxe.Range[0], qaxe.Range[1]);
 	AxisScaling qscal = qaxe.Scaling;
 
 	switch (qscal) {
-	case AxisScaling::Logarithmic:
+	case AxisScaling::Log10:
 		gr_setscale(GR_OPTION_Y_LOG);
+		break;
+	case AxisScaling::Ln:
+		gr_setscale(GR_OPTION_Y_LN);
+		break;
+	case AxisScaling::Inverted:
+		gr_setscale(GR_OPTION_FLIP_Y);
 		break;
 	case AxisScaling::Linear:
 	default:
 		gr_setscale(0);
 		break;
 	}
+	// }}}
 
 	if (GetDrawGridState()) {
 		gr_setlinecolorind(ColorIndex(ColorGR::Grey));
@@ -116,3 +129,4 @@ void PlotGR::draw() {
 	UpdateSeries();
 }
 } // namespace VSCL::Plot
+// vim: foldmethod=marker

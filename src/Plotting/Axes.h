@@ -12,8 +12,10 @@ enum class Axis : std::uint8_t {
 };
 
 enum class AxisScaling : std::uint8_t {
-	Linear,
-	Logarithmic
+	Linear = 0,
+	Log10 = 1,
+	Ln = 2,
+	Inverted = 3
 };
 
 struct AxisInfo {

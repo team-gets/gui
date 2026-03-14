@@ -39,11 +39,11 @@ void DevWindow::SetQMLFromPath(const QUrl& path) {
 void DevWindow::SwapSetting() {
 	switch (CurrentSetting) {
 	case DevWindow::NumericTesting:
-		Stacker->setCurrentIndex(0);
+		Stacker->setCurrentIndex(1);
 		CurrentSetting = DevWindow::QMLView;
 		break;
 	case DevWindow::QMLView:
-		Stacker->setCurrentIndex(1);
+		Stacker->setCurrentIndex(0);
 		CurrentSetting = DevWindow::NumericTesting;
 		break;
 	}

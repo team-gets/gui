@@ -40,7 +40,7 @@ void AttitudeDial::UpdateOrigin() {
 }
 
 void AttitudeDial::UpdateNumericDisplay() {
-	NumericDisplay->setText(QString::number(CurrentAngle));
+	NumericDisplay->setText(QString::number(CurrentAngle) + "°");
 
 	int w = int(0.2*Radius);
 	int h = int(0.1*Radius);

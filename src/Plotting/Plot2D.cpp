@@ -109,6 +109,21 @@ const SeriesInfo& EmbeddablePlot2D::GetSeriesViewByName(std::string& name) const
 	return Series[0];
 }
 
+void EmbeddablePlot2D::SetSeries(std::string& name, SeriesInfo& newInfo) {
+	for (SeriesInfo& serie : Series) {
+		if (serie.Name == name) {
+			serie = newInfo;
+			return;
+		}
+	}
+
+	std::cout << "Warning: Series of name " << name << " not found. Doing nothing.\n";
+}
+
+void EmbeddablePlot2D::SetSeries(uint8_t idx, SeriesInfo& newInfo) {
+	Series[idx] = newInfo;
+}
+
 void EmbeddablePlot2D::RemoveSeries(uint8_t idx) { Series.erase(Series.begin() + idx); }
 void EmbeddablePlot2D::RemoveSeries(std::string& name) {
 	uint8_t n = 0;

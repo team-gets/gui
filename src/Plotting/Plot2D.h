@@ -51,6 +51,9 @@ public:
 	SeriesInfo GetSeriesByName(std::string& name);
 	const SeriesInfo& GetSeriesViewByName(std::string& name) const;
 
+	void SetSeries(std::string& name, SeriesInfo& newInfo);
+	void SetSeries(uint8_t idx, SeriesInfo& newInfo);
+
 	// Remove the series at the given index.
 	void RemoveSeries(uint8_t idx);
 	// Remove the named series.

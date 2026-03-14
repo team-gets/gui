@@ -1,13 +1,20 @@
+#
+#	This file is for:
+#	- Encapsulating some platform differences
+#	- Source declaration
+#	- Qt6 dependency declaration
+#
+
 set(WINDOWING_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Windowing")
 set(WIDGETS_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Widgets")
 set(PLOTTING_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Plotting")
 
 set(APP_SOURCES
-	"${CMAKE_SOURCE_DIR}/src/main.cpp")
+	"${CMAKE_SOURCE_DIR}/src/App/Main.cpp")
 
 # sorry
 set(OTHER_APP_SOURCES
-	"${CMAKE_SOURCE_DIR}/src/recreation.cpp")
+	"${CMAKE_SOURCE_DIR}/src/App/Recreation.cpp")
 
 set(WIDGET_SOURCES
 	"${WINDOWING_SRC_DIR}/DevWindow.cpp"

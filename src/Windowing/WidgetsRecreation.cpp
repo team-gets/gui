@@ -69,8 +69,21 @@ void Widgets::SetupTimeHistoryPlot() {
 	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
 	MajorLayout->addWidget(TimeHistory, 1, 0);
 
-	Plot->AddSeries();
-	Plot->AddSeries();
+	Plot::SeriesInfo rollInfo;
+	rollInfo.Name = "Roll";
+	rollInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Red);
+
+	Plot::SeriesInfo pitchInfo;
+	pitchInfo.Name = "Pitch";
+	pitchInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Blue);
+
+	Plot::SeriesInfo yawInfo;
+	yawInfo.Name = "Yaw";
+	yawInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Green);
+
+	Plot->SetSeries(0, rollInfo);
+	Plot->AddSeries(pitchInfo);
+	Plot->AddSeries(yawInfo);
 } // void Widgets::SetupTimeHistoryPlot()
 // }}}
 // Menubar and Actions {{{

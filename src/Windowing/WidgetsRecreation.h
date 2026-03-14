@@ -1,19 +1,7 @@
 #pragma once
 
 #include <array>
-
-#include <QMainWindow>
-#include <QMenu>
-#include <QMenuBar>
-#include <QMessageBox>
-#include <QStatusBar>
-#include <QStackedWidget>
-
-#include <QWidget>
-#include <QLayout>
-#include <QQuickWidget>
-
-#include <QActionGroup>
+#include <QtWidgets>
 
 #include "Widgets/Dial/AttitudeDial.h"
 #include "Plotting/Container.h"
@@ -24,14 +12,22 @@ class Widgets : public QMainWindow {
 public:
     Widgets();
 
-protected:
-
 private:
 	QWidget* MajorContainer;
-	QWidget* AttitudeDialRow;
+	QGridLayout* MajorLayout;
+	void SetupCentralWidget();
+
+	QFrame* AttitudeDialRow;
+	QHBoxLayout* AttitudeDialOrganizer;
+
+	AttitudeDial* RollDial;
+	AttitudeDial* PitchDial;
+	AttitudeDial* YawDial;
 	std::array<AttitudeDial*, 3> Dials;
+	void SetupAttitudeDials();
+
 	Plot::PlotContainer* TimeHistory;
-	QWidget* StatusColumn;
+	QFrame* StatusColumn;
 
 // Menubar and Actions {{{
 private slots:

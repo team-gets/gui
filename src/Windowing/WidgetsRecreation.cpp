@@ -1,3 +1,4 @@
+
 #include "WidgetsRecreation.h"
 
 namespace VSCL::FromPpt {
@@ -15,7 +16,40 @@ Widgets::Widgets() {
     resize(720, 480);
 
 	// Set up the static layout
+	SetupCentralWidget();
+	SetupAttitudeDials();
+
 } // void Widgets::Widgets()
+
+void Widgets::SetupCentralWidget() {
+	MajorContainer = new QWidget(this);
+
+	QSizePolicy majorPolicy;
+	majorPolicy.setHorizontalPolicy(QSizePolicy::MinimumExpanding);
+	majorPolicy.setVerticalPolicy(QSizePolicy::MinimumExpanding);
+	MajorContainer->setSizePolicy(majorPolicy);
+
+	MajorLayout = new QGridLayout(MajorContainer);
+	MajorLayout->setContentsMargins(10, 10, 10, 10);
+	MajorContainer->setLayout(MajorLayout);
+
+	setCentralWidget(MajorContainer);
+} // void Widgets::SetupCentralWidget()
+
+void Widgets::SetupAttitudeDials() {
+	AttitudeDialRow = new QFrame(MajorContainer);
+
+	AttitudeDialOrganizer = new QHBoxLayout(AttitudeDialRow);
+	AttitudeDialOrganizer->setAlignment(Qt::AlignHCenter);
+	AttitudeDialOrganizer->setContentsMargins(10, 10, 10, 10);
+	AttitudeDialRow->setLayout(AttitudeDialOrganizer);
+
+	RollDial = new AttitudeDial(AttitudeDialRow);
+	PitchDial = new AttitudeDial(AttitudeDialRow);
+	YawDial = new AttitudeDial(AttitudeDialRow);
+	Dials = { RollDial, PitchDial, YawDial };
+
+} // void Widgets::SetupCentralWidget()
 
 // Menubar and Actions {{{
 void Widgets::About() {

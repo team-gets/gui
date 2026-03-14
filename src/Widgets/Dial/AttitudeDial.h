@@ -4,6 +4,14 @@
 #include <QtWidgets>
 
 namespace VSCL {
+struct AttitudeDialPalette {
+	QColor Primary = QColorConstants::White;
+	QColor Hand = QColorConstants::Black;
+	QColor Cap = QColorConstants::Black;
+	QColor MajorTick = QColorConstants::DarkGray;
+	QColor MinorTick = QColorConstants::DarkGray;
+};
+
 class AttitudeDial : public QWidget {
 
 	Q_OBJECT;
@@ -11,6 +19,11 @@ class AttitudeDial : public QWidget {
 public:
 	AttitudeDial(QWidget* parent);
 	void SetDialAngle(double value);
+
+	void SetPalette(AttitudeDialPalette& newPalette);
+	AttitudeDialPalette GetPalette() const;
+	const AttitudeDialPalette& GetPaletteView() const;
+
 	virtual void paintEvent(QPaintEvent* event) override;
 
 private:
@@ -19,6 +32,8 @@ private:
 	double Radius = 1.0;
 	void UpdateOrigin();
 	void UpdateRadius();
+
+	AttitudeDialPalette Palette;
 
 	void PaintCircularBacking(QPaintEvent* event, QPainter* painter);
 	void PaintTicks(QPaintEvent* event, QPainter* painter);

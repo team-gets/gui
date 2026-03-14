@@ -34,7 +34,7 @@ void AttitudeDial::UpdateOrigin() {
 void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
 	QBrush fillBrush = painter->brush();
 	fillBrush.setStyle(Qt::SolidPattern);
-	fillBrush.setColor(QColorConstants::White);
+	fillBrush.setColor(Palette.Primary);
 
 	painter->setBrush(fillBrush);
 	painter->setRenderHint(QPainter::Antialiasing, true);
@@ -44,6 +44,7 @@ void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
 void AttitudeDial::PaintTicks(QPaintEvent* event, QPainter* painter) {
 	for (int i = 0; i < 12; i++) {
 		QPoint st, ed;
+		QColor tickcolor;
 		const double ci = Radius*Cos30Degs[i];
 		const double si = Radius*Sin30Degs[i];
 		double ticker[2] = { 0.0, 1.0 };
@@ -54,9 +55,11 @@ void AttitudeDial::PaintTicks(QPaintEvent* event, QPainter* painter) {
 		case 6:
 		case 9: // major
 			ticker[0] = 0.85;
+			tickcolor = Palette.MajorTick;
 			break;
 		default: // minor
 			ticker[0] = 0.95;
+			tickcolor = Palette.MinorTick;
 			break;
 		}
 
@@ -64,7 +67,7 @@ void AttitudeDial::PaintTicks(QPaintEvent* event, QPainter* painter) {
 		ed = Origin + ticker[1] * QPoint{ int(ci), int(si) };
 
 		QPen pen = painter->pen();
-		pen.setColor(QColorConstants::DarkGray);
+		pen.setColor(tickcolor);
 
 		painter->setPen(pen);
 		painter->drawLine(st, ed);
@@ -78,7 +81,7 @@ void AttitudeDial::PaintHand(QPaintEvent* event, QPainter* painter) {
 	QPoint end = Origin + QPoint{ linex, liney };
 
 	QPen pen = painter->pen();
-	pen.setColor(QColorConstants::Black);
+	pen.setColor(Palette.Hand);
 
 	painter->setPen(pen);
 	painter->drawLine(Origin, end);
@@ -87,12 +90,16 @@ void AttitudeDial::PaintHand(QPaintEvent* event, QPainter* painter) {
 void AttitudeDial::PaintCap(QPaintEvent* event, QPainter* painter) {
 	QBrush fillBrush = painter->brush();
 	fillBrush.setStyle(Qt::SolidPattern);
-	fillBrush.setColor(QColorConstants::Black);
+	fillBrush.setColor(Palette.Cap);
 
 	painter->setBrush(fillBrush);
 	painter->setRenderHint(QPainter::Antialiasing, true);
 	painter->drawEllipse(Origin, (int)(0.05*Radius), (int)(0.05*Radius));
 } // AttitudeDial::PaintCap()
+
+void AttitudeDial::SetPalette(AttitudeDialPalette& newPalette) { Palette = newPalette; }
+AttitudeDialPalette AttitudeDial::GetPalette() const { return Palette; }
+const AttitudeDialPalette& AttitudeDial::GetPaletteView() const { return Palette; }
 
 void AttitudeDial::paintEvent(QPaintEvent* event) { 
 	UpdateRadius();

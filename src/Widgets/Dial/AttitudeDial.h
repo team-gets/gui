@@ -18,6 +18,8 @@ class AttitudeDial : public QWidget {
 
 public:
 	AttitudeDial(QWidget* parent);
+	AttitudeDial(QWidget* parent, bool enabled);
+
 	void SetDialAngle(double value);
 
 	void SetPalette(AttitudeDialPalette& newPalette);
@@ -37,8 +39,10 @@ private:
 
 	QFont NumericDisplayFont;
 	QLabel* NumericDisplay;
+	bool NumericDisplayEnabled = true;
 	void UpdateNumericFont();
 	void UpdateNumericDisplay();
+	void SetNumericDisplayState(bool enabled);
 
 	void PaintCircularBacking(QPaintEvent* event, QPainter* painter);
 	void PaintTicks(QPaintEvent* event, QPainter* painter);

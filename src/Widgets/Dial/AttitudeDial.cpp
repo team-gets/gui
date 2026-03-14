@@ -20,6 +20,10 @@ AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
 	update();
 } // AttitudeDial ctor
 
+AttitudeDial::AttitudeDial(QWidget* parent, bool showNumericDisplay) : AttitudeDial(parent) {
+	NumericDisplayEnabled = showNumericDisplay;
+}
+
 void AttitudeDial::SetDialAngle(double value) {
 	CurrentAngle = value;
 	update();
@@ -55,6 +59,12 @@ void AttitudeDial::UpdateNumericFont() {
 
 	NumericDisplayFont.setPointSize(pts);
 	NumericDisplay->setFont(NumericDisplayFont);
+} // void AttitudeDial::UpdateNumericDisplay()
+
+void AttitudeDial::SetNumericDisplayState(bool enabled) {
+	NumericDisplayEnabled = enabled;
+	NumericDisplay->setVisible(enabled);
+	update();
 } // void AttitudeDial::UpdateNumericDisplay()
 
 void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
@@ -137,7 +147,10 @@ void AttitudeDial::paintEvent(QPaintEvent* event) {
 	PaintTicks(event, &painter);
 	PaintHand(event, &painter);
 	PaintCap(event, &painter);
-	UpdateNumericDisplay();
-	UpdateNumericFont();
+
+	if (NumericDisplayEnabled) {
+		UpdateNumericDisplay();
+		UpdateNumericFont();
+	}
 }
 } // namespace VSCL

@@ -45,9 +45,10 @@ void EmbeddablePlot2D::SetAxis(Axis axis, AxisInfo& info) {
 		QuantityAxis = info;
 		break;
 	}
+	Plot();
 }
 
-void EmbeddablePlot2D::SetTitle(const std::string& title) { Title = title; }
+void EmbeddablePlot2D::SetTitle(const std::string& title) { Title = title; Plot(); }
 
 void EmbeddablePlot2D::Plot() {
 	if (WidgetRep)
@@ -59,6 +60,7 @@ void EmbeddablePlot2D::EraseAllData() {
 		series.Times.clear();
 		series.Quantities.clear();
 	}
+	Plot();
 }
 
 const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
@@ -113,11 +115,15 @@ void EmbeddablePlot2D::RemoveSeries(std::string& name) {
 	for (const SeriesInfo& serie : Series) {
 		if (serie.Name == name) {
 			Series.erase(Series.begin() + n);
+			Plot();
 			return;
 		}
 
 		n++;
 	}
+
+	std::cout << "Warning: Series of name " << name << " not found. Nothing was removed.\n";
+	Plot();
 }
 
 const std::vector<SeriesInfo>& EmbeddablePlot2D::GetSeriesInfosView() const { return Series; }
@@ -127,8 +133,8 @@ std::vector<double> EmbeddablePlot2D::GetTimes() const { return GetTimes(0); }
 std::vector<double> EmbeddablePlot2D::GetQuantities(uint8_t idx) const { return Series[idx].Quantities; }
 std::vector<double> EmbeddablePlot2D::GetQuantities() const { return GetQuantities(0); }
 
-void EmbeddablePlot2D::SetColor(uint8_t idx, ColorRGB& color) { Series[idx].Color = color; }
-void EmbeddablePlot2D::SetColor(ColorRGB& color) { SetColor(0, color); }
+void EmbeddablePlot2D::SetColor(uint8_t idx, ColorRGB& color) { Series[idx].Color = color; Plot(); }
+void EmbeddablePlot2D::SetColor(ColorRGB& color) { SetColor(0, color); Plot(); }
 // }}}
 } // namespace VSCL::Plot
 // vim: foldmethod=marker

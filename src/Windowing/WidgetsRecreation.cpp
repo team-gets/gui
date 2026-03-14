@@ -11,10 +11,15 @@ Widgets::Widgets() {
 	Plot::PlotGR* grplotted = new Plot::PlotGR(this);
 	grplotted->SetDrawGridState(true);
 	for (int i = 0; i < 100; i++) {
-		//Plot->AddPoint(i, std::cos(i / 12));
 		grplotted->AddPoint(i / 100.0, std::cos(0.1 * i) / 2.0 + 0.5);
 	}
 
+	grplotted->AddSeries();
+	Plot::ColorRGB color = Plot::RGBFromColorGR(Plot::ColorGR::Blue);
+	grplotted->SetColor(1, color);
+	for (int i = 0; i < 100; i++) {
+		grplotted->AddPoint(1, i / 100.0, std::sin(0.1 * i) / 2.0 + 0.5);
+	}
 
 	PlotContainer = new Plot::PlotContainer(this, grplotted);
 	setCentralWidget(PlotContainer);

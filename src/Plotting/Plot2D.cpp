@@ -1,3 +1,4 @@
+#include <iostream>
 #include <QHBoxLayout>
 #include "Plot2D.h"
 
@@ -48,9 +49,6 @@ void EmbeddablePlot2D::SetAxis(Axis axis, AxisInfo& info) {
 
 void EmbeddablePlot2D::SetTitle(const std::string& title) { Title = title; }
 
-void EmbeddablePlot2D::SetColor(uint8_t idx, ColorRGB& color) { Series[idx].Color = color; }
-void EmbeddablePlot2D::SetColor(ColorRGB& color) { SetColor(0, color); }
-
 void EmbeddablePlot2D::Plot() {
 	if (WidgetRep)
 		WidgetRep->update();
@@ -63,12 +61,6 @@ void EmbeddablePlot2D::EraseAllData() {
 	}
 }
 
-std::vector<double> EmbeddablePlot2D::GetTimes(uint8_t idx) const { return Series[idx].Times; }
-std::vector<double> EmbeddablePlot2D::GetTimes() const { return GetTimes(0); }
-std::vector<double> EmbeddablePlot2D::GetQuantities(uint8_t idx) const { return Series[idx].Quantities; }
-std::vector<double> EmbeddablePlot2D::GetQuantities() const { return GetQuantities(0); }
-
-const std::vector<SeriesInfo>& EmbeddablePlot2D::GetSeriesInfosView() const { return Series; }
 const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
 	switch (axis) {
 	case Axis::Time:
@@ -83,5 +75,53 @@ const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
 
 QWidget* EmbeddablePlot2D::GetWidgetRep() const { return WidgetRep; }
 void EmbeddablePlot2D::SetWidgetRep(QWidget* newWidgetRep) { WidgetRep = newWidgetRep; }
+
+void EmbeddablePlot2D::AddSeries() { Series.push_back(SeriesInfo()); }
+void EmbeddablePlot2D::AddSeries(std::string& name) { Series.push_back(SeriesInfo{ .Name = name }); }
+
+SeriesInfo EmbeddablePlot2D::GetSeriesByName(std::string& name) {
+	for (const SeriesInfo& serie : Series) {
+		if (serie.Name == name) {
+			return serie;
+		}
+	}
+
+	std::cout << "Warning: Series of name " << name << " not found\n";
+	return SeriesInfo();
+}
+
+const SeriesInfo& EmbeddablePlot2D::GetSeriesViewByName(std::string& name) const {
+	for (const SeriesInfo& serie : Series) {
+		if (serie.Name == name) {
+			return serie;
+		}
+	}
+
+	std::cout << "Warning: Series of name " << name << " not found. Returning a view of the first series.\n";
+	return Series[0];
+}
+
+void EmbeddablePlot2D::RemoveSeries(uint8_t idx) { Series.erase(Series.begin() + idx); }
+void EmbeddablePlot2D::RemoveSeries(std::string& name) {
+	uint8_t n = 0;
+	for (const SeriesInfo& serie : Series) {
+		if (serie.Name == name) {
+			Series.erase(Series.begin() + n);
+			return;
+		}
+
+		n++;
+	}
+}
+
+const std::vector<SeriesInfo>& EmbeddablePlot2D::GetSeriesInfosView() const { return Series; }
+
+std::vector<double> EmbeddablePlot2D::GetTimes(uint8_t idx) const { return Series[idx].Times; }
+std::vector<double> EmbeddablePlot2D::GetTimes() const { return GetTimes(0); }
+std::vector<double> EmbeddablePlot2D::GetQuantities(uint8_t idx) const { return Series[idx].Quantities; }
+std::vector<double> EmbeddablePlot2D::GetQuantities() const { return GetQuantities(0); }
+
+void EmbeddablePlot2D::SetColor(uint8_t idx, ColorRGB& color) { Series[idx].Color = color; }
+void EmbeddablePlot2D::SetColor(ColorRGB& color) { SetColor(0, color); }
 
 } // namespace VSCL::Plot

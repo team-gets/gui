@@ -28,26 +28,48 @@ public:
 	// Set the main title
 	virtual void SetTitle(const std::string& title);
 
-	// Set color
-	virtual void SetColor(uint8_t idx, ColorRGB& color);
-	virtual void SetColor(ColorRGB& color);
-
 	// This is called after all the setup and is a call to (re)draw.
 	virtual void Plot();
 
 	// Clear data that was being stored.
 	virtual void EraseAllData();
 
+	QWidget* GetWidgetRep() const;
+	void SetWidgetRep(QWidget* newWidgetRep);
+
+	const AxisInfo& GetAxisInfoView(Axis axis) const;
+
+	/*
+	 *	Series data.
+	 */
+
+	// Add a blank series.
+	void AddSeries();
+	// Add a named series.
+	void AddSeries(std::string& name);
+
+	SeriesInfo GetSeriesByName(std::string& name);
+	const SeriesInfo& GetSeriesViewByName(std::string& name) const;
+
+	// Remove the series at the given index.
+	void RemoveSeries(uint8_t idx);
+	// Remove the named series.
+	void RemoveSeries(std::string& name);
+
+	// Get a view of all series info. This is a const reference to the series data.
+	const std::vector<SeriesInfo>& GetSeriesInfosView() const;
+
+	// Get the stored time data from the series at index idx.
 	std::vector<double> GetTimes(uint8_t idx) const;
 	std::vector<double> GetTimes() const;
+
+	// Get the stored quantity data from the series at index idx.
 	std::vector<double> GetQuantities(uint8_t idx) const;
 	std::vector<double> GetQuantities() const;
 
-	const std::vector<SeriesInfo>& GetSeriesInfosView() const;
-	const AxisInfo& GetAxisInfoView(Axis axis) const;
-
-	QWidget* GetWidgetRep() const;
-	void SetWidgetRep(QWidget* newWidgetRep);
+	// Set color
+	virtual void SetColor(uint8_t idx, ColorRGB& color);
+	virtual void SetColor(ColorRGB& color);
 
 	constexpr bool GetDrawGridState() { return DrawGrid; };
 	constexpr void SetDrawGridState(bool newState) { DrawGrid = newState; };

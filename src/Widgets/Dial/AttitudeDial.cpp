@@ -10,12 +10,12 @@ namespace VSCL {
 
 AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
 	NumericDisplayFont = QFont();
-	NumericDisplayFont.setPointSize(Radius / 15);
-
 	NumericDisplay = new QLabel(this);
 	NumericDisplay->setBuddy(this);
 	NumericDisplay->setAlignment(Qt::AlignCenter);
+	NumericDisplay->setFrameStyle(QFrame::Panel | QFrame::Raised);
 	NumericDisplay->setFont(NumericDisplayFont);
+	NumericDisplay->setStyleSheet(" QLabel { color: white; background-color: black; border-radius: 3% } ");
 
 	update();
 } // AttitudeDial ctor
@@ -50,10 +50,11 @@ void AttitudeDial::UpdateNumericDisplay() {
 } // void AttitudeDial::UpdateNumericDisplay()
 
 void AttitudeDial::UpdateNumericFont() {
-	int pts = Radius / 15;
+	int pts = Radius / 20;
 	pts = (pts < 1) ? 1 : pts;
 
 	NumericDisplayFont.setPointSize(pts);
+	NumericDisplay->setFont(NumericDisplayFont);
 } // void AttitudeDial::UpdateNumericDisplay()
 
 void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {

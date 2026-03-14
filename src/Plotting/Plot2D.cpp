@@ -86,6 +86,7 @@ void EmbeddablePlot2D::AddSeries(std::string& name) {
 	Series.push_back(serie);
 	Plot();
 }
+void EmbeddablePlot2D::AddSeries(SeriesInfo& newInfo) { Series.push_back(newInfo); Plot(); };
 
 SeriesInfo EmbeddablePlot2D::GetSeriesByName(std::string& name) {
 	for (const SeriesInfo& serie : Series) {

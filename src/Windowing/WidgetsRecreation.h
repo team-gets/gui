@@ -29,7 +29,16 @@ private:
 	Plot::EmbeddablePlot2D* Plot;
 	Plot::PlotContainer* TimeHistory;
 	void SetupTimeHistoryPlot();
-	QFrame* StatusColumn;
+
+	// im not entirely sure of this part
+	QGroupBox* StatusColumn;
+	QVBoxLayout* StatusColumnOrganizer;
+	QPushButton* LoadTestRoutineButton;
+	QPushButton* QuantityCalculatorButton;
+	QPushButton* LogOpenButton;
+	QPushButton* AbortButton;
+	void SetupButtons();
+	void SetupStatusColumn();
 
 // Menubar and Actions {{{
 private slots:

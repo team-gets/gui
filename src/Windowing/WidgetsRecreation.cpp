@@ -15,9 +15,9 @@ static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {
 	ph3 = std::rand() % 12;
 
 	for (int i = 0; i < 100; i++) {
-		plot->AddPoint(0, i/100.0, std::cos(0.1 * i + ph1/12) / 2.0 + 0.5);
-		plot->AddPoint(1, i/100.0, std::cos(0.1 * i - ph2/12) / 2.0 + 0.5);
-		plot->AddPoint(2, i/100.0, std::cos(0.1 * i + ph3/12) / 2.0 + 0.5);
+		plot->AddPoint(0, i/10.0, std::cos(0.1 * i + ph1/12) / 2.0 + 0.5);
+		plot->AddPoint(1, i/10.0, std::sin(0.1 * i - ph2/12) / 2.0 + 0.5);
+		plot->AddPoint(2, i/10.0, std::cos(0.1 * i + ph3/12) / 2.0 + 0.5);
 	}
 }
 // }}}
@@ -40,6 +40,8 @@ Widgets::Widgets() {
 	SetupCentralWidget();
 	SetupAttitudeDials();
 	SetupTimeHistoryPlot();
+	SetupButtons();
+	SetupStatusColumn();
 
 } // void Widgets::Widgets()
 
@@ -83,6 +85,34 @@ void Widgets::SetupAttitudeDials() {
 
 	Dials = { RollDial, PitchDial, YawDial };
 } // void Widgets::SetupCentralWidget()
+
+void Widgets::SetupButtons() {
+	LoadTestRoutineButton = new QPushButton;
+	LoadTestRoutineButton->setText(tr("Load Test Routine"));
+
+	QuantityCalculatorButton = new QPushButton;
+	QuantityCalculatorButton->setText(tr("Calculate Quantity"));
+
+	LogOpenButton = new QPushButton;
+	LogOpenButton->setText(tr("Open Log"));
+
+	AbortButton = new QPushButton;
+	AbortButton->setText(tr("Abort"));
+	AbortButton->setStyleSheet(" QPushButton { background-color: red } ");
+} // void Widgets::SetupButtons()
+
+void Widgets::SetupStatusColumn() {
+	StatusColumn = new QGroupBox(tr("Operate"));
+	MajorLayout->addWidget(StatusColumn, 0, 1, 2, 1);
+
+	StatusColumnOrganizer = new QVBoxLayout;
+	StatusColumnOrganizer->addWidget(LoadTestRoutineButton);
+	StatusColumnOrganizer->addWidget(QuantityCalculatorButton);
+	StatusColumnOrganizer->addWidget(LogOpenButton);
+	StatusColumnOrganizer->addWidget(AbortButton);
+
+	StatusColumn->setLayout(StatusColumnOrganizer);
+} // void Widgets::SetupStatusColumn()
 
 void Widgets::SetupTimeHistoryPlot() {
 	Plot = new Plot::PlotGR(this);

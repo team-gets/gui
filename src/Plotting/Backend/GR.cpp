@@ -94,12 +94,14 @@ void PlotGR::UpdateAxes() {
 
 	if (GetDrawGridState()) {
 		gr_setlinecolorind(ColorIndex(ColorGR::Grey));
+		gr_setlinetype(1);
 		gr_grid(ttick, qtick, 0, 0, taxe.MajorSpacing, qaxe.MajorSpacing);
 	}
 
 	gr_setlinecolorind(ColorIndex(ColorGR::Black));
+	gr_setlinetype(1);
     gr_axes(ttick, qtick, 0, 0, taxe.MajorSpacing, qaxe.MajorSpacing, -0.01);
-}
+} // void PlotGR::UpdateAxes();
 
 void PlotGR::UpdateSeries() {
 	const std::vector<SeriesInfo> serieses = GetSeriesInfosView();
@@ -136,11 +138,11 @@ void PlotGR::UpdateSeries() {
 		gr_setlinecolorind(ColorIndex(color));
 		gr_polyline(n, timeArr, quantityArr);
 	}
-}
+} // void PlotGR::UpdateSeries()
 
 void PlotGR::draw() {
-	UpdateAxes();
 	UpdateSeries();
+	UpdateAxes();
 }
 } // namespace VSCL::Plot
 // vim: foldmethod=marker

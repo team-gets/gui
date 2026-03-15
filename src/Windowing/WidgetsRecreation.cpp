@@ -55,7 +55,7 @@ void Widgets::SetupCentralWidget() {
 	MajorContainer->setSizePolicy(majorPolicy);
 
 	MajorLayout = new QGridLayout(MajorContainer);
-	MajorLayout->setContentsMargins(10, 10, 10, 10);
+	MajorLayout->setContentsMargins(50, 50, 50, 50);
 	MajorContainer->setLayout(MajorLayout);
 
 	setCentralWidget(MajorContainer);
@@ -66,7 +66,7 @@ void Widgets::SetupAttitudeDials() {
 	MajorLayout->addWidget(AttitudeDialRow, 0, 0);
 
 	AttitudeDialOrganizer = new QHBoxLayout(AttitudeDialRow);
-	AttitudeDialOrganizer->setContentsMargins(10, 10, 10, 10);
+	AttitudeDialOrganizer->setContentsMargins(20, 20, 20, 20);
 	AttitudeDialRow->setLayout(AttitudeDialOrganizer);
 
 	QSizePolicy dialsPolicy;
@@ -118,6 +118,12 @@ void Widgets::SetupTimeHistoryPlot() {
 	Plot = new Plot::PlotGR(this);
 	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
 	MajorLayout->addWidget(TimeHistory, 1, 0);
+
+	Plot::AxisInfo axInfo;
+	axInfo.Range = { 0, 10 };
+	axInfo.MajorSpacing = 10;
+	axInfo.MinorSpacing = 0.25;
+	Plot->SetAxis(Plot::Axis::Time, axInfo);
 
 	Plot::SeriesInfo rollInfo;
 	rollInfo.Name = "Roll";

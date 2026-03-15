@@ -4,17 +4,14 @@
 
 namespace VSCL::Plot {
 
-void EmbeddablePlot2D::AddPoint(uint8_t idx,
-		double time, double quantity) {
+void EmbeddablePlot2D::AddPoint(double time, double quantity) { AddPoint(0, time, quantity);  }
+void EmbeddablePlot2D::AddPoint(uint8_t idx, double time, double quantity) {
 	std::vector<double>& oldTime = Series[idx].Times;
 	std::vector<double>& oldQty = Series[idx].Quantities;
 
 	oldTime.push_back(time);
 	oldQty.push_back(quantity);
 }
-void EmbeddablePlot2D::AddPoint(
-		double time, double quantity) {
-			AddPoint(0, time, quantity); }
 
 void EmbeddablePlot2D::AddPoints(uint8_t idx,
 		const std::vector<double>& times, const std::vector<double>& quantities) {
@@ -76,7 +73,10 @@ const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
 }
 
 QWidget* EmbeddablePlot2D::GetWidgetRep() const { return WidgetRep; }
-void EmbeddablePlot2D::SetWidgetRep(QWidget* newWidgetRep) { WidgetRep = newWidgetRep; }
+void EmbeddablePlot2D::SetWidgetRep(QWidget* newWidgetRep) {
+	WidgetRep = newWidgetRep;
+	WidgetRep->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+}
 
 // Series {{{
 void EmbeddablePlot2D::AddSeries() { Series.push_back(SeriesInfo()); Plot(); }
@@ -121,9 +121,7 @@ void EmbeddablePlot2D::SetSeries(std::string& name, SeriesInfo& newInfo) {
 	std::cout << "Warning: Series of name " << name << " not found. Doing nothing.\n";
 }
 
-void EmbeddablePlot2D::SetSeries(uint8_t idx, SeriesInfo& newInfo) {
-	Series[idx] = newInfo;
-}
+void EmbeddablePlot2D::SetSeries(uint8_t idx, SeriesInfo& newInfo) { Series[idx] = newInfo; }
 
 void EmbeddablePlot2D::RemoveSeries(uint8_t idx) { Series.erase(Series.begin() + idx); }
 void EmbeddablePlot2D::RemoveSeries(std::string& name) {

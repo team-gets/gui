@@ -146,7 +146,7 @@ void PlotGR::draw() {
 
 	double wxh = (double)width() / (double)height();
 	double hxw = (double)height() / (double)width();
-	double inset[4] = { 0.1, 0.97, 0.1, 0.9 }; // this is magic numbers
+	double inset[4] = { 0.1, 0.97, 0.16, 0.9 }; // this is magic numbers
 	double wwsdims[4] = { 0, 1, 0, 1 };
 	double vpdims[4];
 

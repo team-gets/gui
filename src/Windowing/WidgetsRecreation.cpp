@@ -33,7 +33,7 @@ Widgets::Widgets() {
 
 	// Geometry and window characteristics
     setWindowTitle(tr("VSCL Gyroscopic Test Rig"));
-    setMinimumSize(160, 160);
+    setMinimumSize(720, 480);
     resize(720, 480);
 
 	// Set up the static layout
@@ -49,6 +49,7 @@ Widgets::Widgets() {
 
 void Widgets::resizeEvent(QResizeEvent* event) {
 	SetGridColumnsMinimums();
+	SetGridRowsMinimums();
 } // void Widgets::resizeEvent()
 
 // Layout and Widgets Setup {{{
@@ -95,14 +96,16 @@ void Widgets::SetupAttitudeDials() {
 void Widgets::SetGridColumnsMinimums() {
 	if (!MajorLayout) { return; };
 	const QRect& dims = centralWidget()->geometry();
-	MajorLayout->setColumnMinimumWidth(0, 3 * dims.width() / 5);
+	MajorLayout->setColumnMinimumWidth(0, 2 * dims.width() / 3);
+	MajorLayout->setColumnMinimumWidth(1, dims.width() / 3);
 } // void Widgets::SetGridColumnsMinimums()
 
 void Widgets::SetGridRowsMinimums() {
 	if (!MajorLayout) { return; }
 	const QRect& dims = centralWidget()->geometry();
-	MajorLayout->setRowMinimumHeight(0, 2 * dims.width() / 5);
-}
+	MajorLayout->setRowMinimumHeight(0, dims.height() / 3);
+	MajorLayout->setRowMinimumHeight(1, 2 * dims.height() / 3);
+} // void Widgets::SetGridRowsMinimums()
 
 void Widgets::SetupButtons() {
 	LoadTestRoutineButton = new QPushButton;

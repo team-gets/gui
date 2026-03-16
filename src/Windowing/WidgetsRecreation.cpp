@@ -103,12 +103,23 @@ void Widgets::SetupButtons() {
 
 void Widgets::SetupStatusColumn() {
 	StatusColumn = new QGroupBox(tr("Operate"));
-	MajorLayout->addWidget(StatusColumn, 0, 1, 2, 1);
+	MajorLayout->addWidget(StatusColumn, 1, 1);
+
+	QSizePolicy vhexpanding;
+	vhexpanding.setVerticalPolicy(QSizePolicy::MinimumExpanding);
+	vhexpanding.setHorizontalPolicy(QSizePolicy::MinimumExpanding);
 
 	StatusColumnOrganizer = new QVBoxLayout;
+	LoadTestRoutineButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(LoadTestRoutineButton);
+
+	QuantityCalculatorButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(QuantityCalculatorButton);
+
+	LogOpenButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(LogOpenButton);
+
+	AbortButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(AbortButton);
 
 	StatusColumn->setLayout(StatusColumnOrganizer);

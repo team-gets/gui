@@ -94,12 +94,14 @@ void PlotGR::UpdateAxes() {
 
 	if (GetDrawGridState()) {
 		gr_setlinecolorind(ColorIndex(ColorGR::Grey));
+		gr_setlinetype(1);
 		gr_grid(ttick, qtick, 0, 0, taxe.MajorSpacing, qaxe.MajorSpacing);
 	}
 
 	gr_setlinecolorind(ColorIndex(ColorGR::Black));
+	gr_setlinetype(1);
     gr_axes(ttick, qtick, 0, 0, taxe.MajorSpacing, qaxe.MajorSpacing, -0.01);
-}
+} // void PlotGR::UpdateAxes();
 
 void PlotGR::UpdateSeries() {
 	const std::vector<SeriesInfo> serieses = GetSeriesInfosView();
@@ -136,11 +138,35 @@ void PlotGR::UpdateSeries() {
 		gr_setlinecolorind(ColorIndex(color));
 		gr_polyline(n, timeArr, quantityArr);
 	}
-}
+} // void PlotGR::UpdateSeries()
 
 void PlotGR::draw() {
-	UpdateAxes();
+	const AxisInfo& taxe = GetAxisInfoView(Axis::Time);
+	const AxisInfo& qaxe = GetAxisInfoView(Axis::Quantity);
+
+	double wxh = (double)width() / (double)height();
+	double hxw = (double)height() / (double)width();
+	double inset[4] = { 0.1, 0.97, 0.16, 0.9 }; // this is magic numbers
+	double wwsdims[4] = { 0, 1, 0, 1 };
+	double vpdims[4];
+
+	if (width() > height()) {
+		wwsdims[3] = hxw;
+		double dims[4] = { inset[0], inset[1], inset[2]*hxw, inset[3]*hxw };
+		memcpy(vpdims, dims, 4*sizeof(double));
+	}
+	else {
+		wwsdims[1] = wxh;
+		double dims[4] = { inset[0]*wxh, inset[1]*wxh, inset[2], inset[3] };
+		memcpy(vpdims, dims, 4*sizeof(double));
+	}
+
+	gr_setwswindow(wwsdims[0], wwsdims[1], wwsdims[2], wwsdims[3]);
+	gr_setviewport(vpdims[0], vpdims[1], vpdims[2], vpdims[3]);
+	gr_setwindow(taxe.Range[0], taxe.Range[1], qaxe.Range[0], qaxe.Range[1]);
+
 	UpdateSeries();
+	UpdateAxes();
 }
 } // namespace VSCL::Plot
 // vim: foldmethod=marker

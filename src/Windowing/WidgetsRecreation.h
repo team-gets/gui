@@ -7,6 +7,7 @@
 #include "Widgets/Displays/QuantitiesRatesDisplay.h"
 #include "Widgets/Displays/QuantitiesRatesRow.h"
 #include "Plotting/Container.h"
+#include "Util/Sizing.h"
 
 namespace VSCL::FromPpt {
 class Widgets : public QMainWindow {
@@ -57,6 +58,7 @@ private:
 	QPushButton* QuantityCalculatorButton;
 	QPushButton* LogOpenButton;
 	QPushButton* AbortButton;
+	Util::FontAdjustment ButtonFontAdjustment{ 12 };
 	void SetupButtons();
 	void SetupStatusColumn();
 	void SetAllButtonTextSize();

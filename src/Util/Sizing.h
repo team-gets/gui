@@ -4,17 +4,18 @@
 
 namespace VSCL::Util {
 
-constexpr int MinimumWidth = 480;
-constexpr int MinimumHeight = 720;
+constexpr int MinimumWidth = 720;
+constexpr int MinimumHeight = 480;
 
 struct FontAdjustment {
 	int PointSizeAtMinimum;
-	bool AdjustToWidth = true;
-	const int AdjustPointSize(QWidget* parent) const {
+	bool AdjustToWidth = false;
+	const int AdjustPointSize(QWidget* win) const {
+		qDebug() << win->size();
 		return PointSizeAtMinimum
 			+ ((AdjustToWidth) ?
-					(parent->width() - MinimumWidth) / MinimumWidth
-					: (parent->height() - MinimumHeight) / MinimumHeight);
+					(win->width() - MinimumWidth) / MinimumWidth
+					: (win->height() - MinimumHeight) / MinimumHeight);
 	}
 };
 } // namespace VSCL::Util

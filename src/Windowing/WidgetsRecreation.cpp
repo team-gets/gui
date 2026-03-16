@@ -188,7 +188,7 @@ void Widgets::SetupStatusColumn() {
 void Widgets::SetAllButtonTextSize() {
 	// assumes equal button sizing in the layout (which is true as of March 16 2026)
 	// magic num: 30 pt when at orig and go from there
-	ButtonFont.setPointSize(12 + (height() - 480) / 480);
+	ButtonFont.setPointSize(ButtonFontAdjustment.AdjustPointSize(window()));
 	LoadTestRoutineButton->setFont(ButtonFont);
 	QuantityCalculatorButton->setFont(ButtonFont);
 	LogOpenButton->setFont(ButtonFont);

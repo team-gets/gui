@@ -27,7 +27,7 @@ void QtyRateRow::resizeEvent(QResizeEvent* event) {
 }
 
 void QtyRateRow::AdjustFontSize() {
-	int tpt = TitleFontAdjustment.AdjustPointSize(this);
+	int tpt = TitleFontAdjustment.AdjustPointSize(window());
 	if (tpt <= TitleFontAdjustment.PointSizeAtMinimum) {
 		setTitle(tr(""));
 		TitleFont.setPointSize(1);
@@ -39,7 +39,7 @@ void QtyRateRow::AdjustFontSize() {
 
 	setFont(TitleFont);
 
-	LabelFont.setPointSize(NumericFontAdjustment.AdjustPointSize(this));
+	LabelFont.setPointSize(NumericFontAdjustment.AdjustPointSize(window()));
 	QuantityLabel->setFont(LabelFont);
 	RateLabel->setFont(LabelFont);
 }

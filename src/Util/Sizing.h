@@ -12,7 +12,9 @@ struct FontAdjustment {
 	bool AdjustToWidth = true;
 	const int AdjustPointSize(QWidget* parent) const {
 		return PointSizeAtMinimum
-			+ ((AdjustToWidth) ? parent->width() - MinimumWidth : parent->height() - MinimumHeight);
+			+ ((AdjustToWidth) ?
+					(parent->width() - MinimumWidth) / MinimumWidth
+					: (parent->height() - MinimumHeight) / MinimumHeight);
 	}
 };
 } // namespace VSCL::Util

@@ -4,6 +4,7 @@
 namespace VSCL {
 QtyRateRow::QtyRateRow(const QString& title, QtyRateDisplay* parent) : QGroupBox(title, parent) {
 	parent->AddRow(this);
+	Title = title;
 
 	Organizer = new QHBoxLayout;
 	Organizer->setContentsMargins(5, 5, 5, 5);
@@ -27,8 +28,15 @@ void QtyRateRow::resizeEvent(QResizeEvent* event) {
 
 void QtyRateRow::AdjustFontSize() {
 	int tpt = TitleFontAdjustment.AdjustPointSize(this);
-	tpt = (tpt <= TitleFontAdjustment.PointSizeAtMinimum) ? 0 : tpt;
-	TitleFont.setPointSize(tpt);
+	if (tpt <= TitleFontAdjustment.PointSizeAtMinimum) {
+		setTitle(tr(""));
+		TitleFont.setPointSize(1);
+	}
+	else {
+		setTitle(Title);
+		TitleFont.setPointSize(tpt);
+	}
+
 	setFont(TitleFont);
 
 	LabelFont.setPointSize(NumericFontAdjustment.AdjustPointSize(this));

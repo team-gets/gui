@@ -31,6 +31,7 @@ private:
 	QString QuantityUnits = tr("");
 	QString RateUnits = tr("/s");
 
+	QString Title;
 	QFont TitleFont;
 	QFont LabelFont;
 	QLabel* QuantityLabel;

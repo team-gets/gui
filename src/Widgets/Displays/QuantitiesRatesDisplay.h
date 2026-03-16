@@ -12,7 +12,7 @@ class QtyRateDisplay : public QGroupBox {
 	friend class QtyRateRow;
 
 public:
-	QtyRateDisplay(QWidget* parent = nullptr);
+	QtyRateDisplay(const QString& title, QWidget* parent = nullptr);
 
 	const QList<QtyRateRow*>& GetRowsView() const;
 

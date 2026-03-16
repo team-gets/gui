@@ -42,6 +42,7 @@ Widgets::Widgets() {
 	SetupCentralWidget();
 	SetupAttitudeDials();
 	SetupTimeHistoryPlot();
+	SetupAttQtysRatesDisplay();
 	SetupButtons();
 	SetupStatusColumn();
 	SetGridColumnsMinimums();
@@ -193,6 +194,16 @@ void Widgets::SetupTimeHistoryPlot() {
 
 	stupid_make_data(Plot);
 } // void Widgets::SetupTimeHistoryPlot()
+
+void Widgets::SetupAttQtysRatesDisplay() {
+	AttQtysRates = new QtyRateDisplay(tr("Attitude"), this);
+	MajorLayout->addWidget(AttQtysRates, 0, 1);
+	
+	RollQtyRate = new QtyRateRow(tr("Roll"), AttQtysRates);
+	PitchQtyRate = new QtyRateRow(tr("Pitch"), AttQtysRates);
+	YawQtyRate = new QtyRateRow(tr("Yaw"), AttQtysRates);
+} // void Widgets::SetupAttQtyRatesDisplay()
+
 // }}}
 // Menubar and Actions {{{
 void Widgets::About() {

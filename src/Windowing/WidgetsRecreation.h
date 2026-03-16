@@ -4,6 +4,8 @@
 #include <QtWidgets>
 
 #include "Widgets/Dial/AttitudeDial.h"
+#include "Widgets/Displays/QuantitiesRatesDisplay.h"
+#include "Widgets/Displays/QuantitiesRatesRow.h"
 #include "Plotting/Container.h"
 
 namespace VSCL::FromPpt {
@@ -34,6 +36,12 @@ private:
 	Plot::EmbeddablePlot2D* Plot;
 	Plot::PlotContainer* TimeHistory;
 	void SetupTimeHistoryPlot();
+
+	QtyRateDisplay* AttQtysRates;
+	QtyRateRow* RollQtyRate;
+	QtyRateRow* PitchQtyRate;
+	QtyRateRow* YawQtyRate;
+	void SetupAttQtysRatesDisplay();
 
 	// im not entirely sure of this part
 	QGroupBox* StatusColumn;

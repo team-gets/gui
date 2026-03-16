@@ -18,6 +18,9 @@ public:
 	void SetRoll(double roll);
 	void SetPitch(double pitch);
 	void SetYaw(double yaw);
+	void SetRollRate(double roll);
+	void SetPitchRate(double pitch);
+	void SetYawRate(double yaw);
 
 private:
 	QFont ButtonFont;

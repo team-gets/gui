@@ -17,8 +17,14 @@ QtyRateRow::QtyRateRow(const QString& title, QtyRateDisplay* parent) : QGroupBox
 	Organizer->addWidget(RateLabel);
 }
 
-void QtyRateRow::SetQuantity(double newQuantity) { Quantity = newQuantity; }
-void QtyRateRow::SetRate(double newRate) { Rate = newRate; }
+void QtyRateRow::SetQuantity(double newQuantity) {
+	Quantity = newQuantity;
+	QuantityLabel->setText(QString::number(Quantity) + QuantityUnits);
+}
+void QtyRateRow::SetRate(double newRate) {
+	Rate = newRate;
+	RateLabel->setText(QString::number(Rate) + RateUnits);
+}
 
 void QtyRateRow::SetQuantityUnits(const QString& units) { QuantityUnits = units; }
 void QtyRateRow::SetRateUnits(const QString& units) { RateUnits = units; }

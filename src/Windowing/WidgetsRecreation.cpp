@@ -52,7 +52,7 @@ Widgets::Widgets() {
 	SetAllButtonTextSize();
 
 	SetRoll(2);
-	SetPitch(10);
+	SetPitch(5);
 	SetYaw(100);
 } // void Widgets::Widgets()
 
@@ -69,13 +69,26 @@ void Widgets::SetRoll(double roll) {
 
 void Widgets::SetPitch(double pitch) {
 	PitchDial->SetDialAngle(pitch);
-	RollQtyRate->SetQuantity(pitch);
+	PitchQtyRate->SetQuantity(pitch);
 }
 
 void Widgets::SetYaw(double yaw) {
 	YawDial->SetDialAngle(yaw);
 	YawQtyRate->SetQuantity(yaw);
 }
+
+void Widgets::SetRollRate(double roll) {
+	RollQtyRate->SetRate(roll);
+}
+
+void Widgets::SetPitchRate(double pitch) {
+	PitchQtyRate->SetRate(pitch);
+}
+
+void Widgets::SetYawRate(double yaw) {
+	YawQtyRate->SetRate(yaw);
+}
+
 
 // Layout and Widgets Setup {{{
 void Widgets::SetupCentralWidget() {
@@ -87,7 +100,7 @@ void Widgets::SetupCentralWidget() {
 	MajorContainer->setSizePolicy(majorPolicy);
 
 	MajorLayout = new QGridLayout(MajorContainer);
-	MajorLayout->setContentsMargins(40, 40, 40, 40);
+	MajorLayout->setContentsMargins(35, 35, 35, 35);
 	MajorContainer->setLayout(MajorLayout);
 
 	setCentralWidget(MajorContainer);
@@ -215,12 +228,18 @@ void Widgets::SetupTimeHistoryPlot() {
 } // void Widgets::SetupTimeHistoryPlot()
 
 void Widgets::SetupAttQtysRatesDisplay() {
-	AttQtysRates = new QtyRateDisplay(tr("Attitude"), this);
+	AttQtysRates = new QtyRateDisplay(tr(""), this);
 	MajorLayout->addWidget(AttQtysRates, 0, 1);
 	
 	RollQtyRate = new QtyRateRow(tr("Roll"), AttQtysRates);
+	RollQtyRate->SetQuantityUnits("°");
+	RollQtyRate->SetRateUnits("°/s");
 	PitchQtyRate = new QtyRateRow(tr("Pitch"), AttQtysRates);
+	PitchQtyRate->SetQuantityUnits("°");
+	PitchQtyRate->SetRateUnits("°/s");
 	YawQtyRate = new QtyRateRow(tr("Yaw"), AttQtysRates);
+	YawQtyRate->SetQuantityUnits("°");
+	YawQtyRate->SetRateUnits("°/s");
 } // void Widgets::SetupAttQtyRatesDisplay()
 
 // }}}

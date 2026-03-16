@@ -11,11 +11,14 @@ class Widgets : public QMainWindow {
 
 public:
     Widgets();
+	virtual void resizeEvent(QResizeEvent* event) override;
 
 private:
 	QWidget* MajorContainer;
 	QGridLayout* MajorLayout;
 	void SetupCentralWidget();
+	void SetGridColumnsMinimums();
+	void SetGridRowsMinimums();
 
 	QFrame* AttitudeDialRow;
 	QHBoxLayout* AttitudeDialOrganizer;

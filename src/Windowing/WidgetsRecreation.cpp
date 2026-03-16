@@ -42,8 +42,14 @@ Widgets::Widgets() {
 	SetupTimeHistoryPlot();
 	SetupButtons();
 	SetupStatusColumn();
+	SetGridColumnsMinimums();
+	SetGridRowsMinimums();
 
 } // void Widgets::Widgets()
+
+void Widgets::resizeEvent(QResizeEvent* event) {
+	SetGridColumnsMinimums();
+} // void Widgets::resizeEvent()
 
 // Layout and Widgets Setup {{{
 void Widgets::SetupCentralWidget() {
@@ -55,7 +61,7 @@ void Widgets::SetupCentralWidget() {
 	MajorContainer->setSizePolicy(majorPolicy);
 
 	MajorLayout = new QGridLayout(MajorContainer);
-	MajorLayout->setContentsMargins(50, 50, 50, 50);
+	MajorLayout->setContentsMargins(40, 40, 40, 40);
 	MajorContainer->setLayout(MajorLayout);
 
 	setCentralWidget(MajorContainer);
@@ -85,6 +91,18 @@ void Widgets::SetupAttitudeDials() {
 
 	Dials = { RollDial, PitchDial, YawDial };
 } // void Widgets::SetupCentralWidget()
+
+void Widgets::SetGridColumnsMinimums() {
+	if (!MajorLayout) { return; };
+	const QRect& dims = centralWidget()->geometry();
+	MajorLayout->setColumnMinimumWidth(0, 3 * dims.width() / 5);
+} // void Widgets::SetGridColumnsMinimums()
+
+void Widgets::SetGridRowsMinimums() {
+	if (!MajorLayout) { return; }
+	const QRect& dims = centralWidget()->geometry();
+	MajorLayout->setRowMinimumHeight(0, 2 * dims.width() / 5);
+}
 
 void Widgets::SetupButtons() {
 	LoadTestRoutineButton = new QPushButton;

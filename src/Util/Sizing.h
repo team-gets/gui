@@ -11,7 +11,6 @@ struct FontAdjustment {
 	int PointSizeAtMinimum;
 	bool AdjustToWidth = false;
 	const int AdjustPointSize(QWidget* win) const {
-		qDebug() << win->size();
 		return PointSizeAtMinimum
 			+ ((AdjustToWidth) ?
 					(win->width() - MinimumWidth) / MinimumWidth

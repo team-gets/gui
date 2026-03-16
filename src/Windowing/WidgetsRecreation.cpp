@@ -35,8 +35,8 @@ Widgets::Widgets() {
 
 	// Geometry and window characteristics
     setWindowTitle(tr("VSCL Gyroscopic Test Rig"));
-    setMinimumSize(720, 480);
-    resize(720, 480);
+    setMinimumSize(Util::MinimumWidth, Util::MinimumHeight);
+    resize(Util::MinimumWidth, Util::MinimumHeight);
 
 	// Set up the static layout
 	SetupCentralWidget();

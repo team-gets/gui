@@ -50,6 +50,10 @@ Widgets::Widgets() {
 
 	ButtonFont = QFont();
 	SetAllButtonTextSize();
+
+	SetRoll(2);
+	SetPitch(10);
+	SetYaw(100);
 } // void Widgets::Widgets()
 
 void Widgets::resizeEvent(QResizeEvent* event) {
@@ -57,6 +61,21 @@ void Widgets::resizeEvent(QResizeEvent* event) {
 	SetGridRowsMinimums();
 	SetAllButtonTextSize();
 } // void Widgets::resizeEvent()
+
+void Widgets::SetRoll(double roll) {
+	RollDial->SetDialAngle(roll);
+	RollQtyRate->SetQuantity(roll);
+}
+
+void Widgets::SetPitch(double pitch) {
+	PitchDial->SetDialAngle(pitch);
+	RollQtyRate->SetQuantity(pitch);
+}
+
+void Widgets::SetYaw(double yaw) {
+	YawDial->SetDialAngle(yaw);
+	YawQtyRate->SetQuantity(yaw);
+}
 
 // Layout and Widgets Setup {{{
 void Widgets::SetupCentralWidget() {
@@ -156,7 +175,7 @@ void Widgets::SetupStatusColumn() {
 void Widgets::SetAllButtonTextSize() {
 	// assumes equal button sizing in the layout (which is true as of March 16 2026)
 	// magic num: 30 pt when at orig and go from there
-	ButtonFont.setPointSize(16 + (height() - 480) / 480);
+	ButtonFont.setPointSize(12 + (height() - 480) / 480);
 	LoadTestRoutineButton->setFont(ButtonFont);
 	QuantityCalculatorButton->setFont(ButtonFont);
 	LogOpenButton->setFont(ButtonFont);

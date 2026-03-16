@@ -14,6 +14,10 @@ class Widgets : public QMainWindow {
 public:
     Widgets();
 	virtual void resizeEvent(QResizeEvent* event) override;
+	
+	void SetRoll(double roll);
+	void SetPitch(double pitch);
+	void SetYaw(double yaw);
 
 private:
 	QFont ButtonFont;

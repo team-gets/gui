@@ -21,6 +21,7 @@ public:
 	AttitudeDial(QWidget* parent, bool enabled);
 
 	void SetDialAngle(double value);
+	void SetNumericDisplayState(bool enabled);
 
 	void SetPalette(AttitudeDialPalette& newPalette);
 	AttitudeDialPalette GetPalette() const;
@@ -42,7 +43,6 @@ private:
 	bool NumericDisplayEnabled = true;
 	void UpdateNumericFont();
 	void UpdateNumericDisplay();
-	void SetNumericDisplayState(bool enabled);
 
 	void PaintCircularBacking(QPaintEvent* event, QPainter* painter);
 	void PaintTicks(QPaintEvent* event, QPainter* painter);

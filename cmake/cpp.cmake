@@ -19,6 +19,8 @@ set(OTHER_APP_SOURCES
 set(WIDGET_SOURCES
 	"${WINDOWING_SRC_DIR}/DevWindow.cpp"
 	"${WINDOWING_SRC_DIR}/NumericTestWidget.cpp"
+	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesDisplay.cpp"
+	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesRow.cpp"
 	"${WIDGETS_SRC_DIR}/Dial/AttitudeDial.cpp")
 
 set(PLOTTING_SOURCES

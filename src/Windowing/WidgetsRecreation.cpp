@@ -112,6 +112,7 @@ void Widgets::SetGridRowsMinimums() {
 	MajorLayout->setRowMinimumHeight(1, 2 * dims.height() / 3);
 } // void Widgets::SetGridRowsMinimums()
 
+// Buttons {{{
 void Widgets::SetupButtons() {
 	LoadTestRoutineButton = new QPushButton;
 	LoadTestRoutineButton->setText(tr("Load Test Routine"));
@@ -160,7 +161,8 @@ void Widgets::SetAllButtonTextSize() {
 	LogOpenButton->setFont(ButtonFont);
 	AbortButton->setFont(ButtonFont);
 	StatusColumn->setFont(ButtonFont);
-}
+} // void Widgets::SetAllButtonTextSize()
+// }}}
 
 void Widgets::SetupTimeHistoryPlot() {
 	Plot = new Plot::PlotGR(this);

@@ -4,23 +4,25 @@
 
 namespace VSCL {
 
-class QuantitiesRatesRow;
+class QtyRateRow;
 
-class QuantitesRatesDisplay : public QFrame {
+class QtyRateDisplay : public QGroupBox {
 	
 	Q_OBJECT;
-	friend class QuantitesRatesRow;
+	friend class QtyRateRow;
 
 public:
-	QuantitesRatesDisplay(QWidget* parent = nullptr);
+	QtyRateDisplay(QWidget* parent = nullptr);
 
-	const QList<QuantitiesRatesRow*>& GetRowsView() const;
+	const QList<QtyRateRow*>& GetRowsView() const;
 
 protected:
-	void AddRow(QuantitiesRatesRow* newRow);
+	void AddRow(QtyRateRow* newRow);
 
 private:
-	QList<QuantitiesRatesRow*> Rows;
+	QList<QtyRateRow*> Rows;
 
-}; // class QuantitiesRatesDisplay
+	QVBoxLayout* Organizer;
+
+}; // class QtyRateDisplay
 } // namespace VSCL

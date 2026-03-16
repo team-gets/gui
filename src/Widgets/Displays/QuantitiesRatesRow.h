@@ -4,15 +4,15 @@
 
 namespace VSCL {
 
-class QuantitiesRatesDisplay;
+class QtyRateDisplay;
 
-class QuantitiesRatesRow : public QFrame {
+class QtyRateRow : public QFrame {
 
 	Q_OBJECT;
-	friend class QuantitiesRatesDisplay;
+	friend class QtyRateDisplay;
 
 public:
-	QuantitiesRatesRow(QuantitiesRatesDisplay* parent);
+	QtyRateRow(QtyRateDisplay* parent);
 
 	void SetQuantity(double newQuantity);
 	void SetRate(double newRate);
@@ -23,5 +23,5 @@ private:
 	QLabel* QuantityLabel;
 	QLabel* QuantityRateLabel;
 
-}; // class QuantitiesRatesDisplay
+}; // class QtyRateDisplay
 } // namespace VSCL

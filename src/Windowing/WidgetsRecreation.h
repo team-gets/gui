@@ -14,6 +14,8 @@ public:
 	virtual void resizeEvent(QResizeEvent* event) override;
 
 private:
+	QFont ButtonFont;
+
 	QWidget* MajorContainer;
 	QGridLayout* MajorLayout;
 	void SetupCentralWidget();
@@ -42,6 +44,7 @@ private:
 	QPushButton* AbortButton;
 	void SetupButtons();
 	void SetupStatusColumn();
+	void SetAllButtonTextSize();
 
 // Menubar and Actions {{{
 private slots:

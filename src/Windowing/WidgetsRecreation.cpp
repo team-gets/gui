@@ -9,9 +9,11 @@
 static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {
 	double ph1, ph2, ph3;
 
-	std::srand(std::chrono::system_clock::now().time_since_epoch().count());
+	std::srand(std::chrono::system_clock::now().time_since_epoch().count() + 1);
 	ph1 = std::rand() % 12;
+	std::srand(std::chrono::system_clock::now().time_since_epoch().count() + 3);
 	ph2 = std::rand() % 12;
+	std::srand(std::chrono::system_clock::now().time_since_epoch().count() + 2);
 	ph3 = std::rand() % 12;
 
 	for (int i = 0; i < 100; i++) {
@@ -45,11 +47,14 @@ Widgets::Widgets() {
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
 
+	ButtonFont = QFont();
+	SetAllButtonTextSize();
 } // void Widgets::Widgets()
 
 void Widgets::resizeEvent(QResizeEvent* event) {
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
+	SetAllButtonTextSize();
 } // void Widgets::resizeEvent()
 
 // Layout and Widgets Setup {{{
@@ -145,6 +150,17 @@ void Widgets::SetupStatusColumn() {
 
 	StatusColumn->setLayout(StatusColumnOrganizer);
 } // void Widgets::SetupStatusColumn()
+
+void Widgets::SetAllButtonTextSize() {
+	// assumes equal button sizing in the layout (which is true as of March 16 2026)
+	// magic num: 30 pt when at orig and go from there
+	ButtonFont.setPointSize(16 + (height() - 480) / 480);
+	LoadTestRoutineButton->setFont(ButtonFont);
+	QuantityCalculatorButton->setFont(ButtonFont);
+	LogOpenButton->setFont(ButtonFont);
+	AbortButton->setFont(ButtonFont);
+	StatusColumn->setFont(ButtonFont);
+}
 
 void Widgets::SetupTimeHistoryPlot() {
 	Plot = new Plot::PlotGR(this);

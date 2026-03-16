@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtWidgets>
+#include "Util/Sizing.h"
 
 namespace VSCL {
 
@@ -13,6 +14,7 @@ class QtyRateRow : public QGroupBox {
 
 public:
 	QtyRateRow(const QString& title, QtyRateDisplay* parent);
+	virtual void resizeEvent(QResizeEvent* event);
 
 	void SetQuantity(double newQuantity);
 	void SetRate(double newRate);
@@ -29,8 +31,14 @@ private:
 	QString QuantityUnits = tr("");
 	QString RateUnits = tr("/s");
 
+	QFont TitleFont;
+	QFont LabelFont;
 	QLabel* QuantityLabel;
 	QLabel* RateLabel;
+
+	void AdjustFontSize();
+	static constexpr Util::FontAdjustment TitleFontAdjustment { 6 };
+	static constexpr Util::FontAdjustment NumericFontAdjustment { 8 };
 
 }; // class QtyRateDisplay
 } // namespace VSCL

@@ -15,6 +15,25 @@ QtyRateRow::QtyRateRow(const QString& title, QtyRateDisplay* parent) : QGroupBox
 	RateLabel = new QLabel(this);
 	RateLabel->setText(QString::number(Rate) + RateUnits);
 	Organizer->addWidget(RateLabel);
+
+	TitleFont = QFont();
+	LabelFont = QFont();
+	AdjustFontSize();
+}
+
+void QtyRateRow::resizeEvent(QResizeEvent* event) {
+	AdjustFontSize();
+}
+
+void QtyRateRow::AdjustFontSize() {
+	int tpt = TitleFontAdjustment.AdjustPointSize(this);
+	tpt = (tpt <= TitleFontAdjustment.PointSizeAtMinimum) ? 0 : tpt;
+	TitleFont.setPointSize(tpt);
+	setFont(TitleFont);
+
+	LabelFont.setPointSize(NumericFontAdjustment.AdjustPointSize(this));
+	QuantityLabel->setFont(LabelFont);
+	RateLabel->setFont(LabelFont);
 }
 
 void QtyRateRow::SetQuantity(double newQuantity) {

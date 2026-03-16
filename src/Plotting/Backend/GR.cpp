@@ -100,6 +100,7 @@ void PlotGR::UpdateAxes() {
 
 	gr_setlinecolorind(ColorIndex(ColorGR::Black));
 	gr_setlinetype(1);
+	gr_setwindow(taxe.Range[0], taxe.Range[1], qaxe.Range[0], qaxe.Range[1]);
     gr_axes(ttick, qtick, 0, 0, taxe.MajorSpacing, qaxe.MajorSpacing, -0.01);
 } // void PlotGR::UpdateAxes();
 

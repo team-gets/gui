@@ -40,6 +40,7 @@ target_include_directories(plotting_iface PUBLIC ${PLOTTING_SRC_DIR})
 
 target_compile_warn_all(plotting_iface)
 
+add_subdirectory("${CMAKE_SOURCE_DIR}/lib/gr")
 find_package(GR REQUIRED)
 
 add_library(gr_backend SHARED ${GR_BKND_SOURCES})

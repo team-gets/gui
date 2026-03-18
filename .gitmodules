@@ -1,6 +1,6 @@
 [submodule "lib/vcpkg"]
 	path = lib/vcpkg
-	url = git@github.com:microsoft/vcpkg.git
+	url = https://github.com/microsoft/vcpkg.git
 [submodule "lib/gr"]
 	path = lib/gr
-	url = git@github.com:sciapp/gr.git
+	url = https://github.com/sciapp/gr.git

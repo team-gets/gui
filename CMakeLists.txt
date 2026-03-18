@@ -39,6 +39,8 @@ target_include_directories(plotting_iface PUBLIC ${PLOTTING_SRC_DIR})
 
 target_compile_warn_all(plotting_iface)
 
+find_package(PNG REQUIRED)
+add_library(Libpng::Libpng ALIAS PNG::PNG) # Why
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/gr")
 find_package(GR REQUIRED)
 

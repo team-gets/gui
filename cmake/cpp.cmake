@@ -28,7 +28,7 @@ set(PLOTTING_SOURCES
 	"${PLOTTING_SRC_DIR}/Container.cpp")
 
 set(GR_BKND_SOURCES
-	"${PLOTTING_SRC_DIR}/Backend/GR.cpp")
+	"${PLOTTING_SRC_DIR}/Backend/CoreGR.cpp")
 
 set(STD_APP_INCLUDES
 	"${CMAKE_SOURCE_DIR}/src"

@@ -7,7 +7,7 @@ project(rig_gui
 )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
-#set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOMOC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -51,7 +51,7 @@ target_include_directories(gr_backend PUBLIC
 	"${CMAKE_SOURCE_DIR}/build/_deps/gr-src/lib/gr") #FIXME: this is really bad
 target_link_libraries(gr_backend PRIVATE plotting_iface)
 target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)
-target_link_libraries(gr_backend PUBLIC GR::qt6gr GR::GR)
+target_link_libraries(gr_backend PUBLIC GR::qt6gr)
 
 target_compile_warn_all(gr_backend)
 

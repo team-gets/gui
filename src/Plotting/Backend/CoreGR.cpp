@@ -1,9 +1,8 @@
 #include <cmath>
 
 #include "gr.h"
-#include "qtgr/grwidget.h"
 
-#include "./GR.h"
+#include "./CoreGR.h"
 #include "./ColorGR.h"
 
 namespace VSCL::Plot {

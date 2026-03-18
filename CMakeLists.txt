@@ -12,6 +12,7 @@ set(CMAKE_AUTOMOC ON)
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
+include("./cmake/bindirs.cmake")
 include("./cmake/cpp.cmake")
 include("./cmake/qml.cmake")
 

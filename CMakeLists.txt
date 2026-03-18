@@ -43,7 +43,6 @@ target_compile_warn_all(plotting_iface)
 find_package(PNG REQUIRED)
 add_library(Libpng::Libpng ALIAS PNG::PNG) # Why does the vcpkg version not do this/why does GR do this
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/gr" EXCLUDE_FROM_ALL)
-find_package(GR REQUIRED)
 
 # GR Backend Compilation
 add_library(gr_backend SHARED ${GR_BKND_SOURCES})

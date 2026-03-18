@@ -14,7 +14,8 @@ then
 ```sh
 cmake --build build
 ```
-for example.
+for example. Don't forget to initialize the submodules.
+Vcpkg should automatically run due to its definition as the toolchain file in `CMakeLists.txt`.
 
 ## Development Resources
 - [Qt Documentation](https://doc.qt.io/)

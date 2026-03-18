@@ -40,15 +40,16 @@ target_include_directories(plotting_iface PUBLIC ${PLOTTING_SRC_DIR})
 target_compile_warn_all(plotting_iface)
 
 find_package(PNG REQUIRED)
-add_library(Libpng::Libpng ALIAS PNG::PNG) # Why
+add_library(Libpng::Libpng ALIAS PNG::PNG) # Why does the vcpkg version not do this/why does GR do this
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/gr")
 find_package(GR REQUIRED)
 
 add_library(gr_backend SHARED ${GR_BKND_SOURCES})
 get_target_property(QT6GR_INCLUDES GR::GR INTERFACE_INCLUDE_DIRECTORIES)
 target_include_directories(gr_backend PUBLIC
-	${QT6GR_INCLUDES} "${CMAKE_SOURCE_DIR}/src"
-	"${CMAKE_SOURCE_DIR}/build/_deps/gr-src/lib/gr") #FIXME: this is really bad
+	${QT6GR_INCLUDES} "${CMAKE_SOURCE_DIR}/src")
+
+add_dependencies(gr_backend plotting_iface)
 target_link_libraries(gr_backend PRIVATE plotting_iface)
 target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)
 target_link_libraries(gr_backend PUBLIC GR::qt6gr)

@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.30...4.0)
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/lib/vcpkg/scripts/buildsystems/vcpkg.cmake"
+	CACHE STRING "Vcpkg toolchain file" FORCE)
 
 project(rig_gui
 	LANGUAGES CXX C
@@ -6,9 +8,6 @@ project(rig_gui
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 set(CMAKE_AUTOMOC ON)
-
-set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/lib/vcpkg/scripts/buildsystems/vcpkg.cmake"
-	CACHE STRING "Vcpkg toolchain file" FORCE)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")

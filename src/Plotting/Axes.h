@@ -7,19 +7,19 @@
 
 namespace VSCL::Plot {
 
-enum class PLOT_API Axis : std::uint8_t {
+enum class Axis : std::uint8_t {
 	Time = 0,
 	Quantity = 1,
 };
 
-enum class PLOT_API AxisScaling : std::uint8_t {
+enum class AxisScaling : std::uint8_t {
 	Linear = 0,
 	Log10 = 1,
 	Ln = 2,
 	Inverted = 3
 };
 
-struct PLOT_API AxisInfo {
+struct AxisInfo {
 	Axis InfoOf;
 	AxisScaling Scaling = AxisScaling::Linear;
 

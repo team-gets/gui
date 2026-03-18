@@ -17,7 +17,7 @@ static const std::map<std::string, ColorRGB> StandardColor = {
 	{ "Blue",	ColorRGB{ 0.0, 0.0, 1.0 } },
 };
 
-enum class PLOT_API LineStyle : uint8_t {
+enum class LineStyle : uint8_t {
 	Solid = 1,
 	Dashed = 2,
 	Dotted = 3,

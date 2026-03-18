@@ -8,7 +8,7 @@
 
 namespace VSCL::Plot {
 
-struct PLOT_API SeriesInfo {
+struct SeriesInfo {
 	std::string Name = "";
 	std::vector<double> Times = { 0.0 };
 	std::vector<double> Quantities = { 0.0 };

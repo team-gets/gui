@@ -10,7 +10,7 @@ namespace VSCL::Plot {
 
 // Reference gr.h 104-123
 // The polyline coloring function takes an int < 1024
-enum class PLOT_API ColorGR : uint16_t {
+enum class ColorGR : uint16_t {
 	White =		0,
 	Black =		1,
 	Red =		236,

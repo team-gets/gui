@@ -1,6 +1,7 @@
 #include <cmath>
 
 #include "gr.h"
+#include "qtgr/grwidget.h"
 
 #include "./GR.h"
 #include "./ColorGR.h"

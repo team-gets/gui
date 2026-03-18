@@ -37,6 +37,7 @@ qt_add_qml_module(qml.a_circle
 add_library(plotting_iface SHARED ${PLOTTING_SOURCES})
 target_link_libraries(plotting_iface PRIVATE Qt6::Core Qt6::Widgets)
 target_include_directories(plotting_iface PUBLIC ${PLOTTING_SRC_DIR})
+target_compile_definitions(plotting_iface PRIVATE COMPILING_PLOT_API_DLL)
 
 target_compile_warn_all(plotting_iface)
 
@@ -54,6 +55,7 @@ target_include_directories(gr_backend PUBLIC
 target_link_libraries(gr_backend PRIVATE plotting_iface)
 target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)
 target_link_libraries(gr_backend PUBLIC GR::qt6gr)
+target_compile_definitions(gr_backend PRIVATE COMPILING_GR_BACKEND_DLL)
 
 target_compile_warn_all(gr_backend)
 

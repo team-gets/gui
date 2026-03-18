@@ -36,7 +36,7 @@ enum class PLOT_API ColorGR : uint16_t {
 }; // enum class ColorGR
 
 // Reference gks/util.c 213-463
-static const PLOT_API std::map<ColorGR, ColorRGB> ColorGRAsRGB = {
+static const std::map<ColorGR, ColorRGB> ColorGRAsRGB = {
 	{ ColorGR::White, ColorRGB{1.000000, 1.000000, 1.000000} },
 	{ ColorGR::Black, ColorRGB{0.0, 0.0, 0.0} },
 	{ ColorGR::Red, ColorRGB{0.901960, 0.098040, 0.294120} },

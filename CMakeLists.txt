@@ -50,7 +50,7 @@ get_target_property(QT6GR_INCLUDES GR::GR INTERFACE_INCLUDE_DIRECTORIES)
 target_include_directories(gr_backend PUBLIC
 	${QT6GR_INCLUDES} "${CMAKE_SOURCE_DIR}/src")
 
-add_dependencies(gr_backend plotting_iface)
+#add_dependencies(gr_backend plotting_iface)
 target_link_libraries(gr_backend PRIVATE plotting_iface)
 target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)
 target_link_libraries(gr_backend PUBLIC GR::qt6gr)

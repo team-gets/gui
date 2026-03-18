@@ -3,22 +3,23 @@
 #include <cstdint>
 #include <array>
 #include <string>
+#include "PlotAPI.h"
 
 namespace VSCL::Plot {
 
-enum class Axis : std::uint8_t {
+enum class PLOT_API Axis : std::uint8_t {
 	Time = 0,
 	Quantity = 1,
 };
 
-enum class AxisScaling : std::uint8_t {
+enum class PLOT_API AxisScaling : std::uint8_t {
 	Linear = 0,
 	Log10 = 1,
 	Ln = 2,
 	Inverted = 3
 };
 
-struct AxisInfo {
+struct PLOT_API AxisInfo {
 	Axis InfoOf;
 	AxisScaling Scaling = AxisScaling::Linear;
 

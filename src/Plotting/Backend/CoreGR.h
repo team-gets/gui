@@ -3,6 +3,7 @@
 #include <QWidget>
 #include "qtgr/grwidget.h"
 
+#include "Plotting/PlotAPI.h"
 #include "Plotting/Plot2D.h"
 #include "ColorGR.h"
 
@@ -12,7 +13,7 @@ namespace VSCL::Plot {
 
 class PlotContainer;
 
-class PlotGR : public EmbeddablePlot2D, public GRWidget {
+class PLOT_API PlotGR : public EmbeddablePlot2D, public GRWidget {
 
 	friend class PlotContainer;
 

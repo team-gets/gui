@@ -50,8 +50,8 @@ get_target_property(QT6GR_INCLUDES GR::GR INTERFACE_INCLUDE_DIRECTORIES)
 target_include_directories(gr_backend PUBLIC
 	${QT6GR_INCLUDES} "${CMAKE_SOURCE_DIR}/src")
 
-target_link_libraries(gr_backend PRIVATE plotting_iface)
-target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)
+target_link_libraries(gr_backend PUBLIC plotting_iface)
+target_link_libraries(gr_backend PUBLIC Qt6::Core Qt6::Widgets)
 target_link_libraries(gr_backend PUBLIC GR::qt6gr qt6plugin)
 target_compile_definitions(gr_backend PRIVATE COMPILING_GR_BACKEND_DLL)
 target_compile_warn_all(gr_backend)
@@ -59,7 +59,7 @@ target_compile_warn_all(gr_backend)
 # Widgets Recreation
 qt_add_executable(widgets_recreation WIN32 MACOSX_BUNDLE
 	"${WINDOWING_SRC_DIR}/WidgetsRecreation.cpp"
-	${OTHER_APP_SOURCES} ${WIDGET_SOURCES} ${PLOTTING_SOURCES})
+	${OTHER_APP_SOURCES} ${WIDGET_SOURCES}) # ${PLOTTING_SOURCES}
 
 target_include_directories(widgets_recreation PRIVATE ${STD_APP_INCLUDES})
 target_compile_warn_all(widgets_recreation)

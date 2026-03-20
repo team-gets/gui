@@ -1,4 +1,19 @@
+# Editor files
+.vs
+.vscode
+
+# LSP files
 .cache
 compile_commands.json
+
+# vcpkg
+vcpkg_installed
+vcpkg-manifest-install.log
+
+# Build files
+bin
 build
-lib
+out
+*.pdb
+*.vsidx
+CMakeSettings.json

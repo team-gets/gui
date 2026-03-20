@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <array>
 #include <string>
+#include "PlotAPI.h"
 
 namespace VSCL::Plot {
 

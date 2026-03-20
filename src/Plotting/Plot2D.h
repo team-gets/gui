@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstdint>
 
+#include "PlotAPI.h"
 #include "Axes.h"
 #include "Series.h"
 
@@ -15,7 +16,7 @@ namespace VSCL::Plot {
 // The embeddable plot has at most, one figure inside of it. A figure will have multiple serieses.
 //
 // TODO: probably look at typical plotting implementations for scientific programming
-class EmbeddablePlot2D {
+class PLOT_API EmbeddablePlot2D {
 public:
 	void AddPoint(uint8_t idx, double time, double quantity);
 	void AddPoint(double time, double quantity);

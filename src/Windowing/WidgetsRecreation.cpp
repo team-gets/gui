@@ -3,7 +3,7 @@
 #include <chrono>
 
 #include "WidgetsRecreation.h"
-#include "Plotting/Backend/GR.h"
+#include "Plotting/Backend/CoreGR.h"
 
 // stupid temp thing {{{
 static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {

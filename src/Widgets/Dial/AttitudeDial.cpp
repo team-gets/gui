@@ -21,7 +21,7 @@ AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
 } // AttitudeDial ctor
 
 AttitudeDial::AttitudeDial(QWidget* parent, bool showNumericDisplay) : AttitudeDial(parent) {
-	NumericDisplayEnabled = showNumericDisplay;
+	SetNumericDisplayState(showNumericDisplay);
 }
 
 void AttitudeDial::SetDialAngle(double value) {

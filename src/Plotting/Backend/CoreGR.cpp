@@ -2,7 +2,7 @@
 
 #include "gr.h"
 
-#include "./GR.h"
+#include "./CoreGR.h"
 #include "./ColorGR.h"
 
 namespace VSCL::Plot {

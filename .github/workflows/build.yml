@@ -44,10 +44,10 @@ jobs:
           vcpkgJsonGlob: "**/vcpkg.json"
       - name: Prepare CMake
         run: |
-          cmake -S . -B build --preset=windows-msvc
+          cmake -S . -B build --preset=linux-gcc
       - name: Build Using CMake
         run: |
-          cmake --build build --preset=windows-msvc
+          cmake --build build --preset=linux-gcc
 
   windows-build:
     name: Windows

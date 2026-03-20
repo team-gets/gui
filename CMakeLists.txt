@@ -52,7 +52,7 @@ target_include_directories(gr_backend PUBLIC
 
 target_link_libraries(gr_backend PRIVATE plotting_iface)
 target_link_libraries(gr_backend PRIVATE Qt6::Core Qt6::Widgets)
-target_link_libraries(gr_backend PUBLIC GR::qt6gr)
+target_link_libraries(gr_backend PUBLIC GR::qt6gr qt6plugin)
 target_compile_definitions(gr_backend PRIVATE COMPILING_GR_BACKEND_DLL)
 target_compile_warn_all(gr_backend)
 

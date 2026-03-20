@@ -4,11 +4,12 @@
 #include <QHBoxLayout>
 
 #include "Plot2D.h"
+#include "PlotAPI.h"
 
 namespace VSCL::Plot {
 
 // The intent is to put stuff next to the embedded plot
-class PlotContainer : public QWidget {
+class PLOT_API PlotContainer : public QWidget {
 
 	Q_OBJECT;
 

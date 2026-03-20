@@ -66,6 +66,7 @@ jobs:
         with:
           vcpkgDirectory: "${{ github.workspace }}/lib/vcpkg"
           vcpkgJsonGlob: "**/vcpkg.json"
+      - uses: ilammy/msvc-dev-cmd@v1.13.0
       - name: Prepare CMake
         run: |
           cmake -S . -B build --preset=windows-msvc

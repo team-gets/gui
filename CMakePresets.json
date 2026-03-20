@@ -1,0 +1,90 @@
+{
+	"version": 3,
+	"cmakeMinimumRequired": {
+		"major": 3,
+		"minor": 30,
+		"patch": 0
+	},
+
+	"configurePresets": [
+		{
+			"name": "default",
+			"hidden": true,
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/bin/${presetName}",
+			"cacheVariables": {
+				"CMAKE_COLOR_DIAGNOSTICS": "ON"
+			}
+		},
+		{
+			"name": "windows-only",
+			"hidden": true,
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
+			  }
+		},
+		{
+			"name": "linux-only",
+			"hidden": true,
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			  }
+		},
+
+		{
+			"name": "windows-mingw",
+			"inherits": [ "default", "windows-only" ],
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "gcc",
+				"CMAKE_CXX_COMPILER": "g++"
+			}
+		},
+		{
+			"name": "windows-msvc",
+			"inherits": [ "default", "windows-only" ],
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "cl",
+				"CMAKE_CXX_COMPILER": "cl"
+			}
+		},
+		{
+			"name": "linux-gcc",
+			"inherits": [ "default", "linux-only" ],
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "gcc",
+				"CMAKE_CXX_COMPILER": "g++"
+			}
+		},
+		{
+			"name": "linux-clang",
+			"inherits": [ "default", "linux-only" ],
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "clang",
+				"CMAKE_CXX_COMPILER": "clang++"
+			}
+		}
+	],
+
+	"buildPresets": [
+		{
+			"name": "windows-mingw",
+			"configurePreset": "windows-mingw"
+		},
+		{
+			"name": "windows-msvc",
+			"configurePreset": "windows-msvc"
+		},
+		{
+			"name": "linux-gcc",
+			"configurePreset": "linux-gcc"
+		},
+		{
+			"name": "linux-clang",
+			"configurePreset": "linux-clang"
+		}
+	]
+}

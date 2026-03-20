@@ -44,10 +44,10 @@ jobs:
           vcpkgJsonGlob: "**/vcpkg.json"
       - name: Prepare CMake
         run: |
-          cmake -S . -B build
+          cmake -S . -B build --preset=windows-msvc
       - name: Build Using CMake
         run: |
-          cmake --build build
+          cmake --build build --preset=windows-msvc
 
   windows-build:
     name: Windows
@@ -68,7 +68,7 @@ jobs:
           vcpkgJsonGlob: "**/vcpkg.json"
       - name: Prepare CMake
         run: |
-          cmake -S . -B build
+          cmake -S . -B build --preset=windows-msvc
       - name: Build Using CMake
         run: |
-          cmake --build build
+          cmake --build build --preset=windows-msvc

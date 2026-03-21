@@ -6,8 +6,8 @@
 #define GR_BACKEND __declspec(dllexport)
 #else
 #define GR_BACKEND __declspec(dllimport)
-#endif
+#endif // COMPILING_GR_BACKEND_DLL
 #else
 #define GR_BACKEND
-#endif
-#endif
+#endif // _WIN32 && !__GNUC__
+#endif // GR_BACKEND

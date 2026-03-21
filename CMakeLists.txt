@@ -9,7 +9,7 @@ project(rig_gui
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets Charts)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 include("./cmake/cpp.cmake")
@@ -55,6 +55,16 @@ target_link_libraries(gr_backend PUBLIC Qt6::Core Qt6::Widgets)
 target_link_libraries(gr_backend PUBLIC GR::qt6gr qt6plugin)
 target_compile_definitions(gr_backend PRIVATE COMPILING_GR_BACKEND_DLL)
 target_compile_warn_all(gr_backend)
+
+# QChart Backend Compilation
+add_library(qchart_backend SHARED ${QCHART_BKND_SOURCES})
+target_include_directories(qchart_backend PUBLIC "${CMAKE_SOURCE_DIR}/src")
+
+target_link_libraries(qchart_backend PUBLIC plotting_iface)
+target_link_libraries(qchart_backend PUBLIC Qt6::Core Qt6::Widgets Qt6::Charts)
+target_compile_definitions(qchart_backend PRIVATE COMPILING_QCHART_BACKEND_DLL)
+target_compile_warn_all(qchart_backend)
+
 
 # Widgets Recreation
 qt_add_executable(widgets_recreation WIN32 MACOSX_BUNDLE

@@ -32,6 +32,7 @@ jobs:
           version: "6.10.0"
           target: "desktop"
           arch: "linux_gcc_64"
+          modules: "qtcharts"
       - name: Install Build Dependencies
         run: |
           echo Installing CMake...
@@ -62,6 +63,7 @@ jobs:
           version: "6.10.0"
           target: "desktop"
           arch: "win64_msvc2022_64"
+          modules: "qtcharts"
       - uses: lukka/run-vcpkg@v11
         with:
           vcpkgDirectory: "${{ github.workspace }}/lib/vcpkg"

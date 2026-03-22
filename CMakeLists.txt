@@ -8,6 +8,7 @@ project(rig_gui
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickWidgets Charts)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -75,4 +76,4 @@ target_include_directories(widgets_recreation PRIVATE ${STD_APP_INCLUDES})
 target_compile_warn_all(widgets_recreation)
 
 target_link_libraries(widgets_recreation PRIVATE ${STD_APP_QT6_DEPS})
-target_link_libraries(widgets_recreation PRIVATE gr_backend)
+target_link_libraries(widgets_recreation PRIVATE gr_backend qchart_backend)

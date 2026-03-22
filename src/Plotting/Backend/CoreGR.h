@@ -7,8 +7,6 @@
 #include "Plotting/Plot2D.h"
 #include "ColorGR.h"
 
-class GRWidget;
-
 namespace VSCL::Plot {
 
 class PlotContainer;

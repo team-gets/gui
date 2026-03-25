@@ -42,21 +42,21 @@ jobs:
           echo Installing automake...
           sudo apt install autoconf autoconf-archive automake libtool
           echo Installing mono...
-          sudo apt install mono-runtime
+          sudo apt install mono-complete
       - uses: lukka/run-vcpkg@v11
         with:
           vcpkgDirectory: "${{ github.workspace }}/lib/vcpkg"
           vcpkgJsonGlob: "**/vcpkg.json"
       - name: "Setup NuGet Credentials"
         run: |
-          vcpkg fetch nuget | tail -n 1 \
+          mono `vcpkg fetch nuget | tail -n 1` \
             sources add \
             -source "https://nuget.pkg.github.com/team-gets/index.json" \
             -storepasswordincleartext \
             -name "GitHub" \
             -username "team-gets" \
             -password "${{ secrets.GITHUB_TOKEN }}"
-          vcpkg fetch nuget | tail -n 1 \
+          mono `vcpkg fetch nuget | tail -n 1` \
             setapikey "${{ secrets.GITHUB_TOKEN }}" \
             -source "https://nuget.pkg.github.com/team-gets/index.json"
       - name: Prepare CMake

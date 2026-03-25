@@ -41,20 +41,22 @@ jobs:
           sudo apt install cmake -y
           echo Installing automake...
           sudo apt install autoconf autoconf-archive automake libtool
+          echo Installing mono...
+          sudo apt install mono
       - uses: lukka/run-vcpkg@v11
         with:
           vcpkgDirectory: "${{ github.workspace }}/lib/vcpkg"
           vcpkgJsonGlob: "**/vcpkg.json"
       - name: "Setup NuGet Credentials"
         run: |
-          ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1` \
+          mono `./lib/vcpkg/vcpkg fetch nuget | tail -n 1` \
             sources add \
             -source "https://nuget.pkg.github.com/<OWNER>/index.json" \
             -storepasswordincleartext \
             -name "GitHub" \
             -username "team-gets" \
             -password "${{ secrets.GITHUB_TOKEN }}"
-          ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1` \
+          mono `./lib/vcpkg/vcpkg fetch nuget | tail -n 1` \
             setapikey "${{ secrets.GITHUB_TOKEN }}" \
             -source "https://nuget.pkg.github.com/team-gets/index.json"
       - name: Prepare CMake
@@ -84,14 +86,14 @@ jobs:
       - name: "Setup NuGet Credentials"
         shell: "bash"
         run: |
-          ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1` \
+          `./lib/vcpkg/vcpkg fetch nuget | tail -n 1` \
             sources add \
             -source "https://nuget.pkg.github.com/<OWNER>/index.json" \
             -storepasswordincleartext \
             -name "GitHub" \
             -username "team-gets" \
             -password "${{ secrets.GITHUB_TOKEN }}"
-          ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1` \
+          `./lib/vcpkg/vcpkg fetch nuget | tail -n 1` \
             setapikey "${{ secrets.GITHUB_TOKEN }}" \
             -source "https://nuget.pkg.github.com/team-gets/index.json"
       - uses: ilammy/msvc-dev-cmd@v1.13.0

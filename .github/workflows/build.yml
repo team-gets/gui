@@ -49,14 +49,14 @@ jobs:
           vcpkgJsonGlob: "**/vcpkg.json"
       - name: "Setup NuGet Credentials"
         run: |
-          vcpkg fetch nuget | tail -n 1` \
+          vcpkg fetch nuget | tail -n 1 \
             sources add \
             -source "https://nuget.pkg.github.com/team-gets/index.json" \
             -storepasswordincleartext \
             -name "GitHub" \
             -username "team-gets" \
             -password "${{ secrets.GITHUB_TOKEN }}"
-          vcpkg fetch nuget | tail -n 1` \
+          vcpkg fetch nuget | tail -n 1 \
             setapikey "${{ secrets.GITHUB_TOKEN }}" \
             -source "https://nuget.pkg.github.com/team-gets/index.json"
       - name: Prepare CMake

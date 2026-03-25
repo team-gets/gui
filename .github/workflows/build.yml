@@ -1,5 +1,8 @@
 name: Build
 
+env:
+  VCPKG_BINARY_SOURCES: "clear;nuget,GitHub,readwrite"
+
 on:
   pull_request:
     branches: ["main"]
@@ -42,6 +45,18 @@ jobs:
         with:
           vcpkgDirectory: "${{ github.workspace }}/lib/vcpkg"
           vcpkgJsonGlob: "**/vcpkg.json"
+      - name: "Setup NuGet Credentials"
+        run: |
+          ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1` \
+            sources add \
+            -source "https://nuget.pkg.github.com/<OWNER>/index.json" \
+            -storepasswordincleartext \
+            -name "GitHub" \
+            -username "team-gets" \
+            -password "${{ secrets.GITHUB_TOKEN }}"
+          ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1` \
+            setapikey "${{ secrets.GITHUB_TOKEN }}" \
+            -source "https://nuget.pkg.github.com/team-gets/index.json"
       - name: Prepare CMake
         run: |
           cmake -S . -B build --preset=linux-gcc
@@ -66,6 +81,19 @@ jobs:
         with:
           vcpkgDirectory: "${{ github.workspace }}/lib/vcpkg"
           vcpkgJsonGlob: "**/vcpkg.json"
+      - name: "Setup NuGet Credentials"
+        shell: "bash"
+        run: |
+          ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1` \
+            sources add \
+            -source "https://nuget.pkg.github.com/<OWNER>/index.json" \
+            -storepasswordincleartext \
+            -name "GitHub" \
+            -username "team-gets" \
+            -password "${{ secrets.GITHUB_TOKEN }}"
+          ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1` \
+            setapikey "${{ secrets.GITHUB_TOKEN }}" \
+            -source "https://nuget.pkg.github.com/team-gets/index.json"
       - uses: ilammy/msvc-dev-cmd@v1.13.0
       - name: Prepare CMake
         run: |

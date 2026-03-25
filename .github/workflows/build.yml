@@ -42,7 +42,7 @@ jobs:
           echo Installing automake...
           sudo apt install autoconf autoconf-archive automake libtool
           echo Installing mono...
-          sudo apt install cli-mono
+          sudo apt install mono-runtime
       - uses: lukka/run-vcpkg@v11
         with:
           vcpkgDirectory: "${{ github.workspace }}/lib/vcpkg"

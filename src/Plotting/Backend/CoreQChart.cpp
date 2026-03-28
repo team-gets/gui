@@ -1,3 +1,4 @@
+#include <iostream>
 #include "CoreQChart.h"
 
 namespace VSCL::Plot {
@@ -13,15 +14,21 @@ PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 	QuantityAxisQt = new QValueAxis;
 
 	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
-	PlotChart->addAxis(LogTimeAxisQt, Qt::AlignBottom);
+	TimeAxisQt->setLinePenColor(QColorConstants::Black);
 	TimeAxisQt->setLabelFormat("%i");
+
+	PlotChart->addAxis(LogTimeAxisQt, Qt::AlignBottom);
+	LogTimeAxisQt->setLinePenColor(QColorConstants::Black);
 	LogTimeAxisQt->setLabelFormat("%g");
 	LogTimeAxisQt->setGridLineVisible(false);
 	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
 
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
-	PlotChart->addAxis(LogQuantityAxisQt, Qt::AlignLeft);
+	QuantityAxisQt->setLinePenColor(QColorConstants::Black);
 	QuantityAxisQt->setLabelFormat("%i");
+
+	PlotChart->addAxis(LogQuantityAxisQt, Qt::AlignLeft);
+	LogQuantityAxisQt->setLinePenColor(QColorConstants::Black);
 	LogQuantityAxisQt->setLabelFormat("%g");
 	LogQuantityAxisQt->setGridLineVisible(false);
 	SetAxis(Axis::Quantity, GetAxisInfoView(Axis::Quantity));
@@ -125,6 +132,19 @@ void PlotQChart::Plot() {
 
 		const ColorRGB& color = sinfo.Color;
 		serie->setColor(QColor::fromRgbF(color[0], color[1], color[2], 1.0));
+
+		switch (sinfo.Style) {
+		case LineStyle::Dashed:
+			std::cerr << "Dashed lines not implemented for Qt Charts.\n";
+			break;
+		case LineStyle::Dotted:
+			std::cerr << "Dotted lines not implemented for Qt Charts.\n";
+			break;
+		case LineStyle::Solid:
+		default:
+			break;
+		}
+
 		serie->setName(QString::fromStdString(sinfo.Name));
 		serie->replace(pts);
 		idx++;

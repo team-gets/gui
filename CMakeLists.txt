@@ -18,21 +18,21 @@ include("./cmake/qml.cmake")
 
 qt_standard_project_setup(REQUIRES 6.10)
 
-qt_add_executable(guidev WIN32 MACOSX_BUNDLE
-	${APP_SOURCES} ${WIDGET_SOURCES})
-
-target_include_directories(guidev PRIVATE ${STD_APP_INCLUDES})
-target_compile_warn_all(guidev)
-
-target_link_libraries(guidev PRIVATE ${STD_APP_QT6_DEPS})
-
-# Ideally you would quickly iter on QML designs by using the dev gui app
-qt_add_qml_module(qml.a_circle
-	URI qml.a_circle
-	OUTPUT_DIRECTORY "qml/a_circle"
-	QML_FILES
-		"qml/circle.qml"
-)
+#qt_add_executable(guidev WIN32 MACOSX_BUNDLE
+#	${APP_SOURCES} ${WIDGET_SOURCES})
+#
+#target_include_directories(guidev PRIVATE ${STD_APP_INCLUDES})
+#target_compile_warn_all(guidev)
+#
+#target_link_libraries(guidev PRIVATE ${STD_APP_QT6_DEPS})
+#
+## Ideally you would quickly iter on QML designs by using the dev gui app
+#qt_add_qml_module(qml.a_circle
+#	URI qml.a_circle
+#	OUTPUT_DIRECTORY "qml/a_circle"
+#	QML_FILES
+#		"qml/circle.qml"
+#)
 
 # Plotting Interface
 add_library(plotting_iface SHARED ${PLOTTING_SOURCES})

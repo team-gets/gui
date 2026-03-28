@@ -239,7 +239,6 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 	axInfo.Range = { 0, 10 };
 	axInfo.MajorSpacing = 1;
 	axInfo.MinorSpacing = 0.5;
-	axInfo.Scaling = Plot::AxisScaling::Log10;
 	Plot->SetAxis(Plot::Axis::Time, axInfo);
 
 	Plot::SeriesInfo rollInfo;

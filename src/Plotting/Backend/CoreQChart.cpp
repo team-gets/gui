@@ -1,5 +1,3 @@
-#include <iostream>
-#include <algorithm>
 #include "CoreQChart.h"
 
 namespace VSCL::Plot {
@@ -8,23 +6,30 @@ PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 	SetWidgetRep(this);
 
 	PlotChart = new QChart;
+
 	LogTimeAxisQt = new QLogValueAxis;
 	LogQuantityAxisQt = new QLogValueAxis;
-
 	TimeAxisQt = new QValueAxis;
 	QuantityAxisQt = new QValueAxis;
 
 	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
 	PlotChart->addAxis(LogTimeAxisQt, Qt::AlignBottom);
+	TimeAxisQt->setLabelFormat("%i");
+	LogTimeAxisQt->setLabelFormat("%g");
+	LogTimeAxisQt->setGridLineVisible(false);
 	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
 
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
 	PlotChart->addAxis(LogQuantityAxisQt, Qt::AlignLeft);
+	QuantityAxisQt->setLabelFormat("%i");
+	LogQuantityAxisQt->setLabelFormat("%g");
+	LogQuantityAxisQt->setGridLineVisible(false);
 	SetAxis(Axis::Quantity, GetAxisInfoView(Axis::Quantity));
 
 	PlotChart->legend()->setVisible(false);
 	PlotChart->setTheme(QChart::ChartThemeLight);
 	setChart(PlotChart);
+	setRenderHint(QPainter::RenderHint::Antialiasing);
 }
 
 PlotQChart::~PlotQChart() {
@@ -35,45 +40,60 @@ PlotQChart::~PlotQChart() {
 void PlotQChart::SetAxis(const Axis axis, const AxisInfo& info) {
 	EmbeddablePlot2D::SetAxis(axis, info);
 	const AxisInfo& ax = GetAxisInfoView(axis);
+
 	QLogValueAxis* axlogqt;
-	QValueAxis* axqt;
+	QValueAxis* axlinqt;
+	QAbstractAxis* axqt;
+	double lobd = ax.Range[0];
 
 	switch (axis) {
 	case Axis::Time:
-		axqt = TimeAxisQt;
+		axlinqt = TimeAxisQt;
 		axlogqt = LogTimeAxisQt;
 		break;
 	case Axis::Quantity:
 	default:
-		axqt = QuantityAxisQt;
+		axlinqt = QuantityAxisQt;
 		axlogqt = LogQuantityAxisQt;
 		break;
 	}
 
-	if (!axqt || !axlogqt) { return; };
-	axqt->setRange(ax.Range[0], ax.Range[1]);
-	axqt->setMinorTickCount(ax.MinorSpacing);
+	if (!axlinqt || !axlogqt) { return; };
 
 	switch (ax.Scaling) {
 	case AxisScaling::Log10:
-		axqt->setVisible(false);
+		axlinqt->setVisible(false);
 		axlogqt->setVisible();
 
 		axlogqt->setBase(10.0);
+		axlogqt->setMinorTickCount(10);
+		lobd = (std::abs(lobd) < 1e-15) ? std::numeric_limits<qreal>::epsilon() : lobd ;
+		axqt = axlogqt;
 		break;
+
 	case AxisScaling::Ln:
-		axqt->setVisible(false);
+		axlinqt->setVisible(false);
 		axlogqt->setVisible();
 
 		axlogqt->setBase(2.71828);
+		axlogqt->setMinorTickCount(0);
+		lobd = (std::abs(lobd) < 1e-15) ? std::numeric_limits<qreal>::epsilon() : lobd ;
+		axqt = axlogqt;
 		break;
+
 	case AxisScaling::Linear:
 	default:
 		axlogqt->setVisible(false);
-		axqt->setVisible();
+		axlinqt->setVisible();
+
+		axlinqt->setMinorTickCount(ax.MajorSpacing / ax.MinorSpacing);
+		axlinqt->setTickCount(std::floor(ax.Range[1] - ax.Range[0]) / ax.MajorSpacing + 1);
+		axqt = axlinqt;
 		break;
 	}
 
+	axlinqt->setRange(lobd, ax.Range[1]);
+	axqt->setTitleText(QString::fromStdString(ax.Title));
 }
 
 void PlotQChart::SetTitle(const std::string& title) {
@@ -117,8 +137,10 @@ void PlotQChart::AddSeries(const SeriesInfo& newInfo) {
 
 	QLineSeries* newSeries = new QLineSeries(PlotChart);
 	PlotChart->addSeries(newSeries);
-	if (!newSeries->attachAxis(TimeAxisQt)) { return; };
-	if (!newSeries->attachAxis(QuantityAxisQt)) { return; };
+	newSeries->attachAxis(TimeAxisQt);
+	newSeries->attachAxis(LogTimeAxisQt);
+	newSeries->attachAxis(QuantityAxisQt);
+	newSeries->attachAxis(LogQuantityAxisQt);
 
 	Plot();
 }

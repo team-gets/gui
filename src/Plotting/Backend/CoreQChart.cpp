@@ -18,6 +18,7 @@ PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
 
 	QLineSeries* firstSeries = new QLineSeries;
+	PlotChart->addSeries(firstSeries);
 	LineSeriesesQt.append(firstSeries);
 	
 	if (!firstSeries->attachAxis(TimeAxisQt)) { std::cerr << "Time axis attachment failure\n"; };
@@ -65,13 +66,16 @@ void PlotQChart::Plot() {
 
 	const std::vector<SeriesInfo>& sinfos = GetSeriesInfosView();
 	unsigned int idx = 0;
+	if (sinfos.size() < 0) return;
 
 	std::for_each(sinfos.begin(), sinfos.end(),
 		[&](const SeriesInfo& sinfo) {
 			QLineSeries* serie = LineSeriesesQt[idx];
 			QList<QPointF> pts;
+			unsigned int n = sinfo.Times.size();
+			if (n == 0) return;
 
-			for (unsigned int i = 0; i < sinfo.Times.size(); i++) {
+			for (unsigned int i = 0; i < n; i++) {
 				pts.append({ sinfo.Times[i], sinfo.Quantities[i] });
 			}
 

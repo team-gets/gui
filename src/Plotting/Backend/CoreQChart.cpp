@@ -6,26 +6,43 @@ PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 	SetWidgetRep(this);
 
 	PlotChart = new QChart;
-	QTimeAxis = new QValueAxis;
-	QQuantityAxis = new QValueAxis;
+	TimeAxisQt = new QValueAxis;
+	QuantityAxisQt = new QValueAxis;
 
 	QLineSeries* firstSeries = new QLineSeries;
 	QLineSerieses.append(firstSeries);
 
-	PlotChart->addAxis(QTimeAxis, Qt::AlignBottom);
-	PlotChart->addAxis(QQuantityAxis, Qt::AlignLeft);
+	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
+	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
 	PlotChart->setTheme(QChart::ChartThemeLight);
 	setChart(PlotChart);
 }
 PlotQChart::~PlotQChart() {
-	delete PlotChart;
+	if (PlotChart)
+		delete PlotChart;
+
 	for (QLineSeries* serie : QLineSerieses) {
-		delete serie;
+		if (serie)
+			delete serie;
 	}
 }
 
 void PlotQChart::SetAxis(Axis axis, AxisInfo& info) {
 	EmbeddablePlot2D::SetAxis(axis, info);
+	const AxisInfo& ax = GetAxisInfoView(axis);
+	QValueAxis* axqt;
+
+	switch (axis) {
+	case Axis::Time:
+		axqt = TimeAxisQt;
+		break;
+	case Axis::Quantity:
+		axqt = QuantityAxisQt;
+		break;
+	}
+
+	axqt->setRange(ax.Range[0], ax.Range[1]);
+	axqt->setTickInterval(ax.MajorSpacing);
 }
 
 void PlotQChart::SetTitle(const std::string& title) {

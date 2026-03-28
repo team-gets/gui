@@ -1,3 +1,5 @@
+#include <iostream>
+#include <algorithm>
 #include "CoreQChart.h"
 
 namespace VSCL::Plot {
@@ -9,25 +11,29 @@ PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 	TimeAxisQt = new QValueAxis;
 	QuantityAxisQt = new QValueAxis;
 
-	QLineSeries* firstSeries = new QLineSeries;
-	QLineSerieses.append(firstSeries);
-
 	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
 	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
 
 	SetAxis(Axis::Quantity, GetAxisInfoView(Axis::Quantity));
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
 
+	QLineSeries* firstSeries = new QLineSeries;
+	LineSeriesesQt.append(firstSeries);
+	
+	if (!firstSeries->attachAxis(TimeAxisQt)) { std::cerr << "Time axis attachment failure\n"; };
+	if (!firstSeries->attachAxis(QuantityAxisQt)) { std::cerr << "Quantity axis attachment failure\n"; };
+
 	PlotChart->setTheme(QChart::ChartThemeLight);
 	setChart(PlotChart);
 }
+
 PlotQChart::~PlotQChart() {
 	if (PlotChart)
 		delete PlotChart;
 
-	for (QLineSeries* serie : QLineSerieses) {
-		if (serie)
-			delete serie;
+	for (const QLineSeries* seriesqt : LineSeriesesQt) {
+		if (seriesqt)
+			delete seriesqt;
 	}
 }
 
@@ -56,6 +62,22 @@ void PlotQChart::SetTitle(const std::string& title) {
 
 void PlotQChart::Plot() {
 	EmbeddablePlot2D::Plot();
+
+	const std::vector<SeriesInfo>& sinfos = GetSeriesInfosView();
+	unsigned int idx = 0;
+
+	std::for_each(sinfos.begin(), sinfos.end(),
+		[&](const SeriesInfo& sinfo) {
+			QLineSeries* serie = LineSeriesesQt[idx];
+			QList<QPointF> pts;
+
+			for (unsigned int i = 0; i < sinfo.Times.size(); i++) {
+				pts.append({ sinfo.Times[i], sinfo.Quantities[i] });
+			}
+
+			serie->replace(pts);
+			idx++;
+		});
 }
 
 void PlotQChart::EraseAllData() {

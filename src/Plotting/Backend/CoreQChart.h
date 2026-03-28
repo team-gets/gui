@@ -24,7 +24,7 @@ public:
 
 private:
 	QChart* PlotChart;
-	QList<QLineSeries*> QLineSerieses;
+	QList<QLineSeries*> LineSeriesesQt;
 	QValueAxis* TimeAxisQt;
 	QValueAxis* QuantityAxisQt;
 

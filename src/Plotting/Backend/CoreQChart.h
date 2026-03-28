@@ -22,9 +22,10 @@ public:
 	virtual void Plot() override;
 	virtual void EraseAllData() override;
 
+	virtual void AddSeries(const SeriesInfo& newInfo) override;
+
 private:
 	QChart* PlotChart;
-	QList<QLineSeries*> LineSeriesesQt;
 	QValueAxis* TimeAxisQt;
 	QValueAxis* QuantityAxisQt;
 

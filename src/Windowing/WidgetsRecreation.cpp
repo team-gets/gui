@@ -22,6 +22,8 @@ static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {
 		plot->AddPoint(1, i/10.0, std::sin(0.1 * i - ph2/12) / 2.0 + 0.5);
 		plot->AddPoint(2, i/10.0, std::cos(0.1 * i + ph3/12) / 2.0 + 0.5);
 	}
+
+	plot->Plot();
 }
 // }}}
 
@@ -251,7 +253,7 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 	yawInfo.Name = "Yaw";
 	//yawInfo.Color = ;
 
-	Plot->SetSeries(0, rollInfo);
+	Plot->AddSeries(rollInfo);
 	Plot->AddSeries(pitchInfo);
 	Plot->AddSeries(yawInfo);
 

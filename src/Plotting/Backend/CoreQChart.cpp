@@ -11,19 +11,13 @@ PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 	TimeAxisQt = new QValueAxis;
 	QuantityAxisQt = new QValueAxis;
 
-	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
 	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
+	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
 
-	SetAxis(Axis::Quantity, GetAxisInfoView(Axis::Quantity));
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
+	SetAxis(Axis::Quantity, GetAxisInfoView(Axis::Quantity));
 
-	QLineSeries* firstSeries = new QLineSeries;
-	PlotChart->addSeries(firstSeries);
-	LineSeriesesQt.append(firstSeries);
-	
-	if (!firstSeries->attachAxis(TimeAxisQt)) { std::cerr << "Time axis attachment failure\n"; };
-	if (!firstSeries->attachAxis(QuantityAxisQt)) { std::cerr << "Quantity axis attachment failure\n"; };
-
+	PlotChart->legend()->setVisible(false);
 	PlotChart->setTheme(QChart::ChartThemeLight);
 	setChart(PlotChart);
 }
@@ -31,11 +25,6 @@ PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 PlotQChart::~PlotQChart() {
 	if (PlotChart)
 		delete PlotChart;
-
-	for (const QLineSeries* seriesqt : LineSeriesesQt) {
-		if (seriesqt)
-			delete seriesqt;
-	}
 }
 
 void PlotQChart::SetAxis(const Axis axis, const AxisInfo& info) {
@@ -48,10 +37,12 @@ void PlotQChart::SetAxis(const Axis axis, const AxisInfo& info) {
 		axqt = TimeAxisQt;
 		break;
 	case Axis::Quantity:
+	default:
 		axqt = QuantityAxisQt;
 		break;
 	}
 
+	if (!axqt) { return; };
 	axqt->setRange(ax.Range[0], ax.Range[1]);
 	axqt->setTickInterval(ax.MajorSpacing);
 }
@@ -66,25 +57,40 @@ void PlotQChart::Plot() {
 
 	const std::vector<SeriesInfo>& sinfos = GetSeriesInfosView();
 	unsigned int idx = 0;
-	if (sinfos.size() < 0) return;
+	if (sinfos.size() < 0) { return; }
 
-	std::for_each(sinfos.begin(), sinfos.end(),
-		[&](const SeriesInfo& sinfo) {
-			QLineSeries* serie = LineSeriesesQt[idx];
-			QList<QPointF> pts;
-			unsigned int n = sinfo.Times.size();
-			if (n == 0) return;
+	for (QAbstractSeries* aseriesQt : PlotChart->series()) {
+		if (!aseriesQt) { return; }
 
-			for (unsigned int i = 0; i < n; i++) {
-				pts.append({ sinfo.Times[i], sinfo.Quantities[i] });
-			}
+		QXYSeries* serie = qobject_cast<QXYSeries*>(aseriesQt);
+		if (!serie) { return; }
 
-			serie->replace(pts);
-			idx++;
-		});
+		QList<QPointF> pts;
+		const SeriesInfo& sinfo = sinfos[idx];
+		unsigned int n = sinfo.Times.size();
+		if (n == 0) { continue; }
+
+		for (unsigned int i = 0; i < n; i++) {
+			pts.append({ sinfo.Times[i], sinfo.Quantities[i] });
+		}
+
+		serie->replace(pts);
+		idx++;
+	}
 }
 
 void PlotQChart::EraseAllData() {
 	EmbeddablePlot2D::EraseAllData();
+}
+
+void PlotQChart::AddSeries(const SeriesInfo& newInfo) {
+	EmbeddablePlot2D::AddSeries(newInfo);
+
+	QLineSeries* newSeries = new QLineSeries(PlotChart);
+	PlotChart->addSeries(newSeries);
+	if (!newSeries->attachAxis(TimeAxisQt)) { return; };
+	if (!newSeries->attachAxis(QuantityAxisQt)) { return; };
+
+	Plot();
 }
 } // namespace VSCL::Plot

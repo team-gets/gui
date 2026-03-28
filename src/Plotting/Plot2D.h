@@ -49,7 +49,7 @@ public:
 	// Add a named series.
 	void AddSeries(std::string& name);
 	// Add a series using the following info.
-	void AddSeries(SeriesInfo& newInfo);
+	virtual void AddSeries(const SeriesInfo& newInfo);
 
 	SeriesInfo GetSeriesByName(std::string& name);
 	const SeriesInfo& GetSeriesViewByName(std::string& name) const;
@@ -85,7 +85,7 @@ private:
 	AxisInfo TimeAxis = { Axis::Time };
 	AxisInfo QuantityAxis = { Axis::Quantity };
 
-	std::vector<SeriesInfo> Series = { SeriesInfo { } };
+	std::vector<SeriesInfo> Series;
 	bool DrawGrid = false;
 
 	// The underlying widget.

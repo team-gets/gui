@@ -18,10 +18,10 @@ namespace VSCL::Plot {
 // TODO: probably look at typical plotting implementations for scientific programming
 class PLOT_API EmbeddablePlot2D {
 public:
-	void AddPoint(uint8_t idx, double time, double quantity);
-	void AddPoint(double time, double quantity);
-	void AddPoints(uint8_t idx, const std::vector<double>& times, const std::vector<double>& quantities);
-	void AddPoints(const std::vector<double>& times, const std::vector<double>& quantities);
+	void AddPoint(uint8_t idx, double time, double quantity, bool update = false);
+	void AddPoint(double time, double quantity, bool update = false);
+	void AddPoints(uint8_t idx, const std::vector<double>& times, const std::vector<double>& quantities, bool update = false);
+	void AddPoints(const std::vector<double>& times, const std::vector<double>& quantities, bool update = false);
 
 	// Set axis properites based on the struct
 	virtual void SetAxis(const Axis axis, const AxisInfo& info);

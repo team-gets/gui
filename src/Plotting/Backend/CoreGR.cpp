@@ -11,7 +11,7 @@ PlotGR::PlotGR(QWidget* parent) : GRWidget(parent) {
 	SetWidgetRep(this);
 };
 
-void PlotGR::SetAxis(Axis axis, AxisInfo& info) { EmbeddablePlot2D::SetAxis(axis, info); draw(); }
+void PlotGR::SetAxis(const Axis axis, const AxisInfo& info) { EmbeddablePlot2D::SetAxis(axis, info); draw(); }
 void PlotGR::SetTitle(const std::string& title) { EmbeddablePlot2D::SetTitle(title); draw(); }
 
 void PlotGR::Plot() {

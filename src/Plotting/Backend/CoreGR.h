@@ -7,8 +7,6 @@
 #include "Plotting/Plot2D.h"
 #include "ColorGR.h"
 
-class GRWidget;
-
 namespace VSCL::Plot {
 
 class PlotContainer;
@@ -20,7 +18,7 @@ class GR_BACKEND PlotGR : public EmbeddablePlot2D, public GRWidget {
 public:
 	PlotGR(QWidget* parent);
 
-	virtual void SetAxis(Axis axis, AxisInfo& info) override;
+	virtual void SetAxis(const Axis axis, const AxisInfo& info) override;
 	virtual void SetTitle(const std::string& title) override;
 	virtual void Plot() override;
 	virtual void EraseAllData() override;

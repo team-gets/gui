@@ -4,7 +4,6 @@
 #include <array>
 #include <string>
 #include <map>
-#include "PlotAPI.h"
 
 namespace VSCL::Plot {
 

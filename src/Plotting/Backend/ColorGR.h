@@ -89,5 +89,4 @@ static const ColorGR ColorGRFromRGB(ColorRGB color, double tol = 1e-1) {
 	// default
 	return ColorGR::Red;
 };
-
 } // VSCL::Plot

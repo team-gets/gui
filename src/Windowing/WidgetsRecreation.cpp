@@ -4,6 +4,7 @@
 
 #include "WidgetsRecreation.h"
 #include "Plotting/Backend/CoreGR.h"
+#include "Plotting/Backend/CoreQChart.h"
 
 // stupid temp thing {{{
 static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {
@@ -21,6 +22,8 @@ static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {
 		plot->AddPoint(1, i/10.0, std::sin(0.1 * i - ph2/12) / 2.0 + 0.5);
 		plot->AddPoint(2, i/10.0, std::cos(0.1 * i + ph3/12) / 2.0 + 0.5);
 	}
+
+	plot->Plot();
 }
 // }}}
 
@@ -41,7 +44,7 @@ Widgets::Widgets() {
 	// Set up the static layout
 	SetupCentralWidget();
 	SetupAttitudeDials();
-	SetupTimeHistoryPlot();
+	SetupTimeHistoryPlotQChart();
 	SetupAttQtysRatesDisplay();
 	SetupButtons();
 	SetupStatusColumn();
@@ -197,7 +200,7 @@ void Widgets::SetAllButtonTextSize() {
 } // void Widgets::SetAllButtonTextSize()
 // }}}
 
-void Widgets::SetupTimeHistoryPlot() {
+void Widgets::SetupTimeHistoryPlotGR() {
 	Plot = new Plot::PlotGR(this);
 	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
 	MajorLayout->addWidget(TimeHistory, 1, 0);
@@ -225,7 +228,37 @@ void Widgets::SetupTimeHistoryPlot() {
 	Plot->AddSeries(yawInfo);
 
 	stupid_make_data(Plot);
-} // void Widgets::SetupTimeHistoryPlot()
+} // void Widgets::SetupTimeHistoryPlotGR()
+
+void Widgets::SetupTimeHistoryPlotQChart() {
+	Plot = new Plot::PlotQChart(this);
+	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
+	MajorLayout->addWidget(TimeHistory, 1, 0);
+
+	Plot::AxisInfo axInfo;
+	axInfo.Range = { 0, 10 };
+	axInfo.MajorSpacing = 1;
+	axInfo.MinorSpacing = 0.5;
+	Plot->SetAxis(Plot::Axis::Time, axInfo);
+
+	Plot::SeriesInfo rollInfo;
+	rollInfo.Name = "Roll";
+	rollInfo.Color = Plot::StandardColor.at("Red");
+
+	Plot::SeriesInfo pitchInfo;
+	pitchInfo.Name = "Pitch";
+	pitchInfo.Color = Plot::StandardColor.at("Green");
+
+	Plot::SeriesInfo yawInfo;
+	yawInfo.Name = "Yaw";
+	yawInfo.Color = Plot::StandardColor.at("Blue");
+
+	Plot->AddSeries(rollInfo);
+	Plot->AddSeries(pitchInfo);
+	Plot->AddSeries(yawInfo);
+
+	stupid_make_data(Plot);
+} // void Widgets::SetupTimeHistoryPlotQChart()
 
 void Widgets::SetupAttQtysRatesDisplay() {
 	AttQtysRates = new QtyRateDisplay(tr(""), this);

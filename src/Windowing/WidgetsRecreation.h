@@ -43,7 +43,8 @@ private:
 
 	Plot::EmbeddablePlot2D* Plot;
 	Plot::PlotContainer* TimeHistory;
-	void SetupTimeHistoryPlot();
+	void SetupTimeHistoryPlotGR();
+	void SetupTimeHistoryPlotQChart();
 
 	QtyRateDisplay* AttQtysRates;
 	QtyRateRow* RollQtyRate;

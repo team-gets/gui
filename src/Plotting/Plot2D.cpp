@@ -4,17 +4,18 @@
 
 namespace VSCL::Plot {
 
-void EmbeddablePlot2D::AddPoint(double time, double quantity) { AddPoint(0, time, quantity);  }
-void EmbeddablePlot2D::AddPoint(uint8_t idx, double time, double quantity) {
+void EmbeddablePlot2D::AddPoint(double time, double quantity, bool update) { AddPoint(0, time, quantity); }
+void EmbeddablePlot2D::AddPoint(uint8_t idx, double time, double quantity, bool update) {
 	std::vector<double>& oldTime = Series[idx].Times;
 	std::vector<double>& oldQty = Series[idx].Quantities;
 
 	oldTime.push_back(time);
 	oldQty.push_back(quantity);
+	if (update) Plot();
 }
 
 void EmbeddablePlot2D::AddPoints(uint8_t idx,
-		const std::vector<double>& times, const std::vector<double>& quantities) {
+		const std::vector<double>& times, const std::vector<double>& quantities, bool update) {
 	std::vector<double>& oldTime = Series[idx].Times;
 	std::vector<double>& oldQty = Series[idx].Quantities;
 
@@ -28,12 +29,14 @@ void EmbeddablePlot2D::AddPoints(uint8_t idx,
 	for (double quantity : quantities) {
 		oldQty.push_back(quantity);
 	}
+
+	if (update) Plot();
 }
 void EmbeddablePlot2D::AddPoints(
-		const std::vector<double>& times, const std::vector<double>& quantities) {
+		const std::vector<double>& times, const std::vector<double>& quantities, bool update) {
 			AddPoints(0, times, quantities); }
 
-void EmbeddablePlot2D::SetAxis(Axis axis, AxisInfo& info) {
+void EmbeddablePlot2D::SetAxis(const Axis axis, const AxisInfo& info) {
 	switch (axis) {
 	case Axis::Time:
 		TimeAxis = info;
@@ -86,7 +89,7 @@ void EmbeddablePlot2D::AddSeries(std::string& name) {
 	Series.push_back(serie);
 	Plot();
 }
-void EmbeddablePlot2D::AddSeries(SeriesInfo& newInfo) { Series.push_back(newInfo); Plot(); };
+void EmbeddablePlot2D::AddSeries(const SeriesInfo& newInfo) { Series.push_back(newInfo); Plot(); };
 
 SeriesInfo EmbeddablePlot2D::GetSeriesByName(std::string& name) {
 	for (const SeriesInfo& serie : Series) {

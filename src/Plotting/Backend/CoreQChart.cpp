@@ -8,13 +8,18 @@ PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 	SetWidgetRep(this);
 
 	PlotChart = new QChart;
+	LogTimeAxisQt = new QLogValueAxis;
+	LogQuantityAxisQt = new QLogValueAxis;
+
 	TimeAxisQt = new QValueAxis;
 	QuantityAxisQt = new QValueAxis;
 
 	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
+	PlotChart->addAxis(LogTimeAxisQt, Qt::AlignBottom);
 	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
 
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
+	PlotChart->addAxis(LogQuantityAxisQt, Qt::AlignLeft);
 	SetAxis(Axis::Quantity, GetAxisInfoView(Axis::Quantity));
 
 	PlotChart->legend()->setVisible(false);
@@ -30,21 +35,45 @@ PlotQChart::~PlotQChart() {
 void PlotQChart::SetAxis(const Axis axis, const AxisInfo& info) {
 	EmbeddablePlot2D::SetAxis(axis, info);
 	const AxisInfo& ax = GetAxisInfoView(axis);
+	QLogValueAxis* axlogqt;
 	QValueAxis* axqt;
 
 	switch (axis) {
 	case Axis::Time:
 		axqt = TimeAxisQt;
+		axlogqt = LogTimeAxisQt;
 		break;
 	case Axis::Quantity:
 	default:
 		axqt = QuantityAxisQt;
+		axlogqt = LogQuantityAxisQt;
 		break;
 	}
 
-	if (!axqt) { return; };
+	if (!axqt || !axlogqt) { return; };
 	axqt->setRange(ax.Range[0], ax.Range[1]);
-	axqt->setTickInterval(ax.MajorSpacing);
+	axqt->setMinorTickCount(ax.MinorSpacing);
+
+	switch (ax.Scaling) {
+	case AxisScaling::Log10:
+		axqt->setVisible(false);
+		axlogqt->setVisible();
+
+		axlogqt->setBase(10.0);
+		break;
+	case AxisScaling::Ln:
+		axqt->setVisible(false);
+		axlogqt->setVisible();
+
+		axlogqt->setBase(2.71828);
+		break;
+	case AxisScaling::Linear:
+	default:
+		axlogqt->setVisible(false);
+		axqt->setVisible();
+		break;
+	}
+
 }
 
 void PlotQChart::SetTitle(const std::string& title) {

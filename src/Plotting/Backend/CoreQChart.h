@@ -26,6 +26,10 @@ public:
 
 private:
 	QChart* PlotChart;
+
+	QLogValueAxis* LogTimeAxisQt;
+	QLogValueAxis* LogQuantityAxisQt;
+
 	QValueAxis* TimeAxisQt;
 	QValueAxis* QuantityAxisQt;
 

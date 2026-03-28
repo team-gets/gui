@@ -125,6 +125,7 @@ void PlotQChart::Plot() {
 
 		const ColorRGB& color = sinfo.Color;
 		serie->setColor(QColor::fromRgbF(color[0], color[1], color[2], 1.0));
+		serie->setName(QString::fromStdString(sinfo.Name));
 		serie->replace(pts);
 		idx++;
 	}
@@ -139,6 +140,7 @@ void PlotQChart::AddSeries(const SeriesInfo& newInfo) {
 
 	QLineSeries* newSeries = new QLineSeries(PlotChart);
 	PlotChart->addSeries(newSeries);
+
 	newSeries->attachAxis(TimeAxisQt);
 	newSeries->attachAxis(LogTimeAxisQt);
 	newSeries->attachAxis(QuantityAxisQt);

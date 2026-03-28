@@ -14,7 +14,10 @@ PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 
 	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
 	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
+
+	SetAxis(Axis::Quantity, GetAxisInfoView(Axis::Quantity));
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
+
 	PlotChart->setTheme(QChart::ChartThemeLight);
 	setChart(PlotChart);
 }

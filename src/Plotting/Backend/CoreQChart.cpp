@@ -123,6 +123,8 @@ void PlotQChart::Plot() {
 			pts.append({ sinfo.Times[i], sinfo.Quantities[i] });
 		}
 
+		const ColorRGB& color = sinfo.Color;
+		serie->setColor(QColor::fromRgbF(color[0], color[1], color[2], 1.0));
 		serie->replace(pts);
 		idx++;
 	}

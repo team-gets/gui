@@ -243,15 +243,15 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 
 	Plot::SeriesInfo rollInfo;
 	rollInfo.Name = "Roll";
-	//rollInfo.Color = Plot::RGBFromColorQChart(Plot::ColorQChart::Red);
+	rollInfo.Color = Plot::StandardColor.at("Red");
 
 	Plot::SeriesInfo pitchInfo;
 	pitchInfo.Name = "Pitch";
-	//pitchInfo.Color = Plot::RGBFromColorQChart(Plot::ColorQChart::Blue);
+	pitchInfo.Color = Plot::StandardColor.at("Green");
 
 	Plot::SeriesInfo yawInfo;
 	yawInfo.Name = "Yaw";
-	//yawInfo.Color = ;
+	yawInfo.Color = Plot::StandardColor.at("Blue");
 
 	Plot->AddSeries(rollInfo);
 	Plot->AddSeries(pitchInfo);

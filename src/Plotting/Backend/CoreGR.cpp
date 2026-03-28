@@ -136,7 +136,7 @@ void PlotGR::UpdateSeries() {
 
 		ColorGR color = ColorGRFromRGB(series.Color);
 		gr_setlinecolorind(ColorIndex(color));
-		gr_polyline(n, timeArr, quantityArr);
+		gr_polyline((int)n, timeArr, quantityArr);
 	}
 } // void PlotGR::UpdateSeries()
 

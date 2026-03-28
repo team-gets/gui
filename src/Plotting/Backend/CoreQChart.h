@@ -17,7 +17,7 @@ public:
 	PlotQChart(QWidget* parent);
 	virtual ~PlotQChart();
 
-	virtual void SetAxis(Axis axis, AxisInfo& info) override;
+	virtual void SetAxis(const Axis axis, const AxisInfo& info) override;
 	virtual void SetTitle(const std::string& title) override;
 	virtual void Plot() override;
 	virtual void EraseAllData() override;

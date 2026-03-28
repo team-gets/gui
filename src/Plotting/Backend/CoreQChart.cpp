@@ -12,6 +12,7 @@ PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 	QLineSeries* firstSeries = new QLineSeries;
 	QLineSerieses.append(firstSeries);
 
+	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
 	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
 	PlotChart->setTheme(QChart::ChartThemeLight);
@@ -27,7 +28,7 @@ PlotQChart::~PlotQChart() {
 	}
 }
 
-void PlotQChart::SetAxis(Axis axis, AxisInfo& info) {
+void PlotQChart::SetAxis(const Axis axis, const AxisInfo& info) {
 	EmbeddablePlot2D::SetAxis(axis, info);
 	const AxisInfo& ax = GetAxisInfoView(axis);
 	QValueAxis* axqt;

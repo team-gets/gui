@@ -33,7 +33,7 @@ void EmbeddablePlot2D::AddPoints(
 		const std::vector<double>& times, const std::vector<double>& quantities) {
 			AddPoints(0, times, quantities); }
 
-void EmbeddablePlot2D::SetAxis(Axis axis, AxisInfo& info) {
+void EmbeddablePlot2D::SetAxis(const Axis axis, const AxisInfo& info) {
 	switch (axis) {
 	case Axis::Time:
 		TimeAxis = info;

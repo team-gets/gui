@@ -24,7 +24,7 @@ public:
 	void AddPoints(const std::vector<double>& times, const std::vector<double>& quantities);
 
 	// Set axis properites based on the struct
-	virtual void SetAxis(Axis axis, AxisInfo& info);
+	virtual void SetAxis(const Axis axis, const AxisInfo& info);
 
 	// Set the main title
 	virtual void SetTitle(const std::string& title);

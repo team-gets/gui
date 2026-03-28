@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 
-#include "PlotAPI.h"
 #include "Appearance.h"
 
 namespace VSCL::Plot {
@@ -17,5 +16,4 @@ struct SeriesInfo {
 	double Alpha = 1.0;
 	LineStyle Style = LineStyle::Solid;
 };
-
 } // namespace VSCL::Plot

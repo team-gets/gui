@@ -67,7 +67,7 @@ void AttitudeDial::SetNumericDisplayState(bool enabled) {
 	update();
 } // void AttitudeDial::UpdateNumericDisplay()
 
-void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
+void AttitudeDial::PaintCircularBacking(QPainter* painter) {
 	QBrush fillBrush = painter->brush();
 	fillBrush.setStyle(Qt::SolidPattern);
 	fillBrush.setColor(Palette.Primary);
@@ -77,7 +77,7 @@ void AttitudeDial::PaintCircularBacking(QPaintEvent* event, QPainter* painter) {
 	painter->drawEllipse(Origin, (int)Radius, (int)Radius);
 } // void AttitudeDial::PaintCircularBacking()
 
-void AttitudeDial::PaintTicks(QPaintEvent* event, QPainter* painter) {
+void AttitudeDial::PaintTicks(QPainter* painter) {
 	for (int i = 0; i < 12; i++) {
 		QPoint st, ed;
 		QColor tickcolor;
@@ -110,7 +110,7 @@ void AttitudeDial::PaintTicks(QPaintEvent* event, QPainter* painter) {
 	}
 } // void AttitudeDial::PaintTicks()
 
-void AttitudeDial::PaintHand(QPaintEvent* event, QPainter* painter) {
+void AttitudeDial::PaintHand(QPainter* painter) {
 	double ang = CurrentAngle * 3.14 / 180.0;
 	int linex = Radius*std::sin(ang);
 	int liney = -Radius*std::cos(ang);
@@ -123,7 +123,7 @@ void AttitudeDial::PaintHand(QPaintEvent* event, QPainter* painter) {
 	painter->drawLine(Origin, end);
 } // AttitudeDial::PaintHand()
 
-void AttitudeDial::PaintCap(QPaintEvent* event, QPainter* painter) {
+void AttitudeDial::PaintCap(QPainter* painter) {
 	QBrush fillBrush = painter->brush();
 	fillBrush.setStyle(Qt::SolidPattern);
 	fillBrush.setColor(Palette.Cap);
@@ -143,10 +143,10 @@ void AttitudeDial::paintEvent(QPaintEvent* event) {
 	UpdateOrigin();
 
 	QPainter painter(this);
-	PaintCircularBacking(event, &painter);
-	PaintTicks(event, &painter);
-	PaintHand(event, &painter);
-	PaintCap(event, &painter);
+	PaintCircularBacking(&painter);
+	PaintTicks(&painter);
+	PaintHand(&painter);
+	PaintCap(&painter);
 
 	if (NumericDisplayEnabled) {
 		UpdateNumericDisplay();

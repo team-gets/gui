@@ -44,10 +44,10 @@ private:
 	void UpdateNumericFont();
 	void UpdateNumericDisplay();
 
-	void PaintCircularBacking(QPaintEvent* event, QPainter* painter);
-	void PaintTicks(QPaintEvent* event, QPainter* painter);
-	void PaintHand(QPaintEvent* event, QPainter* painter);
-	void PaintCap(QPaintEvent* event, QPainter* painter);
+	void PaintCircularBacking(QPainter* painter);
+	void PaintTicks(QPainter* painter);
+	void PaintHand(QPainter* painter);
+	void PaintCap(QPainter* painter);
 
 	static constexpr std::array<double, 12> Cos30Degs = {
 		1.0, 0.8660254037844387, 0.5, 0.0,

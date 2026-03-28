@@ -17,7 +17,7 @@ DevWindow::DevWindow() {
 	Stacker->addWidget(MainQuick);
 
 	AttitudeDial* dial = new AttitudeDial(this);
-	NumericTestWidget* NumericDisplaysTest = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
+	NumericDisplaysTest = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
 	Stacker->addWidget(NumericDisplaysTest);
 
     CreateActions();

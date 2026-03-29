@@ -7,10 +7,10 @@
 namespace VSCL {
 struct AttitudeDialPalette {
 	QColor Primary = QColorConstants::White;
-	QColor Hand = QColorConstants::Black;
+	QColor Hand = QColorConstants::Red;
 	QColor Cap = QColorConstants::Black;
 	QColor MajorTick = QColorConstants::DarkGray;
-	QColor MinorTick = QColorConstants::DarkGray;
+	QColor MinorTick = QColorConstants::LightGray;
 };
 
 class AttitudeDial : public QWidget {
@@ -52,16 +52,13 @@ private:
 	void PaintHand(QPainter* painter);
 	void PaintCap(QPainter* painter);
 
-	static constexpr std::array<double, 12> Cos30Degs = {
-		1.0, 0.8660254037844387, 0.5, 0.0,
-		-0.5, -0.8660254037844387, -1.0, -0.8660254037844387, 
-		-0.5, 0.0, 0.5, 0.8660254037844387 
-	};
-	static constexpr std::array<double, 12> Sin30Degs = {
-		0.0, 0.5, 0.8660254037844387, 1.0,
-		0.8660254037844387, 0.5, 0.0, -0.5,
-		-0.8660254037844387, -1.0, -0.8660254037844387, -0.5
-	};
+	static constexpr std::array<std::array<double, 2>, 4> MajorTicks = {{
+		{ 1.0, 0.0 }, { 0.0, 1.0 }, { -1.0, 0.0 }, { 0.0, -1.0 }
+	}};
 
+	static constexpr std::array<std::array<double, 2>, 4> MinorTicks = {{
+		{ 0.7071067811865475, 0.7071067811865475 }, { 0.7071067811865475, -0.7071067811865475 },
+		{ -0.7071067811865475, -0.7071067811865475 }, { -0.7071067811865475, 0.7071067811865475 } 
+	}};
 }; // class AttitudeDial
 } // namespace VSCL

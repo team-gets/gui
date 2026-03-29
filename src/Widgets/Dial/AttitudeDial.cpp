@@ -76,33 +76,35 @@ void AttitudeDial::PaintCircularBacking(QPainter* painter) {
 } // void AttitudeDial::PaintCircularBacking()
 
 void AttitudeDial::PaintTicks(QPainter* painter) {
-	for (int i = 0; i < 12; i++) {
-		QPoint st, ed;
+	for (int i = 0; i < 8; i++) {
 		QColor tickcolor;
-		const double ci = Radius*Cos30Degs[i];
-		const double si = Radius*Sin30Degs[i];
-		double ticker[2] = { 0.0, 1.0 };
+		std::array<double, 2> ticker = { 0.0, 1.0 };
+		std::array<double, 2> cossin;
 
 		switch (i) {
 		case 0:
-		case 3:
-		case 6:
-		case 9: // major
+		case 1:
+		case 2:
+		case 3: // major
 			ticker[0] = 0.85;
 			tickcolor = Palette.MajorTick;
+			cossin = MajorTicks[i];
 			break;
 		default: // minor
 			ticker[0] = 0.95;
 			tickcolor = Palette.MinorTick;
+			cossin = MinorTicks[i - 4];
 			break;
 		}
 
-		st = Origin + ticker[0] * QPoint{ int(ci), int(si) };
-		ed = Origin + ticker[1] * QPoint{ int(ci), int(si) };
-
+		qDebug() << cossin;
+		double ci = Radius * cossin[0];
+		double si = Radius * cossin[1];
 		QPen pen = painter->pen();
 		pen.setColor(tickcolor);
 
+		QPoint st = Origin + ticker[0] * QPoint{ int(ci), int(si) };
+		QPoint ed = Origin + ticker[1] * QPoint{ int(ci), int(si) };
 		painter->setPen(pen);
 		painter->drawLine(st, ed);
 	}

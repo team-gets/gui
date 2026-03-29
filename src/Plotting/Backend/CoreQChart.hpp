@@ -1,9 +1,9 @@
 #pragma once
 
 #include <QtCharts>
-#include "Plotting/Plot2D.h"
-#include "Plotting/Axes.h"
-#include "APIQChart.h"
+#include "Plotting/Plot2D.hpp"
+#include "Plotting/Axes.hpp"
+#include "APIQChart.hpp"
 
 namespace VSCL::Plot {
 

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "CoreQChart.h"
+#include "CoreQChart.hpp"
 
 namespace VSCL::Plot {
 

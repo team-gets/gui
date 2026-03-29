@@ -2,8 +2,8 @@
 
 #include <QFileDialog>
 
-#include "DevWindow.h"
-#include "Dial/AttitudeDial.h"
+#include "DevWindow.hpp"
+#include "Dial/AttitudeDial.hpp"
 
 namespace VSCL {
 DevWindow::DevWindow() {

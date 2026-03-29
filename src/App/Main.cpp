@@ -2,7 +2,7 @@
 #include <QWindow>
 #include <QWidget>
 
-#include "Windowing/DevWindow.h"
+#include "Windowing/DevWindow.hpp"
 
 int main(int argc, char** argv) {
 	QApplication app(argc, argv);

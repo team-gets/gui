@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cmath>
 
-#include "AttitudeDial.h"
+#include "AttitudeDial.hpp"
 
 namespace VSCL {
 

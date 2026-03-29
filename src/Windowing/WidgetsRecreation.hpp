@@ -3,11 +3,11 @@
 #include <array>
 #include <QtWidgets>
 
-#include "Widgets/Dial/AttitudeDial.h"
-#include "Widgets/Displays/QuantitiesRatesDisplay.h"
-#include "Widgets/Displays/QuantitiesRatesRow.h"
-#include "Plotting/Container.h"
-#include "Util/Sizing.h"
+#include "Widgets/Dial/AttitudeDial.hpp"
+#include "Widgets/Displays/QuantitiesRatesDisplay.hpp"
+#include "Widgets/Displays/QuantitiesRatesRow.hpp"
+#include "Plotting/Container.hpp"
+#include "Util/Sizing.hpp"
 
 namespace VSCL::FromPpt {
 class Widgets : public QMainWindow {

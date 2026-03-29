@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets>
-#include "Util/Sizing.h"
+#include "Util/Sizing.hpp"
 
 namespace VSCL {
 

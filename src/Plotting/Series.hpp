@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "Appearance.h"
+#include "Appearance.hpp"
 
 namespace VSCL::Plot {
 

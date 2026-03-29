@@ -1,5 +1,5 @@
-#include "QuantitiesRatesRow.h"
-#include "QuantitiesRatesDisplay.h"
+#include "QuantitiesRatesRow.hpp"
+#include "QuantitiesRatesDisplay.hpp"
 
 namespace VSCL {
 QtyRateRow::QtyRateRow(const QString& title, QtyRateDisplay* parent) : QGroupBox(title, parent) {

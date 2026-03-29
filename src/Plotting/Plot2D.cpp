@@ -1,6 +1,6 @@
 #include <iostream>
 #include <QHBoxLayout>
-#include "Plot2D.h"
+#include "Plot2D.hpp"
 
 namespace VSCL::Plot {
 

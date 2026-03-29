@@ -6,9 +6,9 @@
 #include <vector>
 #include <cstdint>
 
-#include "PlotAPI.h"
-#include "Axes.h"
-#include "Series.h"
+#include "PlotAPI.hpp"
+#include "Axes.hpp"
+#include "Series.hpp"
 
 namespace VSCL::Plot {
 

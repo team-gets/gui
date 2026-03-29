@@ -2,7 +2,7 @@
 #include <QWindow>
 #include <QWidget>
 
-#include "Windowing/WidgetsRecreation.h"
+#include "Windowing/WidgetsRecreation.hpp"
 
 int main(int argc, char** argv) {
 	QApplication app(argc, argv);

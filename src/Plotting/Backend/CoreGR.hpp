@@ -3,9 +3,9 @@
 #include <QWidget>
 #include "qtgr/grwidget.h"
 
-#include "APIGR.h"
-#include "Plotting/Plot2D.h"
-#include "ColorGR.h"
+#include "APIGR.hpp"
+#include "Plotting/Plot2D.hpp"
+#include "ColorGR.hpp"
 
 namespace VSCL::Plot {
 

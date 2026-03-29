@@ -21,7 +21,8 @@ set(WIDGET_SOURCES
 	"${WINDOWING_SRC_DIR}/NumericTestWidget.cpp"
 	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesDisplay.cpp"
 	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesRow.cpp"
-	"${WIDGETS_SRC_DIR}/Dial/AttitudeDial.cpp")
+	"${WIDGETS_SRC_DIR}/Dial/AttitudeDial.cpp"
+	"${WIDGETS_SRC_DIR}/Displays/RateLabel.hpp")
 
 set(PLOTTING_SOURCES
 	"${PLOTTING_SRC_DIR}/Plot2D.cpp"

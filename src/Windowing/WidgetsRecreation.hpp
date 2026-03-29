@@ -3,7 +3,7 @@
 #include <array>
 #include <QtWidgets>
 
-#include "Widgets/Dial/AttitudeDial.hpp"
+#include "Widgets/Dial/Attitude.hpp"
 #include "Widgets/Displays/QuantitiesRatesDisplay.hpp"
 #include "Widgets/Displays/QuantitiesRatesRow.hpp"
 #include "Plotting/Container.hpp"

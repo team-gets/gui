@@ -1,10 +1,6 @@
 #include <QBoxLayout>
 #include <QPainter>
-
-#include <algorithm>
-#include <cmath>
-
-#include "AttitudeDial.hpp"
+#include "Attitude.hpp"
 
 namespace VSCL {
 
@@ -97,7 +93,6 @@ void AttitudeDial::PaintTicks(QPainter* painter) {
 			break;
 		}
 
-		qDebug() << cossin;
 		double ci = Radius * cossin[0];
 		double si = Radius * cossin[1];
 		QPen pen = painter->pen();

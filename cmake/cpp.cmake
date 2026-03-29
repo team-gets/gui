@@ -1,6 +1,6 @@
 #
 #	This file is for:
-#	- Encapsulating some platform differences
+#	- Encapsulating some platform and compiler differences
 #	- Source declaration
 #	- Qt6 dependency declaration
 #
@@ -16,13 +16,23 @@ set(APP_SOURCES
 set(OTHER_APP_SOURCES
 	"${CMAKE_SOURCE_DIR}/src/App/Recreation.cpp")
 
-set(WIDGET_SOURCES
+set(WINDOWING_SOURCES
 	"${WINDOWING_SRC_DIR}/DevWindow.cpp"
-	"${WINDOWING_SRC_DIR}/NumericTestWidget.cpp"
+	"${WINDOWING_SRC_DIR}/NumericTestWidget.cpp")
+
+set(DIAL_SOURCES
+	"${WIDGETS_SRC_DIR}/Dial/Attitude.cpp"
+	"${WIDGETS_SRC_DIR}/Dial/Composite.cpp")
+
+set(DISPLAYER_SOURCES
 	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesDisplay.cpp"
 	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesRow.cpp"
-	"${WIDGETS_SRC_DIR}/Dial/AttitudeDial.cpp"
 	"${WIDGETS_SRC_DIR}/Displays/RateLabel.hpp")
+
+set(WIDGET_SOURCES
+	${WINDOWING_SOURCES}
+	${DIAL_SOURCES}
+	${DISPLAYER_SOURCES})
 
 set(PLOTTING_SOURCES
 	"${PLOTTING_SRC_DIR}/Plot2D.cpp"

@@ -3,7 +3,7 @@
 #include <QFileDialog>
 
 #include "DevWindow.hpp"
-#include "Dial/AttitudeDial.hpp"
+#include "Dial/Attitude.hpp"
 
 namespace VSCL {
 DevWindow::DevWindow() {

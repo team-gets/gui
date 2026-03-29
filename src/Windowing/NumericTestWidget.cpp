@@ -1,6 +1,6 @@
 #include <QGridLayout>
 
-#include "NumericTestWidget.h"
+#include "NumericTestWidget.hpp"
 
 namespace VSCL {
 

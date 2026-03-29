@@ -3,8 +3,8 @@
 #include <QtWidgets>
 #include <QHBoxLayout>
 
-#include "Plot2D.h"
-#include "PlotAPI.h"
+#include "Plot2D.hpp"
+#include "PlotAPI.hpp"
 
 namespace VSCL::Plot {
 

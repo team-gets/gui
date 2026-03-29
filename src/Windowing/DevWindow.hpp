@@ -13,7 +13,7 @@
 
 #include <QActionGroup>
 
-#include "NumericTestWidget.h"
+#include "NumericTestWidget.hpp"
 
 namespace VSCL {
 class DevWindow : public QMainWindow {

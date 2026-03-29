@@ -1,5 +1,5 @@
-#include "QuantitiesRatesDisplay.h"
-#include "QuantitiesRatesRow.h"
+#include "QuantitiesRatesDisplay.hpp"
+#include "QuantitiesRatesRow.hpp"
 
 namespace VSCL {
 

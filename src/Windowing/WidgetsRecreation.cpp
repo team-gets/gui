@@ -2,9 +2,9 @@
 #include <cmath>
 #include <chrono>
 
-#include "WidgetsRecreation.h"
-#include "Plotting/Backend/CoreGR.h"
-#include "Plotting/Backend/CoreQChart.h"
+#include "WidgetsRecreation.hpp"
+#include "Plotting/Backend/CoreGR.hpp"
+#include "Plotting/Backend/CoreQChart.hpp"
 
 // stupid temp thing {{{
 static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {
@@ -216,7 +216,7 @@ void Widgets::SetupTimeHistoryPlotGR() {
 	rollInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Red);
 
 	Plot::SeriesInfo pitchInfo;
-	pitchInfo.Name = "Pitch";
+	pitchInfo.Name = "Pit.hpp";
 	pitchInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Blue);
 
 	Plot::SeriesInfo yawInfo;
@@ -246,7 +246,7 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 	rollInfo.Color = Plot::StandardColor.at("Red");
 
 	Plot::SeriesInfo pitchInfo;
-	pitchInfo.Name = "Pitch";
+	pitchInfo.Name = "Pit.hpp";
 	pitchInfo.Color = Plot::StandardColor.at("Green");
 
 	Plot::SeriesInfo yawInfo;
@@ -267,7 +267,7 @@ void Widgets::SetupAttQtysRatesDisplay() {
 	RollQtyRate = new QtyRateRow(tr("Roll"), AttQtysRates);
 	RollQtyRate->SetQuantityUnits("°");
 	RollQtyRate->SetRateUnits("°/s");
-	PitchQtyRate = new QtyRateRow(tr("Pitch"), AttQtysRates);
+	PitchQtyRate = new QtyRateRow(tr("Pit.hpp"), AttQtysRates);
 	PitchQtyRate->SetQuantityUnits("°");
 	PitchQtyRate->SetRateUnits("°/s");
 	YawQtyRate = new QtyRateRow(tr("Yaw"), AttQtysRates);

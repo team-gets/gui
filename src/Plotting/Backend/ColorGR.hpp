@@ -4,7 +4,7 @@
 #include <cmath>
 #include <cstdint>
 
-#include "Plotting/Appearance.h"
+#include "Plotting/Appearance.hpp"
 
 namespace VSCL::Plot {
 

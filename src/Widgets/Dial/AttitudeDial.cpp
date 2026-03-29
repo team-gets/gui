@@ -79,8 +79,8 @@ QPoint AttitudeDial::HandEndingLowestNominal() const {
 QPoint AttitudeDial::HandEndingCenteredNominal() const {
 	double rangeCtr = (Range[1] - Range[0]) / 2.0;
 	double ang = (CurrentAngle - rangeCtr) * 3.14 / 180.0;
-	int linex = Radius*std::sin(ang);
-	int liney = -Radius*std::cos(ang);
+	int linex = -Radius*std::sin(ang);
+	int liney = Radius*std::cos(ang);
 
 	return Origin + QPoint{ linex, liney };
 }

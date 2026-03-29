@@ -25,8 +25,10 @@ public:
 	void DisplayRateFromArray(const std::vector<double>& ts, const std::vector<double>& qtys);
 
 private:
-	QGridLayout* Organizer;
+	QGridLayout* MajorOrganizer;
+	QGridLayout* DuoOrganizer;
 	QLabel* DialNameLabel;
+	QWidget* DialRateDuo;
 	AttitudeDial* Dial;
 	RateLabel* NumericRateLabel;
 

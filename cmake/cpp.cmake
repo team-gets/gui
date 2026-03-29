@@ -27,7 +27,7 @@ set(DIAL_SOURCES
 set(DISPLAYER_SOURCES
 	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesDisplay.cpp"
 	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesRow.cpp"
-	"${WIDGETS_SRC_DIR}/Displays/RateLabel.hpp")
+	"${WIDGETS_SRC_DIR}/Displays/RateLabel.cpp")
 
 set(WIDGET_SOURCES
 	${WINDOWING_SOURCES}

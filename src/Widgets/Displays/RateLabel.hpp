@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QLabel>
+#include "Util/Sizing.hpp"
 
 namespace VSCL {
 
@@ -13,6 +14,7 @@ class RateLabel : public QLabel {
 
 public:
 	RateLabel(QWidget* parent);
+	virtual void resizeEvent(QResizeEvent* event) override;
 
 	void SetTextFrom(double num);
 	void SetRateFromArray(const std::vector<double>& ts, const std::vector<double>& qtys);
@@ -22,6 +24,9 @@ private:
 	double Rate = 0.0;
 	QString QuantityUnitString = "";
 	QString TimeUnitString = "/s";
+
+	Util::FontAdjustment FontAdjustment{ 10, true };
+	QFont Font{};
 
 }; // class RateLabel
 } // namespace VSCL

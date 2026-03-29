@@ -7,7 +7,23 @@
 namespace VSCL {
 RateLabel::RateLabel(QWidget* parent) : QLabel(parent) {
 	SetTextFrom(0.0);
-	setScaledContents(true);
+	setFrameStyle(QFrame::StyledPanel | QFrame::Plain);
+	setStyleSheet("background-color: white;"
+				  "color: black;"
+				  "font: bold;"
+				  "margin: 2%;"
+				  "border-style: outset;"
+				  "border-color: black;"
+				  "border-width: 1%;"
+				  "border-radius: 5%;"
+				  "padding: 1%;");
+
+	Font.setPointSize(FontAdjustment.PointSizeAtMinimum);
+	setFont(Font);
+}
+
+void RateLabel::resizeEvent(QResizeEvent* event) {
+	Font.setPointSize(FontAdjustment.AdjustPointSize(window()));
 }
 
 void RateLabel::SetTextFrom(double num) {

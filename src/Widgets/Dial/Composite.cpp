@@ -30,15 +30,11 @@ CompositeDial::CompositeDial(QWidget* parent) : QWidget(parent) {
 	this->setSizePolicy(expandPolicy);
 	DialRateDuo->setSizePolicy(expandPolicy);
 	Dial->setSizePolicy(expandPolicy);
-	DialNameLabel->setSizePolicy(expandPolicy);
 
 	MajorOrganizer->setAlignment(Qt::AlignHCenter);
 	MajorOrganizer->setAlignment(DialNameLabel, Qt::AlignHCenter | Qt::AlignTop);
-	//MajorOrganizer->setAlignment(DialRateDuo, Qt::AlignHCenter);
 
-	//DuoOrganizer->setAlignment(Qt::AlignHCenter);
-	//DuoOrganizer->setAlignment(Dial,Qt::AlignHCenter);
-	DuoOrganizer->setAlignment(NumericRateLabel, Qt::AlignHCenter);
+	DuoOrganizer->setAlignment(NumericRateLabel, Qt::AlignHCenter | Qt::AlignVCenter);
 }
 
 CompositeDial::CompositeDial(const QString& title, QWidget* parent)

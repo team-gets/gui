@@ -9,21 +9,9 @@
 namespace VSCL {
 
 AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
-	NumericDisplayFont = QFont();
-	NumericDisplay = new QLabel(this);
-	NumericDisplay->setBuddy(this);
-	NumericDisplay->setAlignment(Qt::AlignCenter);
-	NumericDisplay->setFrameStyle(QFrame::Panel | QFrame::Raised);
-	NumericDisplay->setFont(NumericDisplayFont);
-	NumericDisplay->setStyleSheet(" QLabel { color: white; background-color: black; border-radius: 3% } ");
 	SetRangeType(RangeTypeMode);
-
 	update();
 } // AttitudeDial ctor
-
-AttitudeDial::AttitudeDial(QWidget* parent, bool showNumericDisplay) : AttitudeDial(parent) {
-	SetNumericDisplayState(showNumericDisplay);
-}
 
 void AttitudeDial::SetDialAngle(double value) {
 	CurrentAngle = value;
@@ -43,30 +31,6 @@ void AttitudeDial::UpdateOrigin() {
 	QSize curSize = size();
 	Origin = { curSize.width() / 2, curSize.height() / 2 };
 }
-
-void AttitudeDial::UpdateNumericDisplay() {
-	NumericDisplay->setText(QString::number(CurrentAngle) + "°");
-
-	int w = int(0.2*Radius);
-	int h = int(0.1*Radius);
-
-	NumericDisplay->setFixedSize(w, h);
-	NumericDisplay->move(Origin - QPoint{ w / 2 , h / 2 });
-} // void AttitudeDial::UpdateNumericDisplay()
-
-void AttitudeDial::UpdateNumericFont() {
-	int pts = Radius / 20;
-	pts = (pts < 1) ? 1 : pts;
-
-	NumericDisplayFont.setPointSize(pts);
-	NumericDisplay->setFont(NumericDisplayFont);
-} // void AttitudeDial::UpdateNumericDisplay()
-
-void AttitudeDial::SetNumericDisplayState(bool enabled) {
-	NumericDisplayEnabled = enabled;
-	NumericDisplay->setVisible(enabled);
-	update();
-} // void AttitudeDial::UpdateNumericDisplay()
 
 QPoint AttitudeDial::HandEndingLowestNominal() const {
 	double ang = (CurrentAngle - Range[0]) * 3.14 / 180.0;
@@ -178,10 +142,5 @@ void AttitudeDial::paintEvent(QPaintEvent* event) {
 	PaintTicks(&painter);
 	PaintHand(&painter);
 	PaintCap(&painter);
-
-	if (NumericDisplayEnabled) {
-		UpdateNumericDisplay();
-		UpdateNumericFont();
-	}
 }
 } // namespace VSCL

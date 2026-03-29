@@ -19,11 +19,8 @@ class AttitudeDial : public QWidget {
 
 public:
 	AttitudeDial(QWidget* parent);
-	AttitudeDial(QWidget* parent, bool enabled);
 
 	void SetDialAngle(double value);
-	void SetNumericDisplayState(bool enabled);
-
 	void SetPalette(AttitudeDialPalette& newPalette);
 	AttitudeDialPalette GetPalette() const;
 	const AttitudeDialPalette& GetPaletteView() const;
@@ -49,12 +46,6 @@ private:
 	QPoint HandEndingLowestNominal() const;
 	QPoint HandEndingCenteredNominal() const;
 	std::function<QPoint(const AttitudeDial&)> RangeHandlerFunction = nullptr;
-
-	QFont NumericDisplayFont;
-	QLabel* NumericDisplay;
-	bool NumericDisplayEnabled = true;
-	void UpdateNumericFont();
-	void UpdateNumericDisplay();
 
 	void PaintCircularBacking(QPainter* painter);
 	void PaintTicks(QPainter* painter);

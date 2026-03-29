@@ -16,6 +16,7 @@ AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
 	NumericDisplay->setFrameStyle(QFrame::Panel | QFrame::Raised);
 	NumericDisplay->setFont(NumericDisplayFont);
 	NumericDisplay->setStyleSheet(" QLabel { color: white; background-color: black; border-radius: 3% } ");
+	SetRangeType(RangeTypeMode);
 
 	update();
 } // AttitudeDial ctor
@@ -67,6 +68,39 @@ void AttitudeDial::SetNumericDisplayState(bool enabled) {
 	update();
 } // void AttitudeDial::UpdateNumericDisplay()
 
+QPoint AttitudeDial::HandEndingLowestNominal() const {
+	double ang = (CurrentAngle - Range[0]) * 3.14 / 180.0;
+	int linex = Radius*std::sin(ang);
+	int liney = -Radius*std::cos(ang);
+
+	return Origin + QPoint{ linex, liney };
+}
+
+QPoint AttitudeDial::HandEndingCenteredNominal() const {
+	double rangeCtr = (Range[1] - Range[0]) / 2.0;
+	double ang = (CurrentAngle - rangeCtr) * 3.14 / 180.0;
+	int linex = Radius*std::sin(ang);
+	int liney = -Radius*std::cos(ang);
+
+	return Origin + QPoint{ linex, liney };
+}
+
+void AttitudeDial::SetRangeType(RangeType newRangeType) {
+	RangeTypeMode = newRangeType;
+	
+	switch (RangeTypeMode) {
+	case RangeType::LowestNominal:
+		RangeHandlerFunction = std::bind(&AttitudeDial::HandEndingLowestNominal, this);
+		break;
+	case RangeType::CenteredNominal:
+	default:
+		RangeHandlerFunction = std::bind(&AttitudeDial::HandEndingCenteredNominal, this);
+		break;
+	}
+
+	update();
+}
+
 void AttitudeDial::PaintCircularBacking(QPainter* painter) {
 	QBrush fillBrush = painter->brush();
 	fillBrush.setStyle(Qt::SolidPattern);
@@ -111,10 +145,7 @@ void AttitudeDial::PaintTicks(QPainter* painter) {
 } // void AttitudeDial::PaintTicks()
 
 void AttitudeDial::PaintHand(QPainter* painter) {
-	double ang = CurrentAngle * 3.14 / 180.0;
-	int linex = Radius*std::sin(ang);
-	int liney = -Radius*std::cos(ang);
-	QPoint end = Origin + QPoint{ linex, liney };
+	QPoint end = (RangeHandlerFunction) ? RangeHandlerFunction(this) : Origin + QPoint{ 0, (int)Radius };
 
 	QPen pen = painter->pen();
 	pen.setColor(Palette.Hand);

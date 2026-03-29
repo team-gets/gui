@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <array>
 #include <QtWidgets>
 
@@ -27,6 +28,12 @@ public:
 	AttitudeDialPalette GetPalette() const;
 	const AttitudeDialPalette& GetPaletteView() const;
 
+	enum class RangeType : uint8_t {
+		CenteredNominal,
+		LowestNominal
+	};
+	void SetRangeType(RangeType newRangeType);
+
 	virtual void paintEvent(QPaintEvent* event) override;
 
 private:
@@ -37,6 +44,11 @@ private:
 	void UpdateRadius();
 
 	AttitudeDialPalette Palette;
+	std::array<double, 2> Range = { -180, 180 };
+	RangeType RangeTypeMode = RangeType::CenteredNominal;
+	QPoint HandEndingLowestNominal() const;
+	QPoint HandEndingCenteredNominal() const;
+	std::function<QPoint(const AttitudeDial&)> RangeHandlerFunction = nullptr;
 
 	QFont NumericDisplayFont;
 	QLabel* NumericDisplay;

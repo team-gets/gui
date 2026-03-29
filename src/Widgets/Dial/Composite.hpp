@@ -28,7 +28,7 @@ private:
 	QGridLayout* Organizer;
 	QLabel* DialNameLabel;
 	AttitudeDial* Dial;
-	RateLabel* RateLabel;
+	RateLabel* NumericRateLabel;
 
 }; // class CompositeDial
 } // namespace VSCL

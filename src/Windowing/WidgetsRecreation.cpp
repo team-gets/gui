@@ -122,13 +122,13 @@ void Widgets::SetupAttitudeDials() {
 	dialsPolicy.setVerticalPolicy(QSizePolicy::MinimumExpanding);
 	AttitudeDialRow->setSizePolicy(dialsPolicy);
 
-	RollDial = new CompositeDial(AttitudeDialRow);
+	RollDial = new CompositeDial(tr("Roll"), AttitudeDialRow);
 	AttitudeDialOrganizer->addWidget(RollDial);
 
-	PitchDial = new CompositeDial(AttitudeDialRow);
+	PitchDial = new CompositeDial(tr("Pitch"), AttitudeDialRow);
 	AttitudeDialOrganizer->addWidget(PitchDial);
 
-	YawDial = new CompositeDial(AttitudeDialRow);
+	YawDial = new CompositeDial(tr("Yaw"), AttitudeDialRow);
 	AttitudeDialOrganizer->addWidget(YawDial);
 
 	Dials = { RollDial, PitchDial, YawDial };

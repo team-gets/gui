@@ -18,4 +18,5 @@ MultiPlotContainer::MultiPlotContainer(QWidget* parent, int n) : MultiPlotContai
         layout()->addWidget(container);
    }
 }
+void MultiPlotContainer::resizeEvent(QResizeEvent* event) { }
 }

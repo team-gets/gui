@@ -14,7 +14,7 @@ set(APP_SOURCES
 
 # sorry
 set(OTHER_APP_SOURCES
-	"${CMAKE_SOURCE_DIR}/src/App/Recreation.cpp")
+	"${CMAKE_SOURCE_DIR}/src/App/testMultiplot.cpp")
 
 set(WINDOWING_SOURCES
 	"${WINDOWING_SRC_DIR}/DevWindow.cpp"

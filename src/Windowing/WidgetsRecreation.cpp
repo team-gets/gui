@@ -174,7 +174,7 @@ void Widgets::SetupStatusColumn() {
 	vhexpanding.setVerticalPolicy(QSizePolicy::MinimumExpanding);
 	vhexpanding.setHorizontalPolicy(QSizePolicy::MinimumExpanding);
 
-	StatusColumnOrganizer = new QVBoxLayout;
+	StatusColumnOrganizer = new QVBoxLayout(StatusColumn);
 	LoadTestRoutineButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(LoadTestRoutineButton);
 

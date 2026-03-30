@@ -1,28 +1,13 @@
 #include <QBoxLayout>
 #include <QPainter>
-
-#include <algorithm>
-#include <cmath>
-
-#include "AttitudeDial.hpp"
+#include "Attitude.hpp"
 
 namespace VSCL {
 
 AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
-	NumericDisplayFont = QFont();
-	NumericDisplay = new QLabel(this);
-	NumericDisplay->setBuddy(this);
-	NumericDisplay->setAlignment(Qt::AlignCenter);
-	NumericDisplay->setFrameStyle(QFrame::Panel | QFrame::Raised);
-	NumericDisplay->setFont(NumericDisplayFont);
-	NumericDisplay->setStyleSheet(" QLabel { color: white; background-color: black; border-radius: 3% } ");
-
+	SetRangeType(RangeTypeMode);
 	update();
 } // AttitudeDial ctor
-
-AttitudeDial::AttitudeDial(QWidget* parent, bool showNumericDisplay) : AttitudeDial(parent) {
-	SetNumericDisplayState(showNumericDisplay);
-}
 
 void AttitudeDial::SetDialAngle(double value) {
 	CurrentAngle = value;
@@ -43,29 +28,38 @@ void AttitudeDial::UpdateOrigin() {
 	Origin = { curSize.width() / 2, curSize.height() / 2 };
 }
 
-void AttitudeDial::UpdateNumericDisplay() {
-	NumericDisplay->setText(QString::number(CurrentAngle) + "°");
+QPoint AttitudeDial::HandEndingLowestNominal() const {
+	double ang = (CurrentAngle - Range[0]) * 3.14 / 180.0;
+	int linex = Radius*std::sin(ang);
+	int liney = -Radius*std::cos(ang);
 
-	int w = int(0.2*Radius);
-	int h = int(0.1*Radius);
+	return Origin + QPoint{ linex, liney };
+}
 
-	NumericDisplay->setFixedSize(w, h);
-	NumericDisplay->move(Origin - QPoint{ w / 2 , h / 2 });
-} // void AttitudeDial::UpdateNumericDisplay()
+QPoint AttitudeDial::HandEndingCenteredNominal() const {
+	double rangeCtr = (Range[1] - Range[0]) / 2.0;
+	double ang = (CurrentAngle - rangeCtr) * 3.14 / 180.0;
+	int linex = -Radius*std::sin(ang);
+	int liney = Radius*std::cos(ang);
 
-void AttitudeDial::UpdateNumericFont() {
-	int pts = Radius / 20;
-	pts = (pts < 1) ? 1 : pts;
+	return Origin + QPoint{ linex, liney };
+}
 
-	NumericDisplayFont.setPointSize(pts);
-	NumericDisplay->setFont(NumericDisplayFont);
-} // void AttitudeDial::UpdateNumericDisplay()
+void AttitudeDial::SetRangeType(RangeType newRangeType) {
+	RangeTypeMode = newRangeType;
+	
+	switch (RangeTypeMode) {
+	case RangeType::LowestNominal:
+		RangeHandlerFunction = std::bind(&AttitudeDial::HandEndingLowestNominal, this);
+		break;
+	case RangeType::CenteredNominal:
+	default:
+		RangeHandlerFunction = std::bind(&AttitudeDial::HandEndingCenteredNominal, this);
+		break;
+	}
 
-void AttitudeDial::SetNumericDisplayState(bool enabled) {
-	NumericDisplayEnabled = enabled;
-	NumericDisplay->setVisible(enabled);
 	update();
-} // void AttitudeDial::UpdateNumericDisplay()
+}
 
 void AttitudeDial::PaintCircularBacking(QPainter* painter) {
 	QBrush fillBrush = painter->brush();
@@ -78,43 +72,41 @@ void AttitudeDial::PaintCircularBacking(QPainter* painter) {
 } // void AttitudeDial::PaintCircularBacking()
 
 void AttitudeDial::PaintTicks(QPainter* painter) {
-	for (int i = 0; i < 12; i++) {
-		QPoint st, ed;
+	for (int i = 0; i < 8; i++) {
 		QColor tickcolor;
-		const double ci = Radius*Cos30Degs[i];
-		const double si = Radius*Sin30Degs[i];
-		double ticker[2] = { 0.0, 1.0 };
+		std::array<double, 2> ticker = { 0.0, 1.0 };
+		std::array<double, 2> cossin;
 
 		switch (i) {
 		case 0:
-		case 3:
-		case 6:
-		case 9: // major
+		case 1:
+		case 2:
+		case 3: // major
 			ticker[0] = 0.85;
 			tickcolor = Palette.MajorTick;
+			cossin = MajorTicks[i];
 			break;
 		default: // minor
 			ticker[0] = 0.95;
 			tickcolor = Palette.MinorTick;
+			cossin = MinorTicks[i - 4];
 			break;
 		}
 
-		st = Origin + ticker[0] * QPoint{ int(ci), int(si) };
-		ed = Origin + ticker[1] * QPoint{ int(ci), int(si) };
-
+		double ci = Radius * cossin[0];
+		double si = Radius * cossin[1];
 		QPen pen = painter->pen();
 		pen.setColor(tickcolor);
 
+		QPoint st = Origin + ticker[0] * QPoint{ int(ci), int(si) };
+		QPoint ed = Origin + ticker[1] * QPoint{ int(ci), int(si) };
 		painter->setPen(pen);
 		painter->drawLine(st, ed);
 	}
 } // void AttitudeDial::PaintTicks()
 
 void AttitudeDial::PaintHand(QPainter* painter) {
-	double ang = CurrentAngle * 3.14 / 180.0;
-	int linex = Radius*std::sin(ang);
-	int liney = -Radius*std::cos(ang);
-	QPoint end = Origin + QPoint{ linex, liney };
+	QPoint end = (RangeHandlerFunction) ? RangeHandlerFunction(this) : Origin + QPoint{ 0, (int)Radius };
 
 	QPen pen = painter->pen();
 	pen.setColor(Palette.Hand);
@@ -147,10 +139,5 @@ void AttitudeDial::paintEvent(QPaintEvent* event) {
 	PaintTicks(&painter);
 	PaintHand(&painter);
 	PaintCap(&painter);
-
-	if (NumericDisplayEnabled) {
-		UpdateNumericDisplay();
-		UpdateNumericFont();
-	}
 }
 } // namespace VSCL

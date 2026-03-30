@@ -54,12 +54,14 @@ Widgets::Widgets() {
 	ButtonFont = QFont();
 	SetAllButtonTextSize();
 
-	SetRoll(2);
+	SetRoll(-32);
 	SetPitch(5);
 	SetYaw(100);
 } // void Widgets::Widgets()
 
 void Widgets::resizeEvent(QResizeEvent* event) {
+	QMainWindow::resizeEvent(event);
+
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
 	SetAllButtonTextSize();
@@ -122,13 +124,13 @@ void Widgets::SetupAttitudeDials() {
 	dialsPolicy.setVerticalPolicy(QSizePolicy::MinimumExpanding);
 	AttitudeDialRow->setSizePolicy(dialsPolicy);
 
-	RollDial = new AttitudeDial(AttitudeDialRow, false);
+	RollDial = new CompositeDial(QString("Roll"), AttitudeDialRow);
 	AttitudeDialOrganizer->addWidget(RollDial);
 
-	PitchDial = new AttitudeDial(AttitudeDialRow, false);
+	PitchDial = new CompositeDial(QString("Pitch"), AttitudeDialRow);
 	AttitudeDialOrganizer->addWidget(PitchDial);
 
-	YawDial = new AttitudeDial(AttitudeDialRow, false);
+	YawDial = new CompositeDial(QString("Yaw"), AttitudeDialRow);
 	AttitudeDialOrganizer->addWidget(YawDial);
 
 	Dials = { RollDial, PitchDial, YawDial };
@@ -246,7 +248,7 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 	rollInfo.Color = Plot::StandardColor.at("Red");
 
 	Plot::SeriesInfo pitchInfo;
-	pitchInfo.Name = "Pit.hpp";
+	pitchInfo.Name = "Pitch";
 	pitchInfo.Color = Plot::StandardColor.at("Green");
 
 	Plot::SeriesInfo yawInfo;
@@ -267,7 +269,7 @@ void Widgets::SetupAttQtysRatesDisplay() {
 	RollQtyRate = new QtyRateRow(tr("Roll"), AttQtysRates);
 	RollQtyRate->SetQuantityUnits("°");
 	RollQtyRate->SetRateUnits("°/s");
-	PitchQtyRate = new QtyRateRow(tr("Pit.hpp"), AttQtysRates);
+	PitchQtyRate = new QtyRateRow(tr("Pitch"), AttQtysRates);
 	PitchQtyRate->SetQuantityUnits("°");
 	PitchQtyRate->SetRateUnits("°/s");
 	YawQtyRate = new QtyRateRow(tr("Yaw"), AttQtysRates);

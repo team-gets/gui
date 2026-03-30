@@ -123,10 +123,10 @@ void PlotQChart::Plot() {
 
 		QList<QPointF> pts;
 		const SeriesInfo& sinfo = sinfos[idx];
-		unsigned int n = sinfo.Times.size();
+		std::size_t n = sinfo.Times.size();
 		if (n == 0) { continue; }
 
-		for (unsigned int i = 0; i < n; i++) {
+		for (unsigned int i = 0; static_cast<std::size_t>(i) < n; i++) {
 			pts.append({ sinfo.Times[i], sinfo.Quantities[i] });
 		}
 

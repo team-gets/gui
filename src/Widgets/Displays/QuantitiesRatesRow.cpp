@@ -23,11 +23,12 @@ QtyRateRow::QtyRateRow(const QString& title, QtyRateDisplay* parent) : QGroupBox
 }
 
 void QtyRateRow::resizeEvent(QResizeEvent* event) {
+	QGroupBox::resizeEvent(event);
 	AdjustFontSize();
 }
 
 void QtyRateRow::AdjustFontSize() {
-	int tpt = TitleFontAdjustment.AdjustPointSize(window());
+	unsigned int tpt = static_cast<unsigned int>(TitleFontAdjustment.AdjustPointSize(window()));
 	if (tpt <= TitleFontAdjustment.PointSizeAtMinimum) {
 		setTitle(tr(""));
 		TitleFont.setPointSize(1);

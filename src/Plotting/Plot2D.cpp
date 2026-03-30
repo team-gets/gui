@@ -4,7 +4,7 @@
 
 namespace VSCL::Plot {
 
-void EmbeddablePlot2D::AddPoint(double time, double quantity, bool update) { AddPoint(0, time, quantity); }
+void EmbeddablePlot2D::AddPoint(double time, double quantity, bool update) { AddPoint(0, time, quantity, update); }
 void EmbeddablePlot2D::AddPoint(uint8_t idx, double time, double quantity, bool update) {
 	std::vector<double>& oldTime = Series[idx].Times;
 	std::vector<double>& oldQty = Series[idx].Quantities;
@@ -19,8 +19,8 @@ void EmbeddablePlot2D::AddPoints(uint8_t idx,
 	std::vector<double>& oldTime = Series[idx].Times;
 	std::vector<double>& oldQty = Series[idx].Quantities;
 
-	oldTime.resize(oldTime.size() + times.size());
-	oldQty.resize(oldQty.size() + quantities.size());
+	oldTime.reserve(oldTime.size() + times.size());
+	oldQty.reserve(oldQty.size() + quantities.size());
 
 	for (double time : times) {
 		oldTime.push_back(time);
@@ -34,7 +34,7 @@ void EmbeddablePlot2D::AddPoints(uint8_t idx,
 }
 void EmbeddablePlot2D::AddPoints(
 		const std::vector<double>& times, const std::vector<double>& quantities, bool update) {
-			AddPoints(0, times, quantities); }
+			AddPoints(0, times, quantities, update); }
 
 void EmbeddablePlot2D::SetAxis(const Axis axis, const AxisInfo& info) {
 	switch (axis) {

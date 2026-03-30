@@ -3,7 +3,7 @@
 #include <array>
 #include <QtWidgets>
 
-#include "Widgets/Dial/AttitudeDial.hpp"
+#include "Widgets/Dial/Composite.hpp"
 #include "Widgets/Displays/QuantitiesRatesDisplay.hpp"
 #include "Widgets/Displays/QuantitiesRatesRow.hpp"
 #include "Plotting/Container.hpp"
@@ -35,10 +35,10 @@ private:
 	QFrame* AttitudeDialRow;
 	QHBoxLayout* AttitudeDialOrganizer;
 
-	AttitudeDial* RollDial;
-	AttitudeDial* PitchDial;
-	AttitudeDial* YawDial;
-	std::array<AttitudeDial*, 3> Dials;
+	CompositeDial* RollDial;
+	CompositeDial* PitchDial;
+	CompositeDial* YawDial;
+	std::array<CompositeDial*, 3> Dials;
 	void SetupAttitudeDials();
 
 	Plot::EmbeddablePlot2D* Plot;

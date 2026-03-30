@@ -15,6 +15,8 @@ public:
     MultiPlotContainer(QWidget* parent, int n);
     virtual void resizeEvent(QResizeEvent *event) override;
 
+    QList<Plot::PlotContainer*> GetPlotContainers() const;
+    const QList<Plot::PlotContainer*>& GetPlotContainersView() const;
 private:
     QList<Plot::PlotContainer*> Plots;
 

@@ -21,5 +21,5 @@ PlotContainer::PlotContainer(QWidget* parent, EmbeddablePlot2D* newPlot)
 
 	Plot->Plot();
 }
-
+EmbeddablePlot2D* PlotContainer::GetPlot() const { return Plot; }
 } // namespace VSCL::Plot

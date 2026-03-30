@@ -16,6 +16,8 @@ class PLOT_API PlotContainer : public QWidget {
 public:
 	PlotContainer(QWidget* parent, EmbeddablePlot2D* newPlot);
 
+	EmbeddablePlot2D* GetPlot() const;
+
 private:
 	EmbeddablePlot2D* Plot;
 

@@ -19,4 +19,10 @@ MultiPlotContainer::MultiPlotContainer(QWidget* parent, int n) : MultiPlotContai
    }
 }
 void MultiPlotContainer::resizeEvent(QResizeEvent* event) { }
+QList<Plot::PlotContainer*> MultiPlotContainer::GetPlotContainers() const {
+    return Plots;
+}
+const QList<Plot::PlotContainer*>& MultiPlotContainer::GetPlotContainersView() const {
+    return Plots;
+}
 }

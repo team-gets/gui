@@ -248,7 +248,7 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 	rollInfo.Color = Plot::StandardColor.at("Red");
 
 	Plot::SeriesInfo pitchInfo;
-	pitchInfo.Name = "Pit.hpp";
+	pitchInfo.Name = "Pitch";
 	pitchInfo.Color = Plot::StandardColor.at("Green");
 
 	Plot::SeriesInfo yawInfo;
@@ -269,7 +269,7 @@ void Widgets::SetupAttQtysRatesDisplay() {
 	RollQtyRate = new QtyRateRow(tr("Roll"), AttQtysRates);
 	RollQtyRate->SetQuantityUnits("°");
 	RollQtyRate->SetRateUnits("°/s");
-	PitchQtyRate = new QtyRateRow(tr("Pit.hpp"), AttQtysRates);
+	PitchQtyRate = new QtyRateRow(tr("Pitch"), AttQtysRates);
 	PitchQtyRate->SetQuantityUnits("°");
 	PitchQtyRate->SetRateUnits("°/s");
 	YawQtyRate = new QtyRateRow(tr("Yaw"), AttQtysRates);

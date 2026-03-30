@@ -25,7 +25,7 @@ private:
 	QString QuantityUnitString = "";
 	QString TimeUnitString = "/s";
 
-	Util::FontAdjustment FontAdjustment{ 10, true };
+	Util::FontAdjustment FontAdjustment{ 10, false };
 	QFont Font{};
 
 }; // class RateLabel

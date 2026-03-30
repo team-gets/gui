@@ -25,6 +25,7 @@ RateLabel::RateLabel(QWidget* parent) : QLabel(parent) {
 void RateLabel::resizeEvent(QResizeEvent* event) {
 	QLabel::resizeEvent(event);
 	Font.setPointSize(FontAdjustment.AdjustPointSize(window()));
+	setFont(Font);
 }
 
 void RateLabel::SetTextFrom(double num) {

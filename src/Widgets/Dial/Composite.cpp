@@ -13,6 +13,7 @@ CompositeDial::CompositeDial(QWidget* parent) : QWidget(parent) {
 
 	DialNameLabel->setText("Dial");
 	DialNameLabel->setScaledContents(true);
+	DialNameLabel->setFont(DialNameFont);
 
 	MajorOrganizer->addWidget(DialNameLabel, 0, 0, 1, 1);
 	MajorOrganizer->addWidget(DialRateDuo, 1, 0, 5, 1);
@@ -31,6 +32,9 @@ CompositeDial::CompositeDial(QWidget* parent) : QWidget(parent) {
 	DialRateDuo->setSizePolicy(expandPolicy);
 	Dial->setSizePolicy(expandPolicy);
 
+	QSizePolicy vertConstrain(QSizePolicy::Preferred, QSizePolicy::Minimum);
+	DialNameLabel->setSizePolicy(vertConstrain);
+
 	MajorOrganizer->setAlignment(Qt::AlignHCenter);
 	MajorOrganizer->setAlignment(DialNameLabel, Qt::AlignHCenter | Qt::AlignTop);
 
@@ -44,6 +48,9 @@ CompositeDial::CompositeDial(const QString& title, QWidget* parent)
 
 void CompositeDial::resizeEvent(QResizeEvent* event) {
 	QWidget::resizeEvent(event);
+
+	DialNameFont.setPointSize(TitleAdjustment.AdjustPointSize(window()));
+	DialNameLabel->setFont(DialNameFont);
 }
 
 // Wrap accessors and settors of child widgets {{{

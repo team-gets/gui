@@ -29,7 +29,8 @@ public:
 private:
 	QGridLayout* MajorOrganizer;
 	QLabel* DialNameLabel;
-	Util::FontAdjustment TitleAdjustment{ .PointSizeAtMinimum = 20, .AdjustToWidth = false };
+	QFont DialNameFont{ };
+	Util::FontAdjustment TitleAdjustment{ .PointSizeAtMinimum = 16, .AdjustToWidth = false };
 
 	QGridLayout* DuoOrganizer;
 	QWidget* DialRateDuo;

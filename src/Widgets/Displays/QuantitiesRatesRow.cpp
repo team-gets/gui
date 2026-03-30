@@ -23,6 +23,7 @@ QtyRateRow::QtyRateRow(const QString& title, QtyRateDisplay* parent) : QGroupBox
 }
 
 void QtyRateRow::resizeEvent(QResizeEvent* event) {
+	QGroupBox::resizeEvent(event);
 	AdjustFontSize();
 }
 

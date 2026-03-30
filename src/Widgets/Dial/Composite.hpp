@@ -5,12 +5,13 @@
 
 #include "Dial/Attitude.hpp"
 #include "Displays/RateLabel.hpp"
+#include "Util/Sizing.hpp"
 
 namespace VSCL {
 
 /*
- *	Composite dial combines multiple elements together:
- *	Base dial, title, and rate display
+ *	@brief The composite dial combines multiple elements together:
+ *	A base dial, title, and rate display.
  */
 class CompositeDial : public QWidget {
 
@@ -19,6 +20,7 @@ class CompositeDial : public QWidget {
 public:
 	CompositeDial(QWidget* parent);
 	CompositeDial(const QString& title, QWidget* parent);
+	virtual void resizeEvent(QResizeEvent* event) override;
 
 	void SetDialTitle(const QString& title);
 	void SetDialAngle(double value);
@@ -26,11 +28,15 @@ public:
 
 private:
 	QGridLayout* MajorOrganizer;
-	QGridLayout* DuoOrganizer;
 	QLabel* DialNameLabel;
+	Util::FontAdjustment TitleAdjustment{ .PointSizeAtMinimum = 20, .AdjustToWidth = false };
+
+	QGridLayout* DuoOrganizer;
 	QWidget* DialRateDuo;
 	AttitudeDial* Dial;
 	RateLabel* NumericRateLabel;
+
+	double RateLimitHz = 1.0;
 
 }; // class CompositeDial
 } // namespace VSCL

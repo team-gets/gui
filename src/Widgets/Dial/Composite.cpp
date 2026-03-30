@@ -42,6 +42,10 @@ CompositeDial::CompositeDial(const QString& title, QWidget* parent)
 	DialNameLabel->setText(title);
 }
 
+void CompositeDial::resizeEvent(QResizeEvent* event) {
+	QWidget::resizeEvent(event);
+}
+
 // Wrap accessors and settors of child widgets {{{
 void CompositeDial::SetDialTitle(const QString& title) { DialNameLabel->setText(title); }
 void CompositeDial::SetDialAngle(double value) { Dial->SetDialAngle(value); }

@@ -60,6 +60,8 @@ Widgets::Widgets() {
 } // void Widgets::Widgets()
 
 void Widgets::resizeEvent(QResizeEvent* event) {
+	QMainWindow::resizeEvent(event);
+
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
 	SetAllButtonTextSize();

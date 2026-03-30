@@ -54,7 +54,7 @@ Widgets::Widgets() {
 	ButtonFont = QFont();
 	SetAllButtonTextSize();
 
-	SetRoll(2);
+	SetRoll(-32);
 	SetPitch(5);
 	SetYaw(100);
 } // void Widgets::Widgets()

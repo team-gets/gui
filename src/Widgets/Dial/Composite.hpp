@@ -30,14 +30,12 @@ private:
 	QGridLayout* MajorOrganizer;
 	QLabel* DialNameLabel;
 	QFont DialNameFont{ };
-	Util::FontAdjustment TitleAdjustment{ .PointSizeAtMinimum = 16, .AdjustToWidth = false };
+	Util::FontAdjustment TitleAdjustment{ 16, false };
 
 	QGridLayout* DuoOrganizer;
 	QWidget* DialRateDuo;
 	AttitudeDial* Dial;
 	RateLabel* NumericRateLabel;
-
-	double RateLimitHz = 1.0;
 
 }; // class CompositeDial
 } // namespace VSCL

@@ -10,19 +10,21 @@ CompositeDial::CompositeDial(QWidget* parent) : QWidget(parent) {
 	this->setLayout(MajorOrganizer);
 	this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-	MajorOrganizer->setAlignment(Qt::AlignHCenter);
-	MajorOrganizer->setAlignment(DialNameLabel, Qt::AlignHCenter | Qt::AlignTop);
-
 	DialNameLabel = new QLabel(this);
 	DialRateDuo = new QWidget(this);
+
+	MajorOrganizer->addWidget(DialNameLabel, 0, 0, 1, 1);
+	MajorOrganizer->addWidget(DialRateDuo, 1, 0, 5, 1);
+
+	MajorOrganizer->setAlignment(Qt::AlignHCenter);
+	MajorOrganizer->setAlignment(DialNameLabel, Qt::AlignHCenter | Qt::AlignTop);
 
 	DialNameLabel->setText("Dial");
 	DialNameLabel->setScaledContents(true);
 	DialNameLabel->setFont(DialNameFont);
 	DialNameLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+	DialNameLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
-	MajorOrganizer->addWidget(DialNameLabel, 0, 0, 1, 1);
-	MajorOrganizer->addWidget(DialRateDuo, 1, 0, 5, 1);
 
 	// Bottom-level
 	DuoOrganizer = new QGridLayout(DialRateDuo);

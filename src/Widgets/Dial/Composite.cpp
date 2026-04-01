@@ -2,16 +2,19 @@
 
 namespace VSCL {
 
-CompositeDial::CompositeDial(QWidget* parent) : QWidget(parent) {
+CompositeDial::CompositeDial(QWidget* parent)
+	: QWidget(parent)
+	, MajorOrganizer(new QGridLayout(this))
+	, DialNameLabel(new QLabel(this))
+	, DialRateDuo(new QWidget(this))
+	, DuoOrganizer(new QGridLayout(DialRateDuo))
+	, Dial(new AttitudeDial(DialRateDuo))
+	, NumericRateLabel(new RateLabel(DialRateDuo)) {
+
 	// Widget setup goes top -> bottom level
-	
 	// Top-level
-	MajorOrganizer = new QGridLayout(this);
 	this->setLayout(MajorOrganizer);
 	this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-	DialNameLabel = new QLabel(this);
-	DialRateDuo = new QWidget(this);
 
 	MajorOrganizer->addWidget(DialNameLabel, 0, 0, 1, 1);
 	MajorOrganizer->addWidget(DialRateDuo, 1, 0, 5, 1);
@@ -25,13 +28,8 @@ CompositeDial::CompositeDial(QWidget* parent) : QWidget(parent) {
 	DialNameLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 	DialNameLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
-
 	// Bottom-level
-	DuoOrganizer = new QGridLayout(DialRateDuo);
 	DialRateDuo->setLayout(DuoOrganizer);
-
-	Dial = new AttitudeDial(DialRateDuo);
-	NumericRateLabel = new RateLabel(DialRateDuo);
 
 	DuoOrganizer->addWidget(Dial, 0, 0);
 	DuoOrganizer->addWidget(NumericRateLabel, 0, 0);

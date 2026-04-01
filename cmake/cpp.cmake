@@ -35,8 +35,7 @@ set(WIDGET_SOURCES
 	${DISPLAYER_SOURCES})
 
 set(PLOTTING_SOURCES
-	"${PLOTTING_SRC_DIR}/Plot2D.cpp"
-	"${PLOTTING_SRC_DIR}/Container.cpp")
+	"${PLOTTING_SRC_DIR}/Plot2D.cpp")
 
 set(GR_BKND_SOURCES
 	"${PLOTTING_SRC_DIR}/Backend/CoreGR.cpp")

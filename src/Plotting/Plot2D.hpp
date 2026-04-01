@@ -15,8 +15,13 @@ namespace VSCL::Plot {
 // 2D plotting interface.
 // The embeddable plot has at most, one figure inside of it.
 // A figure will have multiple series.
-class PLOT_API EmbeddablePlot2D {
+class PLOT_API EmbeddablePlot2D : public QWidget {
+
+	Q_OBJECT;
+
 public:
+	EmbeddablePlot2D(QWidget* parent);
+
 	void AddPoint(uint8_t idx, double time, double quantity, bool update = false);
 	void AddPoint(double time, double quantity, bool update = false);
 	void AddPoints(uint8_t idx, const std::vector<double>& times, const std::vector<double>& quantities, bool update = false);
@@ -33,9 +38,6 @@ public:
 
 	// Clear data that was being stored.
 	virtual void EraseAllData();
-
-	QWidget* GetWidgetRep() const;
-	void SetWidgetRep(QWidget* newWidgetRep);
 
 	const AxisInfo& GetAxisInfoView(Axis axis) const;
 

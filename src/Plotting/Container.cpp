@@ -5,7 +5,7 @@ namespace VSCL::Plot {
 
 PlotContainer::PlotContainer(QWidget* parent, EmbeddablePlot2D* newPlot)
 	: QWidget(parent) {
-	QHBoxLayout* boxlay = new QHBoxLayout;
+	QHBoxLayout* boxlay = new QHBoxLayout(this);
 	boxlay->setContentsMargins(5, 5, 5, 5);
 	setLayout(boxlay);
 

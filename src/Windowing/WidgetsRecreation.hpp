@@ -8,6 +8,7 @@
 #include "Widgets/Displays/QuantitiesRatesRow.hpp"
 #include "Plotting/Container.hpp"
 #include "Util/Sizing.hpp"
+#include "Widgets/Displays/MultiPlotContainer.hpp"
 
 namespace VSCL::FromPpt {
 class Widgets : public QMainWindow {
@@ -43,6 +44,10 @@ private:
 
 	Plot::EmbeddablePlot2D* Plot;
 	Plot::PlotContainer* TimeHistory;
+	
+	MultiPlotContainer* Plots;
+	void SetupMultiPlot(); 
+
 	void SetupTimeHistoryPlotGR();
 	void SetupTimeHistoryPlotQChart();
 

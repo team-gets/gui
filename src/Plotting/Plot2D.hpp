@@ -45,7 +45,7 @@ public:
 	 */
 
 	// Add a blank series.
-	void AddSeries();
+	virtual void AddSeries();
 	// Add a named series.
 	void AddSeries(std::string& name);
 	// Add a series using the following info.

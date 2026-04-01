@@ -21,7 +21,8 @@ public:
 	virtual void SetTitle(const std::string& title) override;
 	virtual void Plot() override;
 	virtual void EraseAllData() override;
-
+	
+	virtual void AddSeries() override;
 	virtual void AddSeries(const SeriesInfo& newInfo) override;
 
 private:

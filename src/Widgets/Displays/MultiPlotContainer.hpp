@@ -17,8 +17,11 @@ public:
 
     QList<Plot::PlotContainer*> GetPlotContainers() const;
     const QList<Plot::PlotContainer*>& GetPlotContainersView() const;
+
+    void AddPoints(int n);
 private:
     QList<Plot::PlotContainer*> Plots;
+    int numberOfPlots;
 
 }; // class MultiPlotContainer
 } // namespace VSCL

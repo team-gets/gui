@@ -155,6 +155,10 @@ void PlotQChart::EraseAllData() {
 	EmbeddablePlot2D::EraseAllData();
 }
 
+void PlotQChart::AddSeries() {
+	AddSeries({ });
+}
+
 void PlotQChart::AddSeries(const SeriesInfo& newInfo) {
 	EmbeddablePlot2D::AddSeries(newInfo);
 

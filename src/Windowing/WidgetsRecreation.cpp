@@ -44,7 +44,8 @@ Widgets::Widgets() {
 	// Set up the static layout
 	SetupCentralWidget();
 	SetupAttitudeDials();
-	SetupTimeHistoryPlotQChart();
+	// SetupTimeHistoryPlotQChart(); // <- old plot
+	SetupMultiPlot(); // <-new multiplot
 	SetupAttQtysRatesDisplay();
 	SetupButtons();
 	SetupStatusColumn();
@@ -202,6 +203,37 @@ void Widgets::SetAllButtonTextSize() {
 } // void Widgets::SetAllButtonTextSize()
 // }}}
 
+void Widgets::SetupMultiPlot() {
+	Plots = new MultiPlotContainer(this, 3);
+	MajorLayout->addWidget(Plots, 1, 0);
+	QList<Plot::PlotContainer*> allPlots = Plots->GetPlotContainers();
+
+	Plot::AxisInfo axInfo;
+	axInfo.Range = { 0, 10 };
+	axInfo.MajorSpacing = 1;
+	axInfo.MinorSpacing = 0.5;
+
+	std::array<std::string, 3> RPY = {"Roll", "Pitch", "Yaw"};
+	auto angle = RPY.begin();
+	auto color = Plot::StandardColor.begin();
+
+	for (Plot::PlotContainer* p : allPlots) {
+		Plot::EmbeddablePlot2D* uhh = p->GetPlot();
+		uhh->SetAxis(Plot::Axis::Time, axInfo);
+
+		std::string name = *angle;
+		Plot::ColorRGB rgb = color->second;
+		Plot::SeriesInfo info;
+		info.Name = name;
+		info.Color = rgb;
+
+		uhh->AddSeries(info);
+
+		angle++;
+		color++;
+	}
+} 
+
 void Widgets::SetupTimeHistoryPlotGR() {
 	Plot = new Plot::PlotGR(this);
 	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
@@ -218,7 +250,7 @@ void Widgets::SetupTimeHistoryPlotGR() {
 	rollInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Red);
 
 	Plot::SeriesInfo pitchInfo;
-	pitchInfo.Name = "Pit.hpp";
+	pitchInfo.Name = "Pitch";
 	pitchInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Blue);
 
 	Plot::SeriesInfo yawInfo;

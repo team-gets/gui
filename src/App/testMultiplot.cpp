@@ -2,12 +2,12 @@
 #include <QWindow>
 #include <QWidget>
 
-#include "Widgets/Displays/MultiPlotContainer.hpp"
+#include "Windowing/WidgetsRecreation.hpp"
 
 int main(int argc, char** argv) {
 	QApplication app(argc, argv);
 
-	VSCL::MultiPlotContainer window(nullptr, 3);
+	VSCL::FromPpt::Widgets window;
 	
 	window.show();
 	return app.exec();

@@ -3,8 +3,9 @@
 
 namespace VSCL {
 
-QtyRateDisplay::QtyRateDisplay(const QString& title, QWidget* parent) : QGroupBox(title, parent) {
-	Organizer = new QVBoxLayout;
+QtyRateDisplay::QtyRateDisplay(const QString& title, QWidget* parent)
+	: QGroupBox(title, parent)
+	, Organizer(new QVBoxLayout(this)) {
 	Organizer->setContentsMargins(10, 10, 10, 10);
 	setLayout(Organizer);
 };

@@ -5,7 +5,9 @@
 #include "Util/FiniteDiff.hpp"
 
 namespace VSCL {
-RateLabel::RateLabel(QWidget* parent) : QLabel(parent) {
+RateLabel::RateLabel(QWidget* parent)
+	: QLabel(parent) {
+
 	SetTextFrom(0.0);
 	setFrameStyle(QFrame::StyledPanel | QFrame::Plain);
 	setStyleSheet("background-color: white;"

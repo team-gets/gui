@@ -4,7 +4,8 @@
 
 namespace VSCL {
 
-AttitudeDial::AttitudeDial(QWidget* parent) : QWidget(parent) {
+AttitudeDial::AttitudeDial(QWidget* parent)
+	: QWidget(parent) {
 	SetRangeType(RangeTypeMode);
 	update();
 } // AttitudeDial ctor

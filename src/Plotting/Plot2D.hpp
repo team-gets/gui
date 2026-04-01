@@ -13,9 +13,8 @@
 namespace VSCL::Plot {
 
 // 2D plotting interface.
-// The embeddable plot has at most, one figure inside of it. A figure will have multiple serieses.
-//
-// TODO: probably look at typical plotting implementations for scientific programming
+// The embeddable plot has at most, one figure inside of it.
+// A figure will have multiple series.
 class PLOT_API EmbeddablePlot2D {
 public:
 	void AddPoint(uint8_t idx, double time, double quantity, bool update = false);

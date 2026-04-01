@@ -25,18 +25,10 @@ qt_standard_project_setup(REQUIRES 6.10)
 #target_compile_warn_all(guidev)
 #
 #target_link_libraries(guidev PRIVATE ${STD_APP_QT6_DEPS})
-#
-## Ideally you would quickly iter on QML designs by using the dev gui app
-#qt_add_qml_module(qml.a_circle
-#	URI qml.a_circle
-#	OUTPUT_DIRECTORY "qml/a_circle"
-#	QML_FILES
-#		"qml/circle.qml"
-#)
 
 # Plotting Interface
 add_library(plotting_iface SHARED ${PLOTTING_SOURCES})
-target_link_libraries(plotting_iface PRIVATE Qt6::Core Qt6::Widgets)
+target_link_libraries(plotting_iface PUBLIC Qt6::Core Qt6::Widgets)
 target_include_directories(plotting_iface PUBLIC ${PLOTTING_SRC_DIR})
 target_compile_definitions(plotting_iface PRIVATE COMPILING_PLOT_API_DLL)
 target_compile_warn_all(plotting_iface)

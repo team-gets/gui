@@ -11,34 +11,32 @@ CompositeDial::CompositeDial(QWidget* parent)
 	, Dial(new AttitudeDial(DialRateDuo))
 	, NumericRateLabel(new RateLabel(DialRateDuo)) {
 
-	// Widget setup goes top -> bottom level
-	// Top-level
-	this->setLayout(MajorOrganizer);
+	// Setup top-level layout
 	this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
+	this->setLayout(MajorOrganizer);
+	MajorOrganizer->setAlignment(Qt::AlignHCenter);
+	MajorOrganizer->setAlignment(DialNameLabel, Qt::AlignHCenter | Qt::AlignTop);
 	MajorOrganizer->addWidget(DialNameLabel, 0, 0, 1, 1);
 	MajorOrganizer->addWidget(DialRateDuo, 1, 0, 5, 1);
 
-	MajorOrganizer->setAlignment(Qt::AlignHCenter);
-	MajorOrganizer->setAlignment(DialNameLabel, Qt::AlignHCenter | Qt::AlignTop);
+	// Set dial-rate combo layout
+	DialRateDuo->setLayout(DuoOrganizer);
+	DuoOrganizer->addWidget(Dial, 0, 0);
+	DuoOrganizer->addWidget(NumericRateLabel, 0, 0);
+	DuoOrganizer->setAlignment(NumericRateLabel, Qt::AlignHCenter | Qt::AlignVCenter);
 
+	// Title this
 	DialNameLabel->setText("Dial");
 	DialNameLabel->setScaledContents(true);
 	DialNameLabel->setFont(DialNameFont);
 	DialNameLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 	DialNameLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
-	// Bottom-level
-	DialRateDuo->setLayout(DuoOrganizer);
-
-	DuoOrganizer->addWidget(Dial, 0, 0);
-	DuoOrganizer->addWidget(NumericRateLabel, 0, 0);
-
+	// Set how the dial-rate combo resizes
 	QSizePolicy expandPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-	DuoOrganizer->setAlignment(NumericRateLabel, Qt::AlignHCenter | Qt::AlignVCenter);
 	DialRateDuo->setSizePolicy(expandPolicy);
 	Dial->setSizePolicy(expandPolicy);
-}
+} // CompositeDial(QWidget* parent)
 
 CompositeDial::CompositeDial(const QString& title, QWidget* parent)
 	: CompositeDial(parent) {

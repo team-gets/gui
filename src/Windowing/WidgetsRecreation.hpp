@@ -6,7 +6,7 @@
 #include "Widgets/Dial/Composite.hpp"
 #include "Widgets/Displays/QuantitiesRatesDisplay.hpp"
 #include "Widgets/Displays/QuantitiesRatesRow.hpp"
-#include "Plotting/Container.hpp"
+#include "Plotting/Plot2D.hpp"
 #include "Util/Sizing.hpp"
 
 namespace VSCL::FromPpt {
@@ -42,7 +42,6 @@ private:
 	void SetupAttitudeDials();
 
 	Plot::EmbeddablePlot2D* Plot;
-	Plot::PlotContainer* TimeHistory;
 	void SetupTimeHistoryPlotGR();
 	void SetupTimeHistoryPlotQChart();
 

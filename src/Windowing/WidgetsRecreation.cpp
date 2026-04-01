@@ -201,8 +201,7 @@ void Widgets::SetAllButtonTextSize() {
 
 void Widgets::SetupTimeHistoryPlotGR() {
 	Plot = new Plot::PlotGR(this);
-	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
-	MajorLayout->addWidget(TimeHistory, 1, 0);
+	MajorLayout->addWidget(Plot, 1, 0);
 
 	Plot::AxisInfo axInfo;
 	axInfo.Range = { 0, 10 };
@@ -231,8 +230,7 @@ void Widgets::SetupTimeHistoryPlotGR() {
 
 void Widgets::SetupTimeHistoryPlotQChart() {
 	Plot = new Plot::PlotQChart(this);
-	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
-	MajorLayout->addWidget(TimeHistory, 1, 0);
+	MajorLayout->addWidget(Plot, 1, 0);
 
 	Plot::AxisInfo axInfo;
 	axInfo.Range = { 0, 10 };

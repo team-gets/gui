@@ -53,8 +53,7 @@ void EmbeddablePlot2D::SetAxis(const Axis axis, const AxisInfo& info) {
 void EmbeddablePlot2D::SetTitle(const std::string& title) { Title = title; Plot(); }
 
 void EmbeddablePlot2D::Plot() {
-	if (WidgetRep)
-		WidgetRep->update();
+	update();
 }
 
 void EmbeddablePlot2D::EraseAllData() {
@@ -75,12 +74,6 @@ const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
 		return QuantityAxis;
 		break;
 	};
-}
-
-QWidget* EmbeddablePlot2D::GetWidgetRep() const { return WidgetRep; }
-void EmbeddablePlot2D::SetWidgetRep(QWidget* newWidgetRep) {
-	WidgetRep = newWidgetRep;
-	WidgetRep->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 }
 
 // Series {{{

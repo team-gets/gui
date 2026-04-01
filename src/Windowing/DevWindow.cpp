@@ -6,19 +6,21 @@
 #include "Dial/Attitude.hpp"
 
 namespace VSCL {
-DevWindow::DevWindow() {
-    Stacker = new QStackedWidget;
-    setCentralWidget(Stacker);
-
-    QLayout* layout = Stacker->layout();
-    layout->setContentsMargins(5, 5, 5, 5);
-
-    MainQuick = new QQuickWidget;
-	Stacker->addWidget(MainQuick);
+DevWindow::DevWindow()
+	: QMainWindow()
+	, Stacker(new QStackedWidget(this))
+	, MainQuick(new QQuickWidget(this))
+	{
 
 	AttitudeDial* dial = new AttitudeDial(this);
 	NumericDisplaysTest = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
+
+    setCentralWidget(Stacker);
+	Stacker->addWidget(MainQuick);
 	Stacker->addWidget(NumericDisplaysTest);
+
+    QLayout* layout = Stacker->layout();
+    layout->setContentsMargins(5, 5, 5, 5);
 
     CreateActions();
     CreateMenus();

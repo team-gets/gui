@@ -210,8 +210,11 @@ void Widgets::SetupMultiPlot() {
 
 	Plot::AxisInfo axInfo;
 	axInfo.Range = { 0, 10 };
-	axInfo.MajorSpacing = 1;
-	axInfo.MinorSpacing = 0.5;
+
+	Plot::AxisInfo justWtv;
+	justWtv.Range = {-180, 180};
+	justWtv.MajorSpacing = 90;
+	justWtv.MinorSpacing = 45;
 
 	std::array<std::string, 3> RPY = {"Roll", "Pitch", "Yaw"};
 	auto angle = RPY.begin();
@@ -219,7 +222,6 @@ void Widgets::SetupMultiPlot() {
 
 	for (Plot::PlotContainer* p : allPlots) {
 		Plot::EmbeddablePlot2D* uhh = p->GetPlot();
-		uhh->SetAxis(Plot::Axis::Time, axInfo);
 
 		std::string name = *angle;
 		Plot::ColorRGB rgb = color->second;
@@ -228,6 +230,10 @@ void Widgets::SetupMultiPlot() {
 		info.Color = rgb;
 
 		uhh->AddSeries(info);
+
+		justWtv.Title = name;
+		uhh->SetAxis(Plot::Axis::Quantity, justWtv);
+		uhh->SetAxis(Plot::Axis::Time, axInfo);
 
 		angle++;
 		color++;

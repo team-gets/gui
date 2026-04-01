@@ -9,11 +9,7 @@
 
 namespace VSCL::Plot {
 
-class PlotContainer;
-
-class GR_BACKEND PlotGR : public EmbeddablePlot2D, public GRWidget {
-
-	friend class PlotContainer;
+class GR_BACKEND PlotGR : public GRWidget, virtual public EmbeddablePlot2D {
 
 public:
 	PlotGR(QWidget* parent);
@@ -34,6 +30,6 @@ protected:
 			double* output, const size_t arrSize);
 
 public:
-	static constexpr uint16_t ColorIndex(ColorGR color) { return static_cast<uint16_t>(color); }
+	static uint16_t ColorIndex(ColorGR color) { return static_cast<uint16_t>(color); }
 }; // class PlotGR
 } // namespace VSCL::Plot

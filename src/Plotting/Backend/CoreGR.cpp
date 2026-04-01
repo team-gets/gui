@@ -7,9 +7,9 @@
 
 namespace VSCL::Plot {
 
-PlotGR::PlotGR(QWidget* parent) : GRWidget(parent) {
-	SetWidgetRep(this);
-};
+PlotGR::PlotGR(QWidget* parent)
+	: EmbeddablePlot2D(parent)
+	, GRWidget(parent) { };
 
 void PlotGR::SetAxis(const Axis axis, const AxisInfo& info) { EmbeddablePlot2D::SetAxis(axis, info); draw(); }
 void PlotGR::SetTitle(const std::string& title) { EmbeddablePlot2D::SetTitle(title); draw(); }
@@ -144,13 +144,15 @@ void PlotGR::draw() {
 	const AxisInfo& taxe = GetAxisInfoView(Axis::Time);
 	const AxisInfo& qaxe = GetAxisInfoView(Axis::Quantity);
 
-	double wxh = (double)width() / (double)height();
-	double hxw = (double)height() / (double)width();
+	double wide = EmbeddablePlot2D::width();
+	double high = EmbeddablePlot2D::height();
+	double wxh = (double)wide / (double)high;
+	double hxw = 1 / wxh;
 	double inset[4] = { 0.1, 0.97, 0.16, 0.9 }; // this is magic numbers
 	double wwsdims[4] = { 0, 1, 0, 1 };
 	double vpdims[4];
 
-	if (width() > height()) {
+	if (wide > high) {
 		wwsdims[3] = hxw;
 		double dims[4] = { inset[0], inset[1], inset[2]*hxw, inset[3]*hxw };
 		memcpy(vpdims, dims, 4*sizeof(double));

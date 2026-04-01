@@ -9,7 +9,7 @@ namespace VSCL::Plot {
 
 class PlotContainer;
 
-class QCHART_BACKEND PlotQChart : public EmbeddablePlot2D, public QChartView  {
+class QCHART_BACKEND PlotQChart : public QChartView, virtual public EmbeddablePlot2D  {
 
 	friend class PlotContainer;
 

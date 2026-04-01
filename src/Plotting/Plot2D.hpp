@@ -15,9 +15,7 @@ namespace VSCL::Plot {
 // 2D plotting interface.
 // The embeddable plot has at most, one figure inside of it.
 // A figure will have multiple series.
-class PLOT_API EmbeddablePlot2D : public QWidget {
-
-	Q_OBJECT;
+class PLOT_API EmbeddablePlot2D : virtual public QWidget {
 
 public:
 	EmbeddablePlot2D(QWidget* parent);
@@ -78,8 +76,8 @@ public:
 	virtual void SetColor(uint8_t idx, ColorRGB& color);
 	virtual void SetColor(ColorRGB& color);
 
-	constexpr bool GetDrawGridState() { return DrawGrid; };
-	constexpr void SetDrawGridState(bool newState) { DrawGrid = newState; };
+	bool GetDrawGridState() { return DrawGrid; };
+	void SetDrawGridState(bool newState) { DrawGrid = newState; };
 
 private:	
 	std::string Title;

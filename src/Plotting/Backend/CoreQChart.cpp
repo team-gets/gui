@@ -3,10 +3,11 @@
 
 namespace VSCL::Plot {
 
-PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
-	SetWidgetRep(this);
+PlotQChart::PlotQChart(QWidget* parent)
+	: EmbeddablePlot2D(parent)
+	, QChartView(parent) {
 
-	// These heap allocs are parented when they get added to each other
+	// These heap allocs are parented and handled when they get added to each other
 	PlotChart = new QChart;
 
 	LogTimeAxisQt = new QLogValueAxis;

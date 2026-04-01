@@ -28,19 +28,19 @@ void QtyRateRow::resizeEvent(QResizeEvent* event) {
 }
 
 void QtyRateRow::AdjustFontSize() {
-	unsigned int tpt = static_cast<unsigned int>(TitleFontAdjustment.AdjustPointSize(window()));
-	if (tpt <= TitleFontAdjustment.PointSizeAtMinimum) {
+	unsigned int tpt = static_cast<unsigned int>(TitleFontAdjustment.AdjustPxSize(window()));
+	if (tpt <= TitleFontAdjustment.PxSizeAtMinimum) {
 		setTitle(tr(""));
-		TitleFont.setPointSize(1);
+		TitleFont.setPixelSize(1);
 	}
 	else {
 		setTitle(Title);
-		TitleFont.setPointSize(tpt);
+		TitleFont.setPixelSize(tpt);
 	}
 
 	setFont(TitleFont);
 
-	LabelFont.setPointSize(NumericFontAdjustment.AdjustPointSize(window()));
+	LabelFont.setPixelSize(NumericFontAdjustment.AdjustPxSize(window()));
 	QuantityLabel->setFont(LabelFont);
 	RateLabel->setFont(LabelFont);
 }

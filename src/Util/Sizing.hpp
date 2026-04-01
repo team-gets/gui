@@ -11,7 +11,7 @@ struct FontAdjustment {
 	/*
 	 *	The point size at the window's minimum resolution.
 	 */
-	unsigned int PointSizeAtMinimum = 12;
+	unsigned int PxSizeAtMinimum = 12;
 
 	/*
 	 *	When true, adjust to the width of the window.
@@ -19,8 +19,8 @@ struct FontAdjustment {
 	 */
 	bool AdjustToWidth = false;
 
-	const int AdjustPointSize(QWidget* win) const {
-		return PointSizeAtMinimum
+	const int AdjustPxSize(QWidget* win) const {
+		return PxSizeAtMinimum
 			+ ((AdjustToWidth) ?
 					(win->width() - MinimumWidth) / MinimumWidth
 					: (win->height() - MinimumHeight) / MinimumHeight);

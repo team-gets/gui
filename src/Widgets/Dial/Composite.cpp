@@ -48,7 +48,7 @@ CompositeDial::CompositeDial(const QString& title, QWidget* parent)
 void CompositeDial::resizeEvent(QResizeEvent* event) {
 	QWidget::resizeEvent(event);
 
-	DialNameFont.setPointSize(TitleAdjustment.AdjustPointSize(window()));
+	DialNameFont.setPixelSize(TitleAdjustment.AdjustPxSize(window()));
 	DialNameLabel->setFont(DialNameFont);
 }
 

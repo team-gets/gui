@@ -2,23 +2,23 @@
 #include "QuantitiesRatesDisplay.hpp"
 
 namespace VSCL {
-QtyRateRow::QtyRateRow(const QString& title, QtyRateDisplay* parent) : QGroupBox(title, parent) {
-	parent->AddRow(this);
-	Title = title;
+QtyRateRow::QtyRateRow(const QString& title, QtyRateDisplay* parent)
+	: QGroupBox(title, parent)
+	, Title(title)
+	, Organizer(new QHBoxLayout(this))
+	, QuantityLabel(new QLabel(this))
+	, RateLabel(new QLabel(this)) {
 
-	Organizer = new QHBoxLayout;
-	Organizer->setContentsMargins(5, 5, 5, 5);
+	parent->AddRow(this);
 	setLayout(Organizer);
 
-	QuantityLabel = new QLabel(this);
-	QuantityLabel->setText(QString::number(Quantity) + QuantityUnits);
+	Organizer->setContentsMargins(5, 5, 5, 5);
 	Organizer->addWidget(QuantityLabel);
-	RateLabel = new QLabel(this);
-	RateLabel->setText(QString::number(Rate) + RateUnits);
 	Organizer->addWidget(RateLabel);
 
-	TitleFont = QFont();
-	LabelFont = QFont();
+	QuantityLabel->setText(QString::number(Quantity) + QuantityUnits);
+	RateLabel->setText(QString::number(Rate) + RateUnits);
+
 	AdjustFontSize();
 }
 

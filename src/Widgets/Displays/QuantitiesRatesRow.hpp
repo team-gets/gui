@@ -23,7 +23,6 @@ public:
 	void SetRateUnits(const QString& units);
 
 private:
-	QHBoxLayout* Organizer;
 
 	double Quantity = 0.0;
 	double Rate = 0.0;
@@ -32,8 +31,10 @@ private:
 	QString RateUnits = tr("/s");
 
 	QString Title;
-	QFont TitleFont;
-	QFont LabelFont;
+	QFont TitleFont{ };
+	QFont LabelFont{ };
+
+	QHBoxLayout* Organizer;
 	QLabel* QuantityLabel;
 	QLabel* RateLabel;
 

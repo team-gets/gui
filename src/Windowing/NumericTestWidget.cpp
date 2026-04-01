@@ -6,27 +6,26 @@ namespace VSCL {
 
 NumericTestWidget::NumericTestWidget(
 		QWidget* parent, QWidget* whatToTest,
-		std::function<void(int)> method) : QWidget(parent) {
+		std::function<void(int)> method)
+	: QWidget(parent)
+	, TesterSpinbox(new QDoubleSpinBox(this))
+	, WidgetBeingTested(whatToTest) {
 
-	setParent(parent);
-
-	QGridLayout* grid = new QGridLayout;
+	QGridLayout* grid = new QGridLayout(this);
 	grid->setContentsMargins(25, 25, 25, 25);
+	grid->addWidget(TesterSpinbox, 0, 0);
+	grid->addWidget(WidgetBeingTested, 0, 1);
 	setLayout(grid);
 
-	TesterSpinbox = new QDoubleSpinBox;
 	TesterSpinbox->setRange(0.0, 360.0);
 	TesterSpinbox->setSuffix("°");
 	TesterSpinbox->setWrapping(true);
-	grid->addWidget(TesterSpinbox, 0, 0);
 
 	QSizePolicy sizePolicy;
 	sizePolicy.setHorizontalPolicy(QSizePolicy::Expanding);
 	sizePolicy.setVerticalPolicy(QSizePolicy::Expanding);
 
-	WidgetBeingTested = whatToTest;
 	WidgetBeingTested->setSizePolicy(sizePolicy);
-	grid->addWidget(WidgetBeingTested, 0, 1);
 
 	connect(TesterSpinbox, &QDoubleSpinBox::valueChanged, WidgetBeingTested, method);
 } // NumericTestWidget ctor

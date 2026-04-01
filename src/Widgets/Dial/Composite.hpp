@@ -32,8 +32,8 @@ private:
 	QFont DialNameFont{ };
 	Util::FontAdjustment TitleAdjustment{ 16, false };
 
-	QGridLayout* DuoOrganizer;
 	QWidget* DialRateDuo;
+	QGridLayout* DuoOrganizer;
 	AttitudeDial* Dial;
 	RateLabel* NumericRateLabel;
 

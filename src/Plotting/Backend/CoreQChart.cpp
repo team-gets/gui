@@ -6,6 +6,7 @@ namespace VSCL::Plot {
 PlotQChart::PlotQChart(QWidget* parent) : QChartView(parent) {
 	SetWidgetRep(this);
 
+	// These heap allocs are parented when they get added to each other
 	PlotChart = new QChart;
 
 	LogTimeAxisQt = new QLogValueAxis;

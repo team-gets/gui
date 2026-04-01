@@ -48,7 +48,6 @@ Widgets::Widgets() {
 	SetupMultiPlot(); // <-new multiplot
 	SetupAttQtysRatesDisplay();
 	SetupButtons();
-	SetupStatusColumn();
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
 
@@ -153,22 +152,22 @@ void Widgets::SetGridRowsMinimums() {
 
 // Buttons {{{
 void Widgets::SetupButtons() {
-	LoadTestRoutineButton = new QPushButton;
+	LoadTestRoutineButton = new QPushButton(this);
 	LoadTestRoutineButton->setText(tr("Load Test Routine"));
 
-	QuantityCalculatorButton = new QPushButton;
+	QuantityCalculatorButton = new QPushButton(this);
 	QuantityCalculatorButton->setText(tr("Calculate Quantity"));
 
-	LogOpenButton = new QPushButton;
+	LogOpenButton = new QPushButton(this);
 	LogOpenButton->setText(tr("Open Log"));
 
-	AbortButton = new QPushButton;
+	AbortButton = new QPushButton(this);
 	AbortButton->setText(tr("Abort"));
 	AbortButton->setStyleSheet(" QPushButton { background-color: red } ");
 } // void Widgets::SetupButtons()
 
 void Widgets::SetupStatusColumn() {
-	StatusColumn = new QGroupBox(tr("Operate"));
+	StatusColumn = new QGroupBox(tr("Operate"), this);
 	MajorLayout->addWidget(StatusColumn, 1, 1);
 
 	QSizePolicy vhexpanding;
@@ -192,8 +191,6 @@ void Widgets::SetupStatusColumn() {
 } // void Widgets::SetupStatusColumn()
 
 void Widgets::SetAllButtonTextSize() {
-	// assumes equal button sizing in the layout (which is true as of March 16 2026)
-	// magic num: 30 pt when at orig and go from there
 	ButtonFont.setPixelSize(ButtonFontAdjustment.AdjustPxSize(window()));
 	LoadTestRoutineButton->setFont(ButtonFont);
 	QuantityCalculatorButton->setFont(ButtonFont);

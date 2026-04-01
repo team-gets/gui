@@ -50,6 +50,7 @@ void CompositeDial::resizeEvent(QResizeEvent* event) {
 
 	DialNameFont.setPixelSize(TitleAdjustment.AdjustPxSize(window()));
 	DialNameLabel->setFont(DialNameFont);
+	NumericRateLabel->resizeEvent(event);
 }
 
 // Wrap accessors and settors of child widgets {{{

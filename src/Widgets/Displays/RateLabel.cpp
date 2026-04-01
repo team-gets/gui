@@ -18,13 +18,13 @@ RateLabel::RateLabel(QWidget* parent) : QLabel(parent) {
 				  "border-radius: 5%;"
 				  "padding: 1%;");
 
-	Font.setPointSize(FontAdjustment.PointSizeAtMinimum);
+	Font.setPixelSize(FontAdjustment.PxSizeAtMinimum);
 	setFont(Font);
 }
 
 void RateLabel::resizeEvent(QResizeEvent* event) {
 	QLabel::resizeEvent(event);
-	Font.setPointSize(FontAdjustment.AdjustPointSize(window()));
+	Font.setPixelSize(FontAdjustment.AdjustPxSize(window()));
 	setFont(Font);
 }
 

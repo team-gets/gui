@@ -33,22 +33,6 @@ target_include_directories(plotting_iface PUBLIC ${PLOTTING_SRC_DIR})
 target_compile_definitions(plotting_iface PRIVATE COMPILING_PLOT_API_DLL)
 target_compile_warn_all(plotting_iface)
 
-find_package(PNG REQUIRED)
-add_library(Libpng::Libpng ALIAS PNG::PNG) # Why does the vcpkg version not do this/why does GR do this
-add_subdirectory_silence_warnings("${CMAKE_SOURCE_DIR}/lib/gr")
-
-# GR Backend Compilation
-add_library(gr_backend SHARED ${GR_BKND_SOURCES})
-get_target_property(QT6GR_INCLUDES GR::GR INTERFACE_INCLUDE_DIRECTORIES)
-target_include_directories(gr_backend PUBLIC
-	${QT6GR_INCLUDES} "${CMAKE_SOURCE_DIR}/src")
-
-target_link_libraries(gr_backend PUBLIC plotting_iface)
-target_link_libraries(gr_backend PUBLIC Qt6::Core Qt6::Widgets)
-target_link_libraries(gr_backend PUBLIC GR::qt6gr qt6plugin)
-target_compile_definitions(gr_backend PRIVATE COMPILING_GR_BACKEND_DLL)
-target_compile_warn_all(gr_backend)
-
 # QChart Backend Compilation
 add_library(qchart_backend SHARED ${QCHART_BKND_SOURCES})
 target_include_directories(qchart_backend PUBLIC "${CMAKE_SOURCE_DIR}/src")
@@ -68,4 +52,4 @@ target_include_directories(widgets_recreation PRIVATE ${STD_APP_INCLUDES})
 target_compile_warn_all(widgets_recreation)
 
 target_link_libraries(widgets_recreation PRIVATE ${STD_APP_QT6_DEPS})
-target_link_libraries(widgets_recreation PRIVATE gr_backend qchart_backend)
+target_link_libraries(widgets_recreation PRIVATE qchart_backend)

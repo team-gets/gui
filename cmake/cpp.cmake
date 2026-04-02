@@ -38,9 +38,6 @@ set(WIDGET_SOURCES
 set(PLOTTING_SOURCES
 	"${PLOTTING_SRC_DIR}/Plot2D.cpp")
 
-set(GR_BKND_SOURCES
-	"${PLOTTING_SRC_DIR}/Backend/CoreGR.cpp")
-
 set(QCHART_BKND_SOURCES
 	"${PLOTTING_SRC_DIR}/Backend/CoreQChart.cpp")
 
@@ -75,4 +72,4 @@ function(add_subdirectory_silence_warnings IN_DIRECTORY)
 	add_subdirectory("${IN_DIRECTORY}" EXCLUDE_FROM_ALL)
 
 	set_directory_properties(PROPERTIES COMPILE_OPTIONS "${oldCompileOpts}")
-endfunction(set_directory_compile_silence_warnings)
+endfunction(add_subdirectory_silence_warnings IN_DIRECTORY)

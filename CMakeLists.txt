@@ -1,6 +1,4 @@
 cmake_minimum_required(VERSION 3.30...4.0)
-set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/lib/vcpkg/scripts/buildsystems/vcpkg.cmake"
-	CACHE STRING "Vcpkg toolchain file" FORCE)
 
 project(rig_gui
 	LANGUAGES CXX C

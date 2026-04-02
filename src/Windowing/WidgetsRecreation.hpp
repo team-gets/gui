@@ -25,7 +25,7 @@ public:
 	void SetYawRate(double yaw);
 
 private:
-	QFont ButtonFont;
+	QFont ButtonFont{ };
 
 	QWidget* MajorContainer;
 	QGridLayout* MajorLayout;

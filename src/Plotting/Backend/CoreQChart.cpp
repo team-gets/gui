@@ -4,8 +4,7 @@
 namespace VSCL::Plot {
 
 PlotQChart::PlotQChart(QWidget* parent)
-	: EmbeddablePlot2D(parent)
-	, QChartView(parent) {
+	: QChartView(parent) {
 
 	// These heap allocs are parented and handled when they get added to each other
 	PlotChart = new QChart;

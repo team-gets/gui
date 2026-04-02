@@ -17,7 +17,8 @@ namespace VSCL::Plot {
 // A figure can have multiple series.
 class PLOT_API EmbeddablePlot2D : virtual public QWidget {
 public:
-	EmbeddablePlot2D(QWidget* parent);
+	EmbeddablePlot2D() : QWidget(nullptr) { }
+	EmbeddablePlot2D(QWidget* parent) : QWidget(parent) { }
 
 	void AddPoint(uint8_t idx, double time, double quantity, bool update = false);
 	void AddPoint(double time, double quantity, bool update = false);

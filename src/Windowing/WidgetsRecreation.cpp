@@ -47,10 +47,10 @@ Widgets::Widgets() {
 	SetupMultiPlot(); // <-new multiplot
 	SetupAttQtysRatesDisplay();
 	SetupButtons();
+	SetupStatusColumn();
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
 
-	ButtonFont = QFont();
 	SetAllButtonTextSize();
 
 	SetRoll(-32);

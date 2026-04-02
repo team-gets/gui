@@ -4,8 +4,6 @@
 
 namespace VSCL::Plot {
 
-EmbeddablePlot2D::EmbeddablePlot2D(QWidget* parent) : QWidget(parent) { }
-
 void EmbeddablePlot2D::AddPoint(double time, double quantity, bool update) { AddPoint(0, time, quantity, update); }
 void EmbeddablePlot2D::AddPoint(uint8_t idx, double time, double quantity, bool update) {
 	std::vector<double>& oldTime = Series[idx].Times;

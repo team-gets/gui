@@ -9,7 +9,7 @@ namespace VSCL::Plot {
 
 class PlotContainer;
 
-class QCHART_BACKEND PlotQChart : public QChartView, virtual public EmbeddablePlot2D  {
+class QCHART_BACKEND PlotQChart : virtual public EmbeddablePlot2D  {
 
 	friend class PlotContainer;
 
@@ -27,6 +27,7 @@ public:
 
 private:
 	QChart* PlotChart;
+	QChartView* PlotChartView;
 
 	QLogValueAxis* LogTimeAxisQt;
 	QLogValueAxis* LogQuantityAxisQt;

@@ -4,15 +4,15 @@
 namespace VSCL::Plot {
 
 PlotQChart::PlotQChart(QWidget* parent)
-	: QChartView(parent) {
+	: EmbeddablePlot2D(parent)
+	, PlotChart(new QChart)
+	, PlotChartView(new QChartView(PlotChart, this)) {
 
 	// These heap allocs are parented and handled when they get added to each other
-	PlotChart = new QChart;
-
-	LogTimeAxisQt = new QLogValueAxis;
-	LogQuantityAxisQt = new QLogValueAxis;
-	TimeAxisQt = new QValueAxis;
-	QuantityAxisQt = new QValueAxis;
+	LogTimeAxisQt = new QLogValueAxis(PlotChart);
+	LogQuantityAxisQt = new QLogValueAxis(PlotChart);
+	TimeAxisQt = new QValueAxis(PlotChart);
+	QuantityAxisQt = new QValueAxis(PlotChart);
 
 	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
 	TimeAxisQt->setLinePenColor(QColorConstants::Black);
@@ -36,8 +36,10 @@ PlotQChart::PlotQChart(QWidget* parent)
 
 	PlotChart->legend()->setVisible(false);
 	PlotChart->setTheme(QChart::ChartThemeLight);
-	setChart(PlotChart);
-	setRenderHint(QPainter::RenderHint::Antialiasing);
+	PlotChartView->setChart(PlotChart);
+	PlotChartView->setRenderHint(QPainter::RenderHint::Antialiasing);
+
+	layout()->addWidget(PlotChartView);
 }
 
 PlotQChart::~PlotQChart() {

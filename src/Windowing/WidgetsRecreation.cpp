@@ -3,7 +3,6 @@
 #include <chrono>
 
 #include "WidgetsRecreation.hpp"
-#include "Plotting/Backend/CoreGR.hpp"
 #include "Plotting/Backend/CoreQChart.hpp"
 
 // stupid temp thing {{{
@@ -234,35 +233,6 @@ void Widgets::SetupMultiPlot() {
 		color++;
 	}
 } 
-
-void Widgets::SetupTimeHistoryPlotGR() {
-	Plot = new Plot::PlotGR(this);
-	MajorLayout->addWidget(Plot, 1, 0);
-
-	Plot::AxisInfo axInfo;
-	axInfo.Range = { 0, 10 };
-	axInfo.MajorSpacing = 10;
-	axInfo.MinorSpacing = 0.25;
-	Plot->SetAxis(Plot::Axis::Time, axInfo);
-
-	Plot::SeriesInfo rollInfo;
-	rollInfo.Name = "Roll";
-	rollInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Red);
-
-	Plot::SeriesInfo pitchInfo;
-	pitchInfo.Name = "Pitch";
-	pitchInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Blue);
-
-	Plot::SeriesInfo yawInfo;
-	yawInfo.Name = "Yaw";
-	yawInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Green);
-
-	Plot->SetSeries(0, rollInfo);
-	Plot->AddSeries(pitchInfo);
-	Plot->AddSeries(yawInfo);
-
-	stupid_make_data(Plot);
-} // void Widgets::SetupTimeHistoryPlotGR()
 
 void Widgets::SetupTimeHistoryPlotQChart() {
 	Plot = new Plot::PlotQChart(this);

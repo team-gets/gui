@@ -46,7 +46,6 @@ private:
 	MultiPlotContainer* Plots;
 	void SetupMultiPlot(); 
 
-	void SetupTimeHistoryPlotGR();
 	void SetupTimeHistoryPlotQChart();
 
 	QtyRateDisplay* AttQtysRates;

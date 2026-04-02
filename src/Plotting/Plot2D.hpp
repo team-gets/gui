@@ -14,9 +14,8 @@ namespace VSCL::Plot {
 
 // 2D plotting interface.
 // The embeddable plot has at most, one figure inside of it.
-// A figure will have multiple series.
+// A figure can have multiple series.
 class PLOT_API EmbeddablePlot2D : virtual public QWidget {
-
 public:
 	EmbeddablePlot2D(QWidget* parent);
 

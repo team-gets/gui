@@ -42,24 +42,6 @@ jobs:
           sudo apt install cmake -y
           echo Installing automake...
           sudo apt install autoconf autoconf-archive automake libtool
-          echo Installing mono...
-          sudo apt install mono-complete
-      - uses: lukka/run-vcpkg@v11
-        with:
-          vcpkgDirectory: "${{ github.workspace }}/lib/vcpkg"
-          vcpkgJsonGlob: "**/vcpkg.json"
-      - name: "Setup NuGet Credentials"
-        run: |
-          mono `vcpkg fetch nuget | tail -n 1` \
-            sources add \
-            -source "https://nuget.pkg.github.com/team-gets/index.json" \
-            -storepasswordincleartext \
-            -name "GitHub" \
-            -username "team-gets" \
-            -password "${{ secrets.GITHUB_TOKEN }}"
-          mono `vcpkg fetch nuget | tail -n 1` \
-            setapikey "${{ secrets.GITHUB_TOKEN }}" \
-            -source "https://nuget.pkg.github.com/team-gets/index.json"
       - name: Prepare CMake
         run: |
           cmake -S . -B build --preset=linux-gcc
@@ -81,23 +63,6 @@ jobs:
           target: "desktop"
           arch: "win64_msvc2022_64"
           modules: "qtcharts"
-      - uses: lukka/run-vcpkg@v11
-        with:
-          vcpkgDirectory: "${{ github.workspace }}/lib/vcpkg"
-          vcpkgJsonGlob: "**/vcpkg.json"
-      - name: "Setup NuGet Credentials"
-        shell: "bash"
-        run: |
-          `./lib/vcpkg/vcpkg fetch nuget | tail -n 1` \
-            sources add \
-            -source "https://nuget.pkg.github.com/team-gets/index.json" \
-            -storepasswordincleartext \
-            -name "GitHub" \
-            -username "team-gets" \
-            -password "${{ secrets.GITHUB_TOKEN }}"
-          `./lib/vcpkg/vcpkg fetch nuget | tail -n 1` \
-            setapikey "${{ secrets.GITHUB_TOKEN }}" \
-            -source "https://nuget.pkg.github.com/team-gets/index.json"
       - uses: ilammy/msvc-dev-cmd@v1.13.0
       - name: Prepare CMake
         run: |

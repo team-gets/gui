@@ -14,7 +14,7 @@ set(APP_SOURCES
 
 # sorry
 set(OTHER_APP_SOURCES
-	"${CMAKE_SOURCE_DIR}/src/App/Recreation.cpp")
+	"${CMAKE_SOURCE_DIR}/src/App/testMultiplot.cpp")
 
 set(WINDOWING_SOURCES
 	"${WINDOWING_SRC_DIR}/DevWindow.cpp"
@@ -27,7 +27,8 @@ set(DIAL_SOURCES
 set(DISPLAYER_SOURCES
 	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesDisplay.cpp"
 	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesRow.cpp"
-	"${WIDGETS_SRC_DIR}/Displays/RateLabel.cpp")
+	"${WIDGETS_SRC_DIR}/Displays/RateLabel.cpp"
+	"${WIDGETS_SRC_DIR}/Displays/MultiPlotContainer.cpp")
 
 set(WIDGET_SOURCES
 	${WINDOWING_SOURCES}
@@ -35,11 +36,7 @@ set(WIDGET_SOURCES
 	${DISPLAYER_SOURCES})
 
 set(PLOTTING_SOURCES
-	"${PLOTTING_SRC_DIR}/Plot2D.cpp"
-	"${PLOTTING_SRC_DIR}/Container.cpp")
-
-set(GR_BKND_SOURCES
-	"${PLOTTING_SRC_DIR}/Backend/CoreGR.cpp")
+	"${PLOTTING_SRC_DIR}/Plot2D.cpp")
 
 set(QCHART_BKND_SOURCES
 	"${PLOTTING_SRC_DIR}/Backend/CoreQChart.cpp")
@@ -75,4 +72,4 @@ function(add_subdirectory_silence_warnings IN_DIRECTORY)
 	add_subdirectory("${IN_DIRECTORY}" EXCLUDE_FROM_ALL)
 
 	set_directory_properties(PROPERTIES COMPILE_OPTIONS "${oldCompileOpts}")
-endfunction(set_directory_compile_silence_warnings)
+endfunction(add_subdirectory_silence_warnings IN_DIRECTORY)

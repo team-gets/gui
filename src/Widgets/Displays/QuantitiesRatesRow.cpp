@@ -28,7 +28,7 @@ void QtyRateRow::resizeEvent(QResizeEvent* event) {
 }
 
 void QtyRateRow::AdjustFontSize() {
-	unsigned int tpt = static_cast<unsigned int>(TitleFontAdjustment.AdjustPxSize(window()));
+	uint32_t tpt = static_cast<uint32_t>(TitleFontAdjustment.AdjustPxSize(window()));
 	if (tpt <= TitleFontAdjustment.PxSizeAtMinimum) {
 		setTitle(tr(""));
 		TitleFont.setPixelSize(1);

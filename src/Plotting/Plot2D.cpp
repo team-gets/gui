@@ -11,6 +11,13 @@ void EmbeddablePlot2D::AddPoint(uint8_t idx, double time, double quantity, bool 
 
 	oldTime.push_back(time);
 	oldQty.push_back(quantity);
+	
+	Plot::AxisInfo axInfo = this->GetAxisInfoView(Plot::Axis::Time);
+    double maxTime = oldTime.back();
+    double minTime = std::max(0.0, maxTime - 10.0);
+    axInfo.Range = { minTime, minTime + 10.0 };
+    SetAxis(Plot::Axis::Time, axInfo);
+
 	if (update) Plot();
 }
 
@@ -51,8 +58,7 @@ void EmbeddablePlot2D::SetAxis(const Axis axis, const AxisInfo& info) {
 void EmbeddablePlot2D::SetTitle(const std::string& title) { Title = title; Plot(); }
 
 void EmbeddablePlot2D::Plot() {
-	if (WidgetRep)
-		WidgetRep->update();
+	update();
 }
 
 void EmbeddablePlot2D::EraseAllData() {
@@ -73,12 +79,6 @@ const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
 		return QuantityAxis;
 		break;
 	};
-}
-
-QWidget* EmbeddablePlot2D::GetWidgetRep() const { return WidgetRep; }
-void EmbeddablePlot2D::SetWidgetRep(QWidget* newWidgetRep) {
-	WidgetRep = newWidgetRep;
-	WidgetRep->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 }
 
 // Series {{{

@@ -6,8 +6,9 @@
 #include "Widgets/Dial/Composite.hpp"
 #include "Widgets/Displays/QuantitiesRatesDisplay.hpp"
 #include "Widgets/Displays/QuantitiesRatesRow.hpp"
-#include "Plotting/Container.hpp"
+#include "Plotting/Plot2D.hpp"
 #include "Util/Sizing.hpp"
+#include "Widgets/Displays/MultiPlotContainer.hpp"
 
 namespace VSCL::FromPpt {
 class Widgets : public QMainWindow {
@@ -24,7 +25,7 @@ public:
 	void SetYawRate(double yaw);
 
 private:
-	QFont ButtonFont;
+	QFont ButtonFont{ };
 
 	QWidget* MajorContainer;
 	QGridLayout* MajorLayout;
@@ -42,8 +43,9 @@ private:
 	void SetupAttitudeDials();
 
 	Plot::EmbeddablePlot2D* Plot;
-	Plot::PlotContainer* TimeHistory;
-	void SetupTimeHistoryPlotGR();
+	MultiPlotContainer* Plots;
+	void SetupMultiPlot(); 
+
 	void SetupTimeHistoryPlotQChart();
 
 	QtyRateDisplay* AttQtysRates;
@@ -56,17 +58,18 @@ private:
 	QGroupBox* StatusColumn;
 	QVBoxLayout* StatusColumnOrganizer;
 	QPushButton* LoadTestRoutineButton;
+	QPushButton* ArmedButton;
 	QPushButton* QuantityCalculatorButton;
 	QPushButton* LogOpenButton;
 	QPushButton* AbortButton;
+	bool bArmedButtonActive = false;  // Track armed button state
 	Util::FontAdjustment ButtonFontAdjustment{ 12 };
 	void SetupButtons();
 	void SetupStatusColumn();
 	void SetAllButtonTextSize();
-
-// Menubar and Actions {{{
 private slots:
     void About();
+	void OnArmedButtonPressed();
 
 private:
     void CreateActions();

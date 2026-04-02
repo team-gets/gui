@@ -3,7 +3,6 @@
 #include <chrono>
 
 #include "WidgetsRecreation.hpp"
-#include "Plotting/Backend/CoreGR.hpp"
 #include "Plotting/Backend/CoreQChart.hpp"
 
 // stupid temp thing {{{
@@ -44,13 +43,14 @@ Widgets::Widgets() {
 	// Set up the static layout
 	SetupCentralWidget();
 	SetupAttitudeDials();
-	SetupTimeHistoryPlotQChart();
+	// SetupTimeHistoryPlotQChart(); // <- old plot
+	SetupMultiPlot(); // <-new multiplot
 	SetupAttQtysRatesDisplay();
 	SetupButtons();
+	SetupStatusColumn();
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
 
-	ButtonFont = QFont();
 	SetAllButtonTextSize();
 
 	SetRoll(-32);
@@ -154,6 +154,11 @@ void Widgets::SetupButtons() {
 	LoadTestRoutineButton = new QPushButton(this);
 	LoadTestRoutineButton->setText(tr("Load Test Routine"));
 
+	ArmedButton = new QPushButton(this);
+	ArmedButton->setText(tr("Disarmed"));
+	ArmedButton->setStyleSheet(" QPushButton { background-color: Yellow; color: Black; } } ");
+	connect(ArmedButton, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
+
 	QuantityCalculatorButton = new QPushButton(this);
 	QuantityCalculatorButton->setText(tr("Calculate Quantity"));
 
@@ -177,6 +182,9 @@ void Widgets::SetupStatusColumn() {
 	LoadTestRoutineButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(LoadTestRoutineButton);
 
+	ArmedButton->setSizePolicy(vhexpanding);
+	StatusColumnOrganizer->addWidget(ArmedButton);
+
 	QuantityCalculatorButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(QuantityCalculatorButton);
 
@@ -192,6 +200,7 @@ void Widgets::SetupStatusColumn() {
 void Widgets::SetAllButtonTextSize() {
 	ButtonFont.setPixelSize(ButtonFontAdjustment.AdjustPxSize(window()));
 	LoadTestRoutineButton->setFont(ButtonFont);
+	ArmedButton->setFont(ButtonFont);
 	QuantityCalculatorButton->setFont(ButtonFont);
 	LogOpenButton->setFont(ButtonFont);
 	AbortButton->setFont(ButtonFont);
@@ -199,40 +208,44 @@ void Widgets::SetAllButtonTextSize() {
 } // void Widgets::SetAllButtonTextSize()
 // }}}
 
-void Widgets::SetupTimeHistoryPlotGR() {
-	Plot = new Plot::PlotGR(this);
-	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
-	MajorLayout->addWidget(TimeHistory, 1, 0);
+void Widgets::SetupMultiPlot() {
+	Plots = new MultiPlotContainer(this, 3);
+	MajorLayout->addWidget(Plots, 1, 0);
+	QList<Plot::EmbeddablePlot2D*> allPlots = Plots->GetPlots();
 
 	Plot::AxisInfo axInfo;
 	axInfo.Range = { 0, 10 };
-	axInfo.MajorSpacing = 10;
-	axInfo.MinorSpacing = 0.25;
-	Plot->SetAxis(Plot::Axis::Time, axInfo);
 
-	Plot::SeriesInfo rollInfo;
-	rollInfo.Name = "Roll";
-	rollInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Red);
+	Plot::AxisInfo justWtv;
+	justWtv.Range = {-180, 180};
+	justWtv.MajorSpacing = 180;
+	justWtv.MinorSpacing = 45;
 
-	Plot::SeriesInfo pitchInfo;
-	pitchInfo.Name = "Pitch";
-	pitchInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Blue);
+	std::array<std::string, 3> RPY = {"Roll", "Pitch", "Yaw"};
+	auto angle = RPY.begin();
+	auto color = Plot::StandardColor.begin();
 
-	Plot::SeriesInfo yawInfo;
-	yawInfo.Name = "Yaw";
-	yawInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Green);
+	for (Plot::EmbeddablePlot2D* p : allPlots) {
+		std::string name = *angle;
+		Plot::ColorRGB rgb = color->second;
+		Plot::SeriesInfo info;
+		info.Name = name;
+		info.Color = rgb;
 
-	Plot->SetSeries(0, rollInfo);
-	Plot->AddSeries(pitchInfo);
-	Plot->AddSeries(yawInfo);
+		p->AddSeries(info);
 
-	stupid_make_data(Plot);
-} // void Widgets::SetupTimeHistoryPlotGR()
+		justWtv.Title = name;
+		p->SetAxis(Plot::Axis::Quantity, justWtv);
+		p->SetAxis(Plot::Axis::Time, axInfo);
+
+		angle++;
+		color++;
+	}
+} 
 
 void Widgets::SetupTimeHistoryPlotQChart() {
 	Plot = new Plot::PlotQChart(this);
-	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
-	MajorLayout->addWidget(TimeHistory, 1, 0);
+	MajorLayout->addWidget(Plot, 1, 0);
 
 	Plot::AxisInfo axInfo;
 	axInfo.Range = { 0, 10 };
@@ -304,6 +317,20 @@ void Widgets::CreateActions() {
     AboutAct->setStatusTip(tr("Show the application's About box"));
     connect(AboutAct, &QAction::triggered, this, &Widgets::About);
 } // void Widgets::CreateActions()
+
+void Widgets::OnArmedButtonPressed() {
+	bArmedButtonActive = !bArmedButtonActive;
+	
+	if (bArmedButtonActive) {
+		// Active state - green color
+		ArmedButton->setText(tr("Armed"));
+		ArmedButton->setStyleSheet(" QPushButton { background-color: red; color: white; } } ");
+	} else {
+		// Inactive state - default color
+		ArmedButton->setText(tr("Disarmed"));
+		ArmedButton->setStyleSheet(" QPushButton { background-color: Yellow; color: Black; } } ");
+	}
+} // void Widgets::OnArmedButtonPressed()
 // }}}
 } // namespace VSCL::FromPpt
 // vim: foldmethod=marker

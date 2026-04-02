@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+#include <QHBoxLayout>
 
 #include <string>
 #include <vector>
@@ -13,11 +14,13 @@
 namespace VSCL::Plot {
 
 // 2D plotting interface.
-// The embeddable plot has at most, one figure inside of it. A figure will have multiple serieses.
-//
-// TODO: probably look at typical plotting implementations for scientific programming
-class PLOT_API EmbeddablePlot2D {
+// The embeddable plot has at most, one figure inside of it.
+// A figure can have multiple series.
+class PLOT_API EmbeddablePlot2D : virtual public QWidget {
 public:
+	EmbeddablePlot2D() : EmbeddablePlot2D(nullptr) { }
+	EmbeddablePlot2D(QWidget* parent) : QWidget(parent) { setLayout(new QHBoxLayout(this)); }
+
 	void AddPoint(uint8_t idx, double time, double quantity, bool update = false);
 	void AddPoint(double time, double quantity, bool update = false);
 	void AddPoints(uint8_t idx, const std::vector<double>& times, const std::vector<double>& quantities, bool update = false);
@@ -34,9 +37,6 @@ public:
 
 	// Clear data that was being stored.
 	virtual void EraseAllData();
-
-	QWidget* GetWidgetRep() const;
-	void SetWidgetRep(QWidget* newWidgetRep);
 
 	const AxisInfo& GetAxisInfoView(Axis axis) const;
 
@@ -77,8 +77,8 @@ public:
 	virtual void SetColor(uint8_t idx, ColorRGB& color);
 	virtual void SetColor(ColorRGB& color);
 
-	constexpr bool GetDrawGridState() { return DrawGrid; };
-	constexpr void SetDrawGridState(bool newState) { DrawGrid = newState; };
+	bool GetDrawGridState() { return DrawGrid; };
+	void SetDrawGridState(bool newState) { DrawGrid = newState; };
 
 private:	
 	std::string Title;

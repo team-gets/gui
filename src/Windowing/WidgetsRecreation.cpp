@@ -3,7 +3,6 @@
 #include <chrono>
 
 #include "WidgetsRecreation.hpp"
-#include "Plotting/Backend/CoreGR.hpp"
 #include "Plotting/Backend/CoreQChart.hpp"
 
 // stupid temp thing {{{
@@ -48,10 +47,10 @@ Widgets::Widgets() {
 	SetupMultiPlot(); // <-new multiplot
 	SetupAttQtysRatesDisplay();
 	SetupButtons();
+	SetupStatusColumn();
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
 
-	ButtonFont = QFont();
 	SetAllButtonTextSize();
 
 	SetRoll(-32);
@@ -203,7 +202,7 @@ void Widgets::SetAllButtonTextSize() {
 void Widgets::SetupMultiPlot() {
 	Plots = new MultiPlotContainer(this, 3);
 	MajorLayout->addWidget(Plots, 1, 0);
-	QList<Plot::PlotContainer*> allPlots = Plots->GetPlotContainers();
+	QList<Plot::EmbeddablePlot2D*> allPlots = Plots->GetPlots();
 
 	Plot::AxisInfo axInfo;
 	axInfo.Range = { 0, 10 };
@@ -217,60 +216,27 @@ void Widgets::SetupMultiPlot() {
 	auto angle = RPY.begin();
 	auto color = Plot::StandardColor.begin();
 
-	for (Plot::PlotContainer* p : allPlots) {
-		Plot::EmbeddablePlot2D* uhh = p->GetPlot();
-
+	for (Plot::EmbeddablePlot2D* p : allPlots) {
 		std::string name = *angle;
 		Plot::ColorRGB rgb = color->second;
 		Plot::SeriesInfo info;
 		info.Name = name;
 		info.Color = rgb;
 
-		uhh->AddSeries(info);
+		p->AddSeries(info);
 
 		justWtv.Title = name;
-		uhh->SetAxis(Plot::Axis::Quantity, justWtv);
-		uhh->SetAxis(Plot::Axis::Time, axInfo);
+		p->SetAxis(Plot::Axis::Quantity, justWtv);
+		p->SetAxis(Plot::Axis::Time, axInfo);
 
 		angle++;
 		color++;
 	}
 } 
 
-void Widgets::SetupTimeHistoryPlotGR() {
-	Plot = new Plot::PlotGR(this);
-	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
-	MajorLayout->addWidget(TimeHistory, 1, 0);
-
-	Plot::AxisInfo axInfo;
-	axInfo.Range = { 0, 10 };
-	axInfo.MajorSpacing = 10;
-	axInfo.MinorSpacing = 0.25;
-	Plot->SetAxis(Plot::Axis::Time, axInfo);
-
-	Plot::SeriesInfo rollInfo;
-	rollInfo.Name = "Roll";
-	rollInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Red);
-
-	Plot::SeriesInfo pitchInfo;
-	pitchInfo.Name = "Pitch";
-	pitchInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Blue);
-
-	Plot::SeriesInfo yawInfo;
-	yawInfo.Name = "Yaw";
-	yawInfo.Color = Plot::RGBFromColorGR(Plot::ColorGR::Green);
-
-	Plot->SetSeries(0, rollInfo);
-	Plot->AddSeries(pitchInfo);
-	Plot->AddSeries(yawInfo);
-
-	stupid_make_data(Plot);
-} // void Widgets::SetupTimeHistoryPlotGR()
-
 void Widgets::SetupTimeHistoryPlotQChart() {
 	Plot = new Plot::PlotQChart(this);
-	TimeHistory = new Plot::PlotContainer(MajorContainer, Plot);
-	MajorLayout->addWidget(TimeHistory, 1, 0);
+	MajorLayout->addWidget(Plot, 1, 0);
 
 	Plot::AxisInfo axInfo;
 	axInfo.Range = { 0, 10 };

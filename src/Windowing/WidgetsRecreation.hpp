@@ -6,7 +6,7 @@
 #include "Widgets/Dial/Composite.hpp"
 #include "Widgets/Displays/QuantitiesRatesDisplay.hpp"
 #include "Widgets/Displays/QuantitiesRatesRow.hpp"
-#include "Plotting/Container.hpp"
+#include "Plotting/Plot2D.hpp"
 #include "Util/Sizing.hpp"
 #include "Widgets/Displays/MultiPlotContainer.hpp"
 
@@ -25,7 +25,7 @@ public:
 	void SetYawRate(double yaw);
 
 private:
-	QFont ButtonFont;
+	QFont ButtonFont{ };
 
 	QWidget* MajorContainer;
 	QGridLayout* MajorLayout;
@@ -43,12 +43,9 @@ private:
 	void SetupAttitudeDials();
 
 	Plot::EmbeddablePlot2D* Plot;
-	Plot::PlotContainer* TimeHistory;
-	
 	MultiPlotContainer* Plots;
 	void SetupMultiPlot(); 
 
-	void SetupTimeHistoryPlotGR();
 	void SetupTimeHistoryPlotQChart();
 
 	QtyRateDisplay* AttQtysRates;

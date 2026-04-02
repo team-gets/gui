@@ -1,11 +1,9 @@
 #pragma once 
 
 #include <QWidget>
-#include "Plotting/Container.hpp"
-#include "Util/Sizing.hpp"
+#include "Plotting/Plot2D.hpp"
 
 namespace VSCL {
-
 class MultiPlotContainer : public QWidget {
 
     Q_OBJECT;
@@ -15,13 +13,13 @@ public:
     MultiPlotContainer(QWidget* parent, int n);
     virtual void resizeEvent(QResizeEvent *event) override;
 
-    QList<Plot::PlotContainer*> GetPlotContainers() const;
-    const QList<Plot::PlotContainer*>& GetPlotContainersView() const;
+    QList<Plot::EmbeddablePlot2D*> GetPlots() const;
+    const QList<Plot::EmbeddablePlot2D*>& GetPlotsView() const;
 
     void AddPoints(int n);
 private:
-    QList<Plot::PlotContainer*> Plots;
-    int numberOfPlots;
+    QList<Plot::EmbeddablePlot2D*> Plots;
+    int NumberOfPlots;
 
 }; // class MultiPlotContainer
 } // namespace VSCL

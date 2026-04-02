@@ -9,8 +9,8 @@ namespace VSCL::Plot {
 
 struct SeriesInfo {
 	std::string Name = "";
-	std::vector<double> Times = { 0.0 };
-	std::vector<double> Quantities = { 0.0 };
+	std::vector<double> Times = {  };
+	std::vector<double> Quantities = {  };
 
 	ColorRGB Color = {1.0, 0.0, 0.0};
 	double Alpha = 1.0;

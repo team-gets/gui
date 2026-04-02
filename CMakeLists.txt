@@ -1,6 +1,4 @@
 cmake_minimum_required(VERSION 3.30...4.0)
-set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/lib/vcpkg/scripts/buildsystems/vcpkg.cmake"
-	CACHE STRING "Vcpkg toolchain file" FORCE)
 
 project(rig_gui
 	LANGUAGES CXX C
@@ -25,37 +23,13 @@ qt_standard_project_setup(REQUIRES 6.10)
 #target_compile_warn_all(guidev)
 #
 #target_link_libraries(guidev PRIVATE ${STD_APP_QT6_DEPS})
-#
-## Ideally you would quickly iter on QML designs by using the dev gui app
-#qt_add_qml_module(qml.a_circle
-#	URI qml.a_circle
-#	OUTPUT_DIRECTORY "qml/a_circle"
-#	QML_FILES
-#		"qml/circle.qml"
-#)
 
 # Plotting Interface
 add_library(plotting_iface SHARED ${PLOTTING_SOURCES})
-target_link_libraries(plotting_iface PRIVATE Qt6::Core Qt6::Widgets)
+target_link_libraries(plotting_iface PUBLIC Qt6::Core Qt6::Widgets)
 target_include_directories(plotting_iface PUBLIC ${PLOTTING_SRC_DIR})
 target_compile_definitions(plotting_iface PRIVATE COMPILING_PLOT_API_DLL)
 target_compile_warn_all(plotting_iface)
-
-find_package(PNG REQUIRED)
-add_library(Libpng::Libpng ALIAS PNG::PNG) # Why does the vcpkg version not do this/why does GR do this
-add_subdirectory_silence_warnings("${CMAKE_SOURCE_DIR}/lib/gr")
-
-# GR Backend Compilation
-add_library(gr_backend SHARED ${GR_BKND_SOURCES})
-get_target_property(QT6GR_INCLUDES GR::GR INTERFACE_INCLUDE_DIRECTORIES)
-target_include_directories(gr_backend PUBLIC
-	${QT6GR_INCLUDES} "${CMAKE_SOURCE_DIR}/src")
-
-target_link_libraries(gr_backend PUBLIC plotting_iface)
-target_link_libraries(gr_backend PUBLIC Qt6::Core Qt6::Widgets)
-target_link_libraries(gr_backend PUBLIC GR::qt6gr qt6plugin)
-target_compile_definitions(gr_backend PRIVATE COMPILING_GR_BACKEND_DLL)
-target_compile_warn_all(gr_backend)
 
 # QChart Backend Compilation
 add_library(qchart_backend SHARED ${QCHART_BKND_SOURCES})
@@ -76,4 +50,4 @@ target_include_directories(widgets_recreation PRIVATE ${STD_APP_INCLUDES})
 target_compile_warn_all(widgets_recreation)
 
 target_link_libraries(widgets_recreation PRIVATE ${STD_APP_QT6_DEPS})
-target_link_libraries(widgets_recreation PRIVATE gr_backend qchart_backend)
+target_link_libraries(widgets_recreation PRIVATE qchart_backend)

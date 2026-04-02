@@ -44,7 +44,8 @@ Widgets::Widgets() {
 	// Set up the static layout
 	SetupCentralWidget();
 	SetupAttitudeDials();
-	SetupTimeHistoryPlotQChart();
+	// SetupTimeHistoryPlotQChart(); // <- old plot
+	SetupMultiPlot(); // <-new multiplot
 	SetupAttQtysRatesDisplay();
 	SetupButtons();
 	SetGridColumnsMinimums();
@@ -198,6 +199,43 @@ void Widgets::SetAllButtonTextSize() {
 	StatusColumn->setFont(ButtonFont);
 } // void Widgets::SetAllButtonTextSize()
 // }}}
+
+void Widgets::SetupMultiPlot() {
+	Plots = new MultiPlotContainer(this, 3);
+	MajorLayout->addWidget(Plots, 1, 0);
+	QList<Plot::PlotContainer*> allPlots = Plots->GetPlotContainers();
+
+	Plot::AxisInfo axInfo;
+	axInfo.Range = { 0, 10 };
+
+	Plot::AxisInfo justWtv;
+	justWtv.Range = {-180, 180};
+	justWtv.MajorSpacing = 90;
+	justWtv.MinorSpacing = 45;
+
+	std::array<std::string, 3> RPY = {"Roll", "Pitch", "Yaw"};
+	auto angle = RPY.begin();
+	auto color = Plot::StandardColor.begin();
+
+	for (Plot::PlotContainer* p : allPlots) {
+		Plot::EmbeddablePlot2D* uhh = p->GetPlot();
+
+		std::string name = *angle;
+		Plot::ColorRGB rgb = color->second;
+		Plot::SeriesInfo info;
+		info.Name = name;
+		info.Color = rgb;
+
+		uhh->AddSeries(info);
+
+		justWtv.Title = name;
+		uhh->SetAxis(Plot::Axis::Quantity, justWtv);
+		uhh->SetAxis(Plot::Axis::Time, axInfo);
+
+		angle++;
+		color++;
+	}
+} 
 
 void Widgets::SetupTimeHistoryPlotGR() {
 	Plot = new Plot::PlotGR(this);

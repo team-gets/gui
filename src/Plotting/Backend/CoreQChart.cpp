@@ -17,21 +17,21 @@ PlotQChart::PlotQChart(QWidget* parent)
 
 	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
 	TimeAxisQt->setLinePenColor(QColorConstants::Black);
-	TimeAxisQt->setLabelFormat("%i");
+	// TimeAxisQt->setLabelFormat("%i");
 
 	PlotChart->addAxis(LogTimeAxisQt, Qt::AlignBottom);
 	LogTimeAxisQt->setLinePenColor(QColorConstants::Black);
-	LogTimeAxisQt->setLabelFormat("%g");
+	// LogTimeAxisQt->setLabelFormat("%g");
 	LogTimeAxisQt->setGridLineVisible(false);
 	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
 
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
 	QuantityAxisQt->setLinePenColor(QColorConstants::Black);
-	QuantityAxisQt->setLabelFormat("%i");
+	// QuantityAxisQt->setLabelFormat("%i");
 
 	PlotChart->addAxis(LogQuantityAxisQt, Qt::AlignLeft);
 	LogQuantityAxisQt->setLinePenColor(QColorConstants::Black);
-	LogQuantityAxisQt->setLabelFormat("%g");
+	// LogQuantityAxisQt->setLabelFormat("%g");
 	LogQuantityAxisQt->setGridLineVisible(false);
 	SetAxis(Axis::Quantity, GetAxisInfoView(Axis::Quantity));
 
@@ -155,6 +155,10 @@ void PlotQChart::Plot() {
 
 void PlotQChart::EraseAllData() {
 	EmbeddablePlot2D::EraseAllData();
+}
+
+void PlotQChart::AddSeries() {
+	AddSeries({ });
 }
 
 void PlotQChart::AddSeries(const SeriesInfo& newInfo) {

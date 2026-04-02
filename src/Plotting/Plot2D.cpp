@@ -13,6 +13,13 @@ void EmbeddablePlot2D::AddPoint(uint8_t idx, double time, double quantity, bool 
 
 	oldTime.push_back(time);
 	oldQty.push_back(quantity);
+	
+	Plot::AxisInfo axInfo = this->GetAxisInfoView(Plot::Axis::Time);
+    double maxTime = oldTime.back();
+    double minTime = std::max(0.0, maxTime - 10.0);
+    axInfo.Range = { minTime, minTime + 10.0 };
+    SetAxis(Plot::Axis::Time, axInfo);
+
 	if (update) Plot();
 }
 

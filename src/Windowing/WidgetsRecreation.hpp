@@ -43,14 +43,9 @@ private:
 	void SetupAttitudeDials();
 
 	Plot::EmbeddablePlot2D* Plot;
-<<<<<<< HEAD
-=======
-	Plot::PlotContainer* TimeHistory;
-	
 	MultiPlotContainer* Plots;
 	void SetupMultiPlot(); 
 
->>>>>>> fb76cf8c5a055ea4682904a0ec9fe69b440e70e3
 	void SetupTimeHistoryPlotGR();
 	void SetupTimeHistoryPlotQChart();
 

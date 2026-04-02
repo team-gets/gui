@@ -16,7 +16,6 @@ public:
     QList<Plot::EmbeddablePlot2D*> GetPlots() const;
     const QList<Plot::EmbeddablePlot2D*>& GetPlotsView() const;
 
-    void AddPoints(int n);
 private:
     QList<Plot::EmbeddablePlot2D*> Plots;
     int NumberOfPlots;

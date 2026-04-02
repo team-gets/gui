@@ -58,17 +58,18 @@ private:
 	QGroupBox* StatusColumn;
 	QVBoxLayout* StatusColumnOrganizer;
 	QPushButton* LoadTestRoutineButton;
+	QPushButton* ArmedButton;
 	QPushButton* QuantityCalculatorButton;
 	QPushButton* LogOpenButton;
 	QPushButton* AbortButton;
+	bool bArmedButtonActive = false;  // Track armed button state
 	Util::FontAdjustment ButtonFontAdjustment{ 12 };
 	void SetupButtons();
 	void SetupStatusColumn();
 	void SetAllButtonTextSize();
-
-// Menubar and Actions {{{
 private slots:
     void About();
+	void OnArmedButtonPressed();
 
 private:
     void CreateActions();

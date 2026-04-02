@@ -7,7 +7,7 @@ namespace VSCL {
 MultiPlotContainer::MultiPlotContainer(QWidget* parent) : QWidget(parent) {
     QVBoxLayout* Organizers = new QVBoxLayout(this);
     Organizers->setContentsMargins(5, 5, 5, 5);
-    //Organizers->setSpacing(0);
+    // Organizers->setSpacing(0);
     setLayout(Organizers); 
 }
 
@@ -31,14 +31,5 @@ QList<Plot::EmbeddablePlot2D*> MultiPlotContainer::GetPlots() const {
 
 const QList<Plot::EmbeddablePlot2D*>& MultiPlotContainer::GetPlotsView() const {
     return Plots;
-}
-
-void MultiPlotContainer::AddPoints(int n) {
-    if (n < 0 || n >= NumberOfPlots || Plots.isEmpty()) return;
-    Plot::EmbeddablePlot2D* plot = Plots.last();
-    plot->AddPoint(0, -1, 0.5);
-    plot->AddPoint(5, 90);
-    plot->AddPoint(11, 90);
-    plot->Plot();
 }
 } // namespace VSCL

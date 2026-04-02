@@ -154,6 +154,11 @@ void Widgets::SetupButtons() {
 	LoadTestRoutineButton = new QPushButton(this);
 	LoadTestRoutineButton->setText(tr("Load Test Routine"));
 
+	ArmedButton = new QPushButton(this);
+	ArmedButton->setText(tr("Disarmed"));
+	ArmedButton->setStyleSheet(" QPushButton { background-color: Yellow; color: Black; } } ");
+	connect(ArmedButton, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
+
 	QuantityCalculatorButton = new QPushButton(this);
 	QuantityCalculatorButton->setText(tr("Calculate Quantity"));
 
@@ -177,6 +182,9 @@ void Widgets::SetupStatusColumn() {
 	LoadTestRoutineButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(LoadTestRoutineButton);
 
+	ArmedButton->setSizePolicy(vhexpanding);
+	StatusColumnOrganizer->addWidget(ArmedButton);
+
 	QuantityCalculatorButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(QuantityCalculatorButton);
 
@@ -192,6 +200,7 @@ void Widgets::SetupStatusColumn() {
 void Widgets::SetAllButtonTextSize() {
 	ButtonFont.setPixelSize(ButtonFontAdjustment.AdjustPxSize(window()));
 	LoadTestRoutineButton->setFont(ButtonFont);
+	ArmedButton->setFont(ButtonFont);
 	QuantityCalculatorButton->setFont(ButtonFont);
 	LogOpenButton->setFont(ButtonFont);
 	AbortButton->setFont(ButtonFont);
@@ -308,6 +317,20 @@ void Widgets::CreateActions() {
     AboutAct->setStatusTip(tr("Show the application's About box"));
     connect(AboutAct, &QAction::triggered, this, &Widgets::About);
 } // void Widgets::CreateActions()
+
+void Widgets::OnArmedButtonPressed() {
+	bArmedButtonActive = !bArmedButtonActive;
+	
+	if (bArmedButtonActive) {
+		// Active state - green color
+		ArmedButton->setText(tr("Armed"));
+		ArmedButton->setStyleSheet(" QPushButton { background-color: red; color: white; } } ");
+	} else {
+		// Inactive state - default color
+		ArmedButton->setText(tr("Disarmed"));
+		ArmedButton->setStyleSheet(" QPushButton { background-color: Yellow; color: Black; } } ");
+	}
+} // void Widgets::OnArmedButtonPressed()
 // }}}
 } // namespace VSCL::FromPpt
 // vim: foldmethod=marker

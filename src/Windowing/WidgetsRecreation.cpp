@@ -218,7 +218,7 @@ void Widgets::SetupMultiPlot() {
 
 	Plot::AxisInfo justWtv;
 	justWtv.Range = {-180, 180};
-	justWtv.MajorSpacing = 90;
+	justWtv.MajorSpacing = 180;
 	justWtv.MinorSpacing = 45;
 
 	std::array<std::string, 3> RPY = {"Roll", "Pitch", "Yaw"};

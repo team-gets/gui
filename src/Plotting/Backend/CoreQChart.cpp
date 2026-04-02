@@ -6,31 +6,29 @@ namespace VSCL::Plot {
 PlotQChart::PlotQChart(QWidget* parent)
 	: EmbeddablePlot2D(parent)
 	, PlotChart(new QChart)
-	, PlotChartView(new QChartView(PlotChart, this)) {
-
-	// These heap allocs are parented and handled when they get added to each other
-	LogTimeAxisQt = new QLogValueAxis(PlotChart);
-	LogQuantityAxisQt = new QLogValueAxis(PlotChart);
-	TimeAxisQt = new QValueAxis(PlotChart);
-	QuantityAxisQt = new QValueAxis(PlotChart);
+	, PlotChartView(new QChartView(PlotChart, this))
+	, LogTimeAxisQt(new QLogValueAxis(PlotChart))
+	, LogQuantityAxisQt(new QLogValueAxis(PlotChart))
+	, TimeAxisQt(new QValueAxis(PlotChart))
+	, QuantityAxisQt(new QValueAxis(PlotChart)) {
 
 	PlotChart->addAxis(TimeAxisQt, Qt::AlignBottom);
 	TimeAxisQt->setLinePenColor(QColorConstants::Black);
-	// TimeAxisQt->setLabelFormat("%i");
+	TimeAxisQt->setLabelFormat("%i");
 
 	PlotChart->addAxis(LogTimeAxisQt, Qt::AlignBottom);
 	LogTimeAxisQt->setLinePenColor(QColorConstants::Black);
-	// LogTimeAxisQt->setLabelFormat("%g");
+	LogTimeAxisQt->setLabelFormat("%g");
 	LogTimeAxisQt->setGridLineVisible(false);
 	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
 
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
 	QuantityAxisQt->setLinePenColor(QColorConstants::Black);
-	// QuantityAxisQt->setLabelFormat("%i");
+	QuantityAxisQt->setLabelFormat("%i");
 
 	PlotChart->addAxis(LogQuantityAxisQt, Qt::AlignLeft);
 	LogQuantityAxisQt->setLinePenColor(QColorConstants::Black);
-	// LogQuantityAxisQt->setLabelFormat("%g");
+	LogQuantityAxisQt->setLabelFormat("%g");
 	LogQuantityAxisQt->setGridLineVisible(false);
 	SetAxis(Axis::Quantity, GetAxisInfoView(Axis::Quantity));
 

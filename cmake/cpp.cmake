@@ -53,6 +53,8 @@ set(STD_APP_QT6_DEPS
 	Qt6::Widgets
 	Qt6::QuickWidgets)
 
+set(CMAKE_CXX_STANDARD 20)
+
 function(target_compile_warn_all IN_TARGET_NAME)
 	if (MSVC)
 		target_compile_options(${IN_TARGET_NAME} PRIVATE "/W4")

@@ -1,12 +1,12 @@
 #pragma once
 
-#include <cstdlib>
-#include <cstring>
 #include <iostream>
 #include <array>
 #include <string_view>
 #include <filesystem>
 #include <algorithm>
+#include <cstring>
+#include <cstdlib>
 
 namespace VSCL::FS {
 
@@ -28,31 +28,34 @@ static std::filesystem::path GetUserAppData() {
 		}
 
 	#else // Linux
-		std::strncpy(usrdata, std::getenv("XDG_DATA_HOME"), 256);
-		
-		if (strnlen(usrdata, 256) == 0) {
-			std::strncpy(usrdata, std::getenv("HOME"), 256);
-			std::strncpy(usrdata, "/.local/share", 2);
+		const char* xdg = std::getenv("XDG_DATA_HOME");
+		if (xdg == NULL || strnlen(xdg, 255) == 0) {
+			const char* homer = std::getenv("HOME");
+			std::strncpy(usrdata, homer, 255);
+			std::strncat(usrdata, "/.local/share", 255);
+		}
+		else {
+			std::strncpy(usrdata, xdg, 255);
 		}
 	#endif
 
 	std::filesystem::path usrdata_as_path(usrdata);
-	return usrdata_as_path / "VSCL" / "testrig";
+	return usrdata_as_path / "vscl" / "testrig";
 }
 
 static bool MakeStandardAppPaths() {
 	const std::filesystem::path app_dir = GetUserAppData();
-	if (!std::filesystem::exists(app_dir)) { std::filesystem::create_directory(app_dir); }
+	if (!std::filesystem::exists(app_dir)) { std::filesystem::create_directories(app_dir); }
 	bool all_success = true;
 
 	std::for_each(StandardPaths.begin(), StandardPaths.end(),
-			[&all_success, app_dir]
-			(const std::filesystem::path& subdir) {
+		[&](const std::filesystem::path& subdir) {
+
 		std::filesystem::path full_path = app_dir / subdir;
 		bool success = true;
 
 		if (!std::filesystem::exists(full_path)) {
-			success = std::filesystem::create_directory(full_path);
+			success = std::filesystem::create_directories(full_path);
 		}
 
 		if (!success) {
@@ -62,7 +65,6 @@ static bool MakeStandardAppPaths() {
 		all_success = all_success && success;
 	});
 
-	return 0;
+	return all_success;
 }
-
 } // namespace VSCL

@@ -51,3 +51,5 @@ target_compile_warn_all(widgets_recreation)
 
 target_link_libraries(widgets_recreation PRIVATE ${STD_APP_QT6_DEPS})
 target_link_libraries(widgets_recreation PRIVATE qchart_backend)
+
+add_subdirectory("${CMAKE_SOURCE_DIR}/test")

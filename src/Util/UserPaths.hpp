@@ -16,7 +16,7 @@ static constexpr std::array<std::string_view, 2> StandardPaths = {
 
 static std::filesystem::path GetUserAppData() {
 	char usrdata[256] = { 0 };
-
+	
 	#ifdef _WIN32 // Windows
 		size_t ret_size;
 		errno_t getenv_stat;
@@ -24,7 +24,7 @@ static std::filesystem::path GetUserAppData() {
 		getenv_stat = getenv_s(&ret_size, usrdata, 128, "LOCALAPPDATA");
 		if (getenv_stat != 0 || ret_size == 0) {
 			std::cerr << "Did not get %LOCALAPPDATA%\n";
-			return getenv_stat;
+			return std::filesystem::temp_directory_path();
 		}
 
 	#else // Linux

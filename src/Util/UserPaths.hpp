@@ -11,7 +11,7 @@
 namespace VSCL::FS {
 
 static constexpr std::array<std::string_view, 2> StandardPaths = {
-	"Data", "Config"
+	"data", "config"
 };
 
 static std::filesystem::path GetUserAppData() {

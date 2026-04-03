@@ -50,7 +50,7 @@ jobs:
           cmake --build build --preset=linux-gcc
       - name: Run Unit Tests
         run: |
-          ctest --output-on-failure --test-dir build/test
+          ctest --output-on-failure --verbose --test-dir build/test
 
   windows-build:
     name: Windows

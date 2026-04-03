@@ -1,20 +1,15 @@
-#pragma once
-
 #include <iostream>
-#include <array>
-#include <string_view>
-#include <filesystem>
 #include <algorithm>
 #include <cstring>
 #include <cstdlib>
 
+#include "UserPaths.hpp"
+
+namespace fs = std::filesystem;
+
 namespace VSCL::FS {
 
-static constexpr std::array<std::string_view, 2> StandardPaths = {
-	"data", "config"
-};
-
-static std::filesystem::path GetUserAppData() {
+fs::path GetUserAppData() {
 	char usrdata[256] = { 0 };
 	
 	#ifdef _WIN32 // Windows
@@ -24,7 +19,7 @@ static std::filesystem::path GetUserAppData() {
 		getenv_stat = getenv_s(&ret_size, usrdata, 128, "LOCALAPPDATA");
 		if (getenv_stat != 0 || ret_size == 0) {
 			std::cerr << "Did not get %LOCALAPPDATA%\n";
-			return std::filesystem::temp_directory_path();
+			return fs::temp_directory_path();
 		}
 
 	#else // Linux
@@ -39,23 +34,23 @@ static std::filesystem::path GetUserAppData() {
 		}
 	#endif
 
-	std::filesystem::path usrdata_as_path(usrdata);
+	fs::path usrdata_as_path(usrdata);
 	return usrdata_as_path / "vscl" / "testrig";
-}
+} // fs::path GetUserAppData()
 
-static bool MakeStandardAppPaths() {
-	const std::filesystem::path app_dir = GetUserAppData();
-	if (!std::filesystem::exists(app_dir)) { std::filesystem::create_directories(app_dir); }
+bool MakeStandardAppPaths() {
+	const fs::path app_dir = GetUserAppData();
+	if (!fs::exists(app_dir)) { fs::create_directories(app_dir); }
 	bool all_success = true;
 
 	std::for_each(StandardPaths.begin(), StandardPaths.end(),
-		[&](const std::filesystem::path& subdir) {
+		[&](const fs::path& subdir) {
 
-		std::filesystem::path full_path = app_dir / subdir;
+		fs::path full_path = app_dir / subdir;
 		bool success = true;
 
-		if (!std::filesystem::exists(full_path)) {
-			success = std::filesystem::create_directories(full_path);
+		if (!fs::exists(full_path)) {
+			success = fs::create_directories(full_path);
 		}
 
 		if (!success) {
@@ -66,5 +61,5 @@ static bool MakeStandardAppPaths() {
 	});
 
 	return all_success;
-}
-} // namespace VSCL
+} // bool MakeStandardAppPaths()
+} // namespace VSCL::FS

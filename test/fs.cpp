@@ -3,7 +3,8 @@
  */
 
 #include <iostream>
-#include "Util/UserPaths.hpp"
+#include "Util/Filesystem/UserPaths.hpp"
+#include "yaml-cpp/yaml.h"
 
 int main(void) {
 	// Test user perms to make em pretty much

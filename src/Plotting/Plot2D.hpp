@@ -87,10 +87,5 @@ private:
 
 	std::vector<SeriesInfo> Series;
 	bool DrawGrid = false;
-
-	// The underlying widget.
-	// This is potentially going to lead to an obtuse interface when programming?
-	QWidget* WidgetRep;
-
 }; // class AttitudePlot
 } // namespace VSCL::Plot

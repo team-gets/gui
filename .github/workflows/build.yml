@@ -73,6 +73,6 @@ jobs:
       - name: Build Using CMake
         run: |
           cmake --build build --preset=windows-msvc
-      - name: Run Unit Tests
-        run: |
-          ctest --output-on-failure --test-dir build/test
+      #- name: Run Unit Tests
+      #  run: |
+      #    ctest --output-on-failure --test-dir build

@@ -10,18 +10,18 @@ namespace chrono = std::chrono;
 namespace fs = std::filesystem;
 
 namespace VSCL::FS {
-
 static std::string MakeTimestamp(void) {
 	chrono::time_point rn = chrono::floor<chrono::seconds>(chrono::utc_clock::now());
 	return std::format("{:%FT%H_%M_%S}", rn);
 }
 
 static void WriteCSVRow(std::ofstream& output, const std::vector<std::string> row) {
+	const std::string last = *(row.end() - 1);
 	std::for_each(row.begin(), row.end(),
 		[&](const std::string& field){
 			output << field;
 
-			if (*(row.end() - 1) != field) {
+			if (last != field) {
 				output << ",";
 			}
 			else {
@@ -43,5 +43,4 @@ std::ofstream SetupDataOutput(const std::vector<std::string>& fields, const std:
 void WriteData(std::ofstream& output, const std::vector<std::string>& data) {
 	WriteCSVRow(output, data);
 }
-
 } // namespace VSCL::FS

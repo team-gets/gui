@@ -8,6 +8,7 @@
 set(WINDOWING_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Windowing")
 set(WIDGETS_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Widgets")
 set(PLOTTING_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Plotting")
+set(UTIL_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Util")
 
 set(APP_SOURCES
 	"${CMAKE_SOURCE_DIR}/src/App/Main.cpp")

@@ -8,14 +8,12 @@
 #include <algorithm>
 #include <type_traits>
 
-#include "Util/Filesystem/FilesystemAPI.hpp"
-
 namespace VSCL::FS {
 
 /*
  *	Open an output filestream to a timestampped CSV file.
  */
-std::ofstream FS_API SetupDataOutput(const std::vector<std::string>& fields, const std::string& prefix = "run_");
+std::ofstream SetupDataOutput(const std::vector<std::string>& fields, const std::string& prefix = "run_");
 
 /*
  *	Write a single row to a CSV filestream.

@@ -7,7 +7,8 @@
 #include <string_view>
 #include <algorithm>
 #include <type_traits>
-#include "Util/Filesystem/API.hpp"
+
+#include "Util/Filesystem/FilesystemAPI.hpp"
 
 namespace VSCL::FS {
 

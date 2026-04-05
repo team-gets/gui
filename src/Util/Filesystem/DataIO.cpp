@@ -1,5 +1,4 @@
 #include <filesystem>
-#include <algorithm>
 #include <format>
 #include <chrono>
 
@@ -10,7 +9,6 @@ namespace chrono = std::chrono;
 namespace fs = std::filesystem;
 
 namespace VSCL::FS {
-
 /*
  *	ISO formatted timestamp
  */

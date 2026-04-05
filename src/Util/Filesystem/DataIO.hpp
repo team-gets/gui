@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fstream>
+#include <array>
 #include <vector>
 #include <string>
 #include <string_view>
@@ -49,12 +50,14 @@ static void WriteCSVRow(std::ofstream& output, const std::array<T, N>& row) {
 		|| std::is_same<std::string, T>()
 		|| std::is_same<std::string_view, T>());
 
+	static_assert(N >= 1);
+
 	unsigned int n = 0;
 	std::for_each(row.begin(), row.end(),
 		[&](const T& field){
 			output << field;
 
-			if (n < N) {
+			if (n < N - 1) {
 				output << ",";
 			}
 			else {

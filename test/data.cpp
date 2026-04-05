@@ -17,10 +17,29 @@ int main(void) {
 	VSCL::FS::WriteCSVRow<std::string>(output, { "1.0", "2.0", "50.0", "0.0" });
 	VSCL::FS::WriteCSVRow<std::string>(output, { "2.0", "32.0", "67.0", "-123.0" });
 
-	std::cout << "Writing random data... ";
+	std::cout << "Writing random data from the stack... ";
 	chrono::time_point rn = chrono::utc_clock::now();
 
-	for (int j = 0; j < 10000; j++) {
+	for (int j = 0; j < 1000000; j++) {
+		std::srand(std::chrono::utc_clock::now().time_since_epoch().count());
+
+		std::array<double, 4> stuff;
+		stuff[0] = (double)(j + 3);
+
+		for (int i = 1; i < 4; i++) {
+			stuff[i] = (double)(std::rand() % 180 * std::pow(-1, std::rand())) / 1.2;
+		}
+
+		VSCL::FS::WriteCSVRow<double, 4>(output, stuff);
+	}
+
+	chrono::time_point taken = chrono::utc_clock::now();
+	std::cout << "I took " << chrono::duration_cast<chrono::milliseconds>(taken - rn) << " for 1000000 additional lines!\n";
+
+	std::cout << "Writing random data from the heap... ";
+	rn = chrono::utc_clock::now();
+
+	for (int j = 1000000; j < 2*1000000; j++) {
 		std::srand(std::chrono::utc_clock::now().time_since_epoch().count());
 
 		std::vector<double> stuff(4);
@@ -33,6 +52,6 @@ int main(void) {
 		VSCL::FS::WriteCSVRow<double>(output, stuff);
 	}
 
-	chrono::time_point taken = chrono::utc_clock::now();
-	std::cout << "I took " << chrono::duration_cast<chrono::milliseconds>(taken - rn) << " for 10000 additional lines!\n";
+	taken = chrono::utc_clock::now();
+	std::cout << "I took " << chrono::duration_cast<chrono::milliseconds>(taken - rn) << " for 1000000 additional lines!\n";
 }

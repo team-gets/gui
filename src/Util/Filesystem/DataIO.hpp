@@ -38,4 +38,29 @@ static void WriteCSVRow(std::ofstream& output, const std::vector<T>& row) {
 			}
 	});
 } // static void WriteCSVRow()
+
+/*
+ *	Write a single row into a CSV filestream while explictly stating the size.
+ */
+template<typename T, unsigned int N>
+static void WriteCSVRow(std::ofstream& output, const std::array<T, N>& row) {
+	static_assert(
+		std::is_floating_point<T>()
+		|| std::is_same<std::string, T>()
+		|| std::is_same<std::string_view, T>());
+
+	unsigned int n = 0;
+	std::for_each(row.begin(), row.end(),
+		[&](const T& field){
+			output << field;
+
+			if (n < N) {
+				output << ",";
+			}
+			else {
+				output << "\n";
+			}
+			n++;
+	});
+} // static void WriteCSVRow()
 } // namespace VSCL::FS

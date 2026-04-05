@@ -3,6 +3,9 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <string_view>
+#include <algorithm>
+#include <type_traits>
 #include "Util/Filesystem/API.hpp"
 
 namespace VSCL::FS {
@@ -13,8 +16,26 @@ namespace VSCL::FS {
 std::ofstream FS_API SetupDataOutput(const std::vector<std::string>& fields, const std::string& prefix = "run_");
 
 /*
- *	Write data to a CSV filestream.
+ *	Write a single row to a CSV filestream.
  */
-void FS_API WriteData(std::ofstream& output, const std::vector<std::string>& data);
+template<typename T>
+static void WriteCSVRow(std::ofstream& output, const std::vector<T>& row) {
+	static_assert(
+		std::is_floating_point<T>()
+		|| std::is_same<std::string, T>()
+		|| std::is_same<std::string_view, T>());
 
+	const T last = *(row.end() - 1);
+	std::for_each(row.begin(), row.end(),
+		[&](const T& field){
+			output << field;
+
+			if (last != field) {
+				output << ",";
+			}
+			else {
+				output << "\n";
+			}
+	});
+} // static void WriteCSVRow()
 } // namespace VSCL::FS

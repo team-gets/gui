@@ -34,7 +34,7 @@ private:
 	void SetGridRowsMinimums();
 
 	QFrame* AttitudeDialRow;
-	QHBoxLayout* AttitudeDialOrganizer;
+	QVBoxLayout* AttitudeDialOrganizer;
 
 	CompositeDial* RollDial;
 	CompositeDial* PitchDial;
@@ -56,7 +56,7 @@ private:
 
 	// im not entirely sure of this part
 	QGroupBox* StatusColumn;
-	QVBoxLayout* StatusColumnOrganizer;
+	QHBoxLayout* StatusColumnOrganizer;
 	QPushButton* LoadTestRoutineButton;
 	QPushButton* ArmedButton;
 	QPushButton* QuantityCalculatorButton;

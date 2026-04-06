@@ -45,7 +45,7 @@ Widgets::Widgets() {
 	SetupAttitudeDials();
 	// SetupTimeHistoryPlotQChart(); // <- old plot
 	SetupMultiPlot(); // <-new multiplot
-	SetupAttQtysRatesDisplay();
+	// SetupAttQtysRatesDisplay(); // <- No need anymore
 	SetupButtons();
 	SetupStatusColumn();
 	SetGridColumnsMinimums();
@@ -68,17 +68,17 @@ void Widgets::resizeEvent(QResizeEvent* event) {
 
 void Widgets::SetRoll(double roll) {
 	RollDial->SetDialAngle(roll);
-	RollQtyRate->SetQuantity(roll);
+	// RollQtyRate->SetQuantity(roll);
 }
 
 void Widgets::SetPitch(double pitch) {
 	PitchDial->SetDialAngle(pitch);
-	PitchQtyRate->SetQuantity(pitch);
+	// PitchQtyRate->SetQuantity(pitch);
 }
 
 void Widgets::SetYaw(double yaw) {
 	YawDial->SetDialAngle(yaw);
-	YawQtyRate->SetQuantity(yaw);
+	// YawQtyRate->SetQuantity(yaw);
 }
 
 void Widgets::SetRollRate(double roll) {
@@ -112,9 +112,9 @@ void Widgets::SetupCentralWidget() {
 
 void Widgets::SetupAttitudeDials() {
 	AttitudeDialRow = new QFrame(MajorContainer);
-	MajorLayout->addWidget(AttitudeDialRow, 0, 0);
+	MajorLayout->addWidget(AttitudeDialRow, 0, 1);
 
-	AttitudeDialOrganizer = new QHBoxLayout(AttitudeDialRow);
+	AttitudeDialOrganizer = new QVBoxLayout(AttitudeDialRow);
 	AttitudeDialOrganizer->setContentsMargins(20, 20, 20, 20);
 	AttitudeDialRow->setLayout(AttitudeDialOrganizer);
 
@@ -138,15 +138,15 @@ void Widgets::SetupAttitudeDials() {
 void Widgets::SetGridColumnsMinimums() {
 	if (!MajorLayout) { return; };
 	const QRect& dims = centralWidget()->geometry();
-	MajorLayout->setColumnMinimumWidth(0, 2 * dims.width() / 3);
-	MajorLayout->setColumnMinimumWidth(1, dims.width() / 3);
+	MajorLayout->setColumnMinimumWidth(0,  4 * dims.width() / 5);
+	MajorLayout->setColumnMinimumWidth(1, 1 * dims.width() / 5);
 } // void Widgets::SetGridColumnsMinimums()
 
 void Widgets::SetGridRowsMinimums() {
 	if (!MajorLayout) { return; }
 	const QRect& dims = centralWidget()->geometry();
-	MajorLayout->setRowMinimumHeight(0, dims.height() / 3);
-	MajorLayout->setRowMinimumHeight(1, 2 * dims.height() / 3);
+	MajorLayout->setRowMinimumHeight(0, 4 * dims.height() / 5);
+	MajorLayout->setRowMinimumHeight(1, 1 * dims.height() / 5);
 } // void Widgets::SetGridRowsMinimums()
 
 // Buttons {{{
@@ -172,13 +172,13 @@ void Widgets::SetupButtons() {
 
 void Widgets::SetupStatusColumn() {
 	StatusColumn = new QGroupBox(tr("Operate"), this);
-	MajorLayout->addWidget(StatusColumn, 1, 1);
+	MajorLayout->addWidget(StatusColumn, 1, 0, 1, 2);
 
 	QSizePolicy vhexpanding;
 	vhexpanding.setVerticalPolicy(QSizePolicy::MinimumExpanding);
 	vhexpanding.setHorizontalPolicy(QSizePolicy::MinimumExpanding);
 
-	StatusColumnOrganizer = new QVBoxLayout(StatusColumn);
+	StatusColumnOrganizer = new QHBoxLayout(StatusColumn);
 	LoadTestRoutineButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(LoadTestRoutineButton);
 
@@ -210,7 +210,7 @@ void Widgets::SetAllButtonTextSize() {
 
 void Widgets::SetupMultiPlot() {
 	Plots = new MultiPlotContainer(this, 3);
-	MajorLayout->addWidget(Plots, 1, 0);
+	MajorLayout->addWidget(Plots, 0, 0);
 	QList<Plot::EmbeddablePlot2D*> allPlots = Plots->GetPlots();
 
 	Plot::AxisInfo axInfo;
@@ -274,7 +274,7 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 
 void Widgets::SetupAttQtysRatesDisplay() {
 	AttQtysRates = new QtyRateDisplay(tr(""), this);
-	MajorLayout->addWidget(AttQtysRates, 0, 1);
+	MajorLayout->addWidget(AttQtysRates, 1, 0);
 	
 	RollQtyRate = new QtyRateRow(tr("Roll"), AttQtysRates);
 	RollQtyRate->SetQuantityUnits("°");

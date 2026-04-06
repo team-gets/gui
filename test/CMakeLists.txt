@@ -10,5 +10,5 @@ target_link_libraries(data_io_suite PRIVATE VSCL::FS)
 target_compile_warn_all(data_io_suite)
 
 ENABLE_TESTING()
-add_test(Filesystem fs_suite)
-add_test(DataIO data_io_suite)
+add_test(NAME Filesystem COMMAND $<TARGET_FILE:fs_suite>)
+add_test(NAME DataIO COMMAND $<TARGET_FILE:data_io_suite>)

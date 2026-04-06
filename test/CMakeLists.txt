@@ -12,5 +12,5 @@ target_compile_warn_all(data_io_suite)
 target_copy_dll(data_io_suite)
 
 ENABLE_TESTING()
-add_test(Filesystem $<TARGET_FILE:fs_suite>)
-add_test(DataIO $<TARGET_FILE:data_io_suite>)
+add_test(Filesystem fs_suite)
+add_test(DataIO data_io_suite)

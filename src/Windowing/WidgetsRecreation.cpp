@@ -172,6 +172,27 @@ void Widgets::SetupButtons() {
 
 void Widgets::SetupStatusColumn() {
 	StatusColumn = new QGroupBox(tr("Operate"), this);
+	StatusColumn->setObjectName("statusColumn");
+
+	StatusColumn->setStyleSheet(
+		"QGroupBox#statusColumn[status='armed'] {"
+		"  border: 2px solid red;"
+		"  border-radius: 5px;"
+		"  margin-top: 20px;"
+		"}"
+		"QGroupBox#statusColumn[status='disarmed'] {"
+		"  border: 2px solid Yellow;"
+		"  border-radius: 5px;"
+		"  margin-top: 20px;"
+		"}"
+		"QGroupBox#statusColumn::title {"
+		"  subcontrol-origin: margin;"
+		"  subcontrol-position: top left;"
+		"  padding: 0 0px;"
+		"}"
+	);
+	StatusColumn->setProperty("status", "disarmed");
+
 	MajorLayout->addWidget(StatusColumn, 1, 0, 1, 2);
 
 	QSizePolicy vhexpanding;
@@ -325,11 +346,16 @@ void Widgets::OnArmedButtonPressed() {
 		// Active state - green color
 		ArmedButton->setText(tr("Armed"));
 		ArmedButton->setStyleSheet(" QPushButton { background-color: red; color: white; } } ");
+		StatusColumn->setProperty("status", "armed");
 	} else {
 		// Inactive state - default color
 		ArmedButton->setText(tr("Disarmed"));
 		ArmedButton->setStyleSheet(" QPushButton { background-color: Yellow; color: Black; } } ");
+		StatusColumn->setProperty("status", "disarmed");
 	}
+	StatusColumn->style()->unpolish(StatusColumn);
+	StatusColumn->style()->polish(StatusColumn);
+	StatusColumn->update();
 } // void Widgets::OnArmedButtonPressed()
 // }}}
 } // namespace VSCL::FromPpt

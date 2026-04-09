@@ -3,8 +3,19 @@
  */
 
 #include <iostream>
+#include <string_view>
+#include <algorithm>
+#include <format>
+
 #include "Util/Filesystem/UserPaths.hpp"
 #include "yaml-cpp/yaml.h"
+
+static constexpr std::string_view CONFIG_PATH_NAME = VSCL::FS::GetStandardPath("config");
+static void CoutManyNames(void) {
+	std::ranges::for_each(VSCL::FS::StandardPaths, [](const std::string_view& str){
+		std::cout << str << "\n";
+	});
+}
 
 int main(void) {
 	// Test user perms to make em pretty much
@@ -15,6 +26,10 @@ int main(void) {
 	std::cout << "Making standard paths... ";
 	bool success = VSCL::FS::MakeStandardAppPaths();
 	std::cout << ((success) ? "Done!\n" : "Failed...\n");
+
+	std::cout << "Here are some standard paths by name...\n";
+	std::cout << std::format("Constexprable! {}\n", CONFIG_PATH_NAME);
+	CoutManyNames();
 
 	std::cout << "Checking for path existences: \n";
 	std::for_each(VSCL::FS::StandardPaths.begin(), VSCL::FS::StandardPaths.end(),

@@ -1,7 +1,8 @@
 add_library(fs_utils STATIC
 	"${CMAKE_CURRENT_LIST_DIR}/UserPaths.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/DataIO.cpp"
-	"${CMAKE_CURRENT_LIST_DIR}/Config.cpp")
+	"${CMAKE_CURRENT_LIST_DIR}/Config.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/State.cpp")
 
 target_link_libraries(fs_utils PUBLIC yaml-cpp::yaml-cpp)
 target_include_directories(fs_utils PUBLIC ${STD_APP_INCLUDES})

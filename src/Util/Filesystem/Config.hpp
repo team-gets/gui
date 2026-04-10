@@ -1,13 +1,7 @@
 #pragma once
 
-#include <filesystem>
+#include "Util/Filesystem/Settings.hpp"
 
-namespace VSCL {
-struct Settings {
-	std::filesystem::path OutputDirectory;
-	bool Autosetup;
-};
+namespace VSCL::FS {
 
-namespace FS {
-
-}} // namespace VSCL::FS
+} // namespace VSCL::FS

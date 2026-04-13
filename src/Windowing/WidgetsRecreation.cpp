@@ -1,7 +1,6 @@
 #include <cstdlib>
 #include <cmath>
 #include <chrono>
-#include <format>
 
 #include "WidgetsRecreation.hpp"
 #include "Plotting/Backend/CoreQChart.hpp"

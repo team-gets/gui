@@ -1,9 +1,11 @@
 #include <cstdlib>
 #include <cmath>
 #include <chrono>
+#include <format>
 
 #include "WidgetsRecreation.hpp"
 #include "Plotting/Backend/CoreQChart.hpp"
+#include "Widgets/Displays/statusCollector.hpp"
 
 // stupid temp thing {{{
 static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {
@@ -174,24 +176,7 @@ void Widgets::SetupStatusColumn() {
 	StatusColumn = new QGroupBox(tr("Operate"), this);
 	StatusColumn->setObjectName("statusColumn");
 
-	StatusColumn->setStyleSheet(
-		"QGroupBox#statusColumn[status='armed'] {"
-		"  border: 2px solid red;"
-		"  border-radius: 5px;"
-		"  margin-top: 20px;"
-		"}"
-		"QGroupBox#statusColumn[status='disarmed'] {"
-		"  border: 2px solid Yellow;"
-		"  border-radius: 5px;"
-		"  margin-top: 20px;"
-		"}"
-		"QGroupBox#statusColumn::title {"
-		"  subcontrol-origin: margin;"
-		"  subcontrol-position: top left;"
-		"  padding: 0 0px;"
-		"}"
-	);
-	StatusColumn->setProperty("status", "disarmed");
+	setGroupBoxStatus(StatusColumn, Status::Disarmed);
 
 	MajorLayout->addWidget(StatusColumn, 1, 0, 1, 2);
 
@@ -343,19 +328,16 @@ void Widgets::OnArmedButtonPressed() {
 	bArmedButtonActive = !bArmedButtonActive;
 	
 	if (bArmedButtonActive) {
-		// Active state - green color
+		// Armed state - Red
 		ArmedButton->setText(tr("Armed"));
 		ArmedButton->setStyleSheet(" QPushButton { background-color: red; color: white; } } ");
-		StatusColumn->setProperty("status", "armed");
+		setGroupBoxStatus(StatusColumn, Status::Armed);
 	} else {
-		// Inactive state - default color
+		// Disarmed state - Yellow
 		ArmedButton->setText(tr("Disarmed"));
 		ArmedButton->setStyleSheet(" QPushButton { background-color: Yellow; color: Black; } } ");
-		StatusColumn->setProperty("status", "disarmed");
+		setGroupBoxStatus(StatusColumn, Status::Disarmed);
 	}
-	StatusColumn->style()->unpolish(StatusColumn);
-	StatusColumn->style()->polish(StatusColumn);
-	StatusColumn->update();
 } // void Widgets::OnArmedButtonPressed()
 // }}}
 } // namespace VSCL::FromPpt

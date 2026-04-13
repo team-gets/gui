@@ -28,7 +28,8 @@ set(DISPLAYER_SOURCES
 	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesDisplay.cpp"
 	"${WIDGETS_SRC_DIR}/Displays/QuantitiesRatesRow.cpp"
 	"${WIDGETS_SRC_DIR}/Displays/RateLabel.cpp"
-	"${WIDGETS_SRC_DIR}/Displays/MultiPlotContainer.cpp")
+	"${WIDGETS_SRC_DIR}/Displays/MultiPlotContainer.cpp"
+	"${WIDGETS_SRC_DIR}/Displays/StatusCollector.cpp")
 
 set(WIDGET_SOURCES
 	${WINDOWING_SOURCES}

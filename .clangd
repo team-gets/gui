@@ -1,4 +1,4 @@
 CompileFlags:
   Add: [-xc++, -Wall]
-  Remove: [-mno-direct-extern-access]
+  Remove: [-mno-direct-extern-access, -fmodules-ts, -fmodule-mapper*, -fdeps-format*]
   CompilationDatabase: build

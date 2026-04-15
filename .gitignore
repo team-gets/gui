@@ -17,3 +17,7 @@ out
 *.pdb
 *.vsidx
 CMakeSettings.json
+
+# Test Files
+Testing
+*.log

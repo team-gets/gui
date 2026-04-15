@@ -8,12 +8,12 @@ struct DataSettings {
 		FS::GetUserAppData() / FS::GetStandardPath("config");
 	
 	// Data csv log prefix
-	std::string LogPrefix{"run"};
+	std::string LogPrefix = "run";
 };
 
 struct ConnectSettings {
-	std::string DefaultInterface{"CANopen"};
-	std::string DefaultGatewayPort{"CAN0"};
+	std::string DefaultInterface = "CANopen";
+	std::string DefaultGatewayPort = "CAN0";
 };
 
 struct Settings {

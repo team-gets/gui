@@ -2,9 +2,11 @@
 
 #include "Util/Filesystem/Settings.hpp"
 
+namespace YAML { class Node; }
 namespace VSCL::FS {
 
-std::filesystem::path GetConfigPath();
-void SerializeConfig(const VSCL::Settings& settings);
+std::filesystem::path GetConfigFile();
+YAML::Node SerializeConfig(const VSCL::Settings& settings);
+void WriteConfig(const VSCL::Settings& settings);
 
 } // namespace VSCL::FS

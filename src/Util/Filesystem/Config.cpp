@@ -9,12 +9,12 @@ namespace stdfs = std::filesystem;
 
 namespace VSCL::FS {
 
-stdfs::path GetConfigPath() {
+stdfs::path GetConfigFile() {
 	constexpr std::string_view cfgwhere = GetStandardPath("config");
 	return GetUserAppData() / cfgwhere / "config.yaml";
 }
 
-void SerializeConfig(const VSCL::Settings &settings) {
+YAML::Node SerializeConfig(const VSCL::Settings &settings) {
 	const VSCL::DataSettings& dataset = settings.Data;
 	YAML::Node data_node;
 	data_node["OutputDirectory"] = dataset.OutputDirectory.string();
@@ -29,8 +29,15 @@ void SerializeConfig(const VSCL::Settings &settings) {
 	top_lvl["Data"] = data_node;
 	top_lvl["Connection"] = conn_node;
 
-	stdfs::path cfgpath = GetConfigPath();
-	std::ofstream cfg(cfgpath);
-	cfg << top_lvl;
+	return top_lvl;
 }
+
+void WriteConfig(const VSCL::Settings& settings) {
+	YAML::Node yamlized = SerializeConfig(settings);
+
+	stdfs::path cfgpath = GetConfigFile();
+	std::ofstream cfg(cfgpath);
+	cfg << yamlized;
+}
+
 } // namespace VSCL::FS

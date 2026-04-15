@@ -14,7 +14,7 @@ stdfs::path GetConfigFile() {
 	return GetUserAppData() / cfgwhere / "config.yaml";
 }
 
-YAML::Node SerializeConfig(const VSCL::Settings &settings) {
+YAML::Node SerializeConfigToYAML(const VSCL::Settings& settings) {
 	const VSCL::DataSettings& dataset = settings.Data;
 	YAML::Node data_node;
 	data_node["OutputDirectory"] = dataset.OutputDirectory.string();
@@ -33,7 +33,7 @@ YAML::Node SerializeConfig(const VSCL::Settings &settings) {
 }
 
 void WriteConfig(const VSCL::Settings& settings) {
-	YAML::Node yamlized = SerializeConfig(settings);
+	YAML::Node yamlized = SerializeConfigToYAML(settings);
 
 	stdfs::path cfgpath = GetConfigFile();
 	std::ofstream cfg(cfgpath);

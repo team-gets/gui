@@ -14,7 +14,13 @@ target_include_directories(cfg_suite PRIVATE ${STD_APP_INCLUDES})
 target_link_libraries(cfg_suite PRIVATE VSCL::FS)
 target_compile_warn_all(cfg_suite)
 
+add_executable(state_suite "${CMAKE_CURRENT_LIST_DIR}/state.cpp")
+target_include_directories(state_suite PRIVATE ${STD_APP_INCLUDES})
+target_link_libraries(state_suite PRIVATE VSCL::FS)
+target_compile_warn_all(state_suite)
+
 ENABLE_TESTING()
 add_test(NAME Filesystem COMMAND $<TARGET_FILE:fs_suite>)
 add_test(NAME DataIO COMMAND $<TARGET_FILE:data_io_suite>)
 add_test(NAME UserConfiguration COMMAND $<TARGET_FILE:cfg_suite>)
+add_test(NAME StateSerialization COMMAND $<TARGET_FILE:state_suite>)

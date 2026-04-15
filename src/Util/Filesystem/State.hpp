@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>
-#include <chrono>
 #include "yaml-cpp/yaml.h"
 
 namespace VSCL {
@@ -12,6 +11,8 @@ struct State {
 
 namespace FS {
 
-void PushYAMLIntoFile(const YAML::Node& yamlin, const std::string_view& name);
+std::filesystem::path GetStateFile();
+YAML::Node SerializeStateToYAML(const VSCL::State& state);
+void WriteState(const VSCL::State& state);
 
 }} // namespace VSCL::FS

@@ -18,8 +18,8 @@ enum class Status {
 static const std::map<Status, std::string> StatusColorMap = {
     {Status::Armed, "red"},
     {Status::Disarmed, "#fbfbfb"}, 
-    {Status::Standby, "yellow"},
-    {Status::Active, "#fbfbfb"},
+    {Status::Standby, "#fbfbfb"},
+    {Status::Active, "yellow"},
     {Status::Opened, "green"},
     {Status::Closed, "gray"}
 };

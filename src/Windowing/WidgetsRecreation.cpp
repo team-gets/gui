@@ -94,7 +94,6 @@ void Widgets::SetYawRate(double yaw) {
 	YawQtyRate->SetRate(yaw);
 }
 
-
 // Layout and Widgets Setup {{{
 void Widgets::SetupCentralWidget() {
 	MajorContainer = new QWidget(this);
@@ -152,23 +151,24 @@ void Widgets::SetGridRowsMinimums() {
 
 // Buttons {{{
 void Widgets::SetupButtons() {
-	LoadTestRoutineButton = new QPushButton(this);
-	LoadTestRoutineButton->setText(tr("Load Test Routine"));
+	StandbyIndicator = new QPushButton(this);
+	StandbyIndicator->setText(tr("Standby"));
+	setButtonStatus(StandbyIndicator, Status::Standby);
 
-	ArmedButton = new QPushButton(this);
-	ArmedButton->setText(tr("Disarmed"));
-	ArmedButton->setStyleSheet(" QPushButton { background-color: Yellow; color: Black; } } ");
-	connect(ArmedButton, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
+	ArmedIndicator = new QPushButton(this);
+	ArmedIndicator->setText(tr("Disarmed"));
+	setButtonStatus(ArmedIndicator, Status::Disarmed);
+	// connect(ArmedIndicator, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
 
-	QuantityCalculatorButton = new QPushButton(this);
-	QuantityCalculatorButton->setText(tr("Calculate Quantity"));
+	InitiateButton = new QPushButton(this);
+	InitiateButton->setText(tr("Initiate"));
 
-	LogOpenButton = new QPushButton(this);
-	LogOpenButton->setText(tr("Open Log"));
+	// LogOpenButton = new QPushButton(this); 
+	// LogOpenButton->setText(tr("Open Log")); 
 
 	AbortButton = new QPushButton(this);
 	AbortButton->setText(tr("Abort"));
-	AbortButton->setStyleSheet(" QPushButton { background-color: red } ");
+	AbortButton->setStyleSheet(" QPushButton { background-color: red ; color: white} ");
 } // void Widgets::SetupButtons()
 
 void Widgets::SetupStatusColumn() {
@@ -184,17 +184,17 @@ void Widgets::SetupStatusColumn() {
 	vhexpanding.setHorizontalPolicy(QSizePolicy::MinimumExpanding);
 
 	StatusColumnOrganizer = new QHBoxLayout(StatusColumn);
-	LoadTestRoutineButton->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(LoadTestRoutineButton);
+	StandbyIndicator->setSizePolicy(vhexpanding);
+	StatusColumnOrganizer->addWidget(StandbyIndicator);
 
-	ArmedButton->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(ArmedButton);
+	ArmedIndicator->setSizePolicy(vhexpanding);
+	StatusColumnOrganizer->addWidget(ArmedIndicator);
 
-	QuantityCalculatorButton->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(QuantityCalculatorButton);
+	InitiateButton->setSizePolicy(vhexpanding);
+	StatusColumnOrganizer->addWidget(InitiateButton);
 
-	LogOpenButton->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(LogOpenButton);
+	// LogOpenButton->setSizePolicy(vhexpanding);
+	// StatusColumnOrganizer->addWidget(LogOpenButton);
 
 	AbortButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(AbortButton);
@@ -204,10 +204,10 @@ void Widgets::SetupStatusColumn() {
 
 void Widgets::SetAllButtonTextSize() {
 	ButtonFont.setPixelSize(ButtonFontAdjustment.AdjustPxSize(window()));
-	LoadTestRoutineButton->setFont(ButtonFont);
-	ArmedButton->setFont(ButtonFont);
-	QuantityCalculatorButton->setFont(ButtonFont);
-	LogOpenButton->setFont(ButtonFont);
+	StandbyIndicator->setFont(ButtonFont);
+	ArmedIndicator->setFont(ButtonFont);
+	InitiateButton->setFont(ButtonFont);
+	// LogOpenButton->setFont(ButtonFont);
 	AbortButton->setFont(ButtonFont);
 	StatusColumn->setFont(ButtonFont);
 } // void Widgets::SetAllButtonTextSize()
@@ -328,13 +328,13 @@ void Widgets::OnArmedButtonPressed() {
 	
 	if (bArmedButtonActive) {
 		// Armed state - Red
-		ArmedButton->setText(tr("Armed"));
-		ArmedButton->setStyleSheet(" QPushButton { background-color: red; color: white; } } ");
+		ArmedIndicator->setText(tr("Armed"));
+		setButtonStatus(ArmedIndicator, Status::Armed);
 		setGroupBoxStatus(StatusColumn, Status::Armed);
 	} else {
 		// Disarmed state - Yellow
-		ArmedButton->setText(tr("Disarmed"));
-		ArmedButton->setStyleSheet(" QPushButton { background-color: Yellow; color: Black; } } ");
+		ArmedIndicator->setText(tr("Disarmed"));
+		setButtonStatus(ArmedIndicator, Status::Disarmed);
 		setGroupBoxStatus(StatusColumn, Status::Disarmed);
 	}
 } // void Widgets::OnArmedButtonPressed()

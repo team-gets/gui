@@ -57,9 +57,9 @@ private:
 	// im not entirely sure of this part
 	QGroupBox* StatusColumn;
 	QHBoxLayout* StatusColumnOrganizer;
-	QPushButton* LoadTestRoutineButton;
-	QPushButton* ArmedButton;
-	QPushButton* QuantityCalculatorButton;
+	QPushButton* StandbyIndicator;
+	QPushButton* ArmedIndicator;
+	QPushButton* InitiateButton;
 	QPushButton* LogOpenButton;
 	QPushButton* AbortButton;
 	bool bArmedButtonActive = false;  // Track armed button state

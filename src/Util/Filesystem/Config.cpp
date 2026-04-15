@@ -5,7 +5,14 @@
 #include "Util/Filesystem/UserPaths.hpp"
 #include "Config.hpp"
 
+namespace stdfs = std::filesystem;
+
 namespace VSCL::FS {
+
+stdfs::path GetConfigPath() {
+	constexpr std::string_view cfgwhere = GetStandardPath("config");
+	return GetUserAppData() / cfgwhere / "config.yaml";
+}
 
 void SerializeConfig(const VSCL::Settings &settings) {
 	const VSCL::DataSettings& dataset = settings.Data;
@@ -22,10 +29,8 @@ void SerializeConfig(const VSCL::Settings &settings) {
 	top_lvl["Data"] = data_node;
 	top_lvl["Connection"] = conn_node;
 
-	constexpr std::string_view cfgwhere = GetStandardPath("config");
-	std::filesystem::path cfgpath = GetUserAppData() / cfgwhere;
-
-	std::ofstream cfg;
+	stdfs::path cfgpath = GetConfigPath();
+	std::ofstream cfg(cfgpath);
 	cfg << top_lvl;
 }
 } // namespace VSCL::FS

@@ -9,6 +9,12 @@ target_include_directories(data_io_suite PRIVATE ${STD_APP_INCLUDES})
 target_link_libraries(data_io_suite PRIVATE VSCL::FS)
 target_compile_warn_all(data_io_suite)
 
+add_executable(cfg_suite "${CMAKE_CURRENT_LIST_DIR}/config.cpp")
+target_include_directories(cfg_suite PRIVATE ${STD_APP_INCLUDES})
+target_link_libraries(cfg_suite PRIVATE VSCL::FS)
+target_compile_warn_all(cfg_suite)
+
 ENABLE_TESTING()
 add_test(NAME Filesystem COMMAND $<TARGET_FILE:fs_suite>)
 add_test(NAME DataIO COMMAND $<TARGET_FILE:data_io_suite>)
+add_test(NAME UserConfiguration COMMAND $<TARGET_FILE:cfg_suite>)

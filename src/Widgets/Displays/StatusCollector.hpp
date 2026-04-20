@@ -6,7 +6,7 @@
 #include <QPushButton>
 
 namespace VSCL {
-enum class STATUS {
+enum class Status {
     ARMED,      // Red
     DISARMED,   // White
     STANDBY,    // White  # true/false of Standby
@@ -15,19 +15,19 @@ enum class STATUS {
     CLOSED      // Grey 
 };
 
-static const std::map<STATUS, std::string> STATUS_COLOR_MAP = {
-    {STATUS::ARMED, "red"},
-    {STATUS::DISARMED, "#fbfbfb"}, 
-    {STATUS::STANDBY, "#fbfbfb"},
-    {STATUS::ACTIVE, "yellow"},
-    {STATUS::OPENED, "green"},
-    {STATUS::CLOSED, "gray"}
+static const std::map<Status, std::string> STATUS_COLOR_MAP = {
+    {Status::ARMED, "red"},
+    {Status::DISARMED, "#fbfbfb"}, 
+    {Status::STANDBY, "#fbfbfb"},
+    {Status::ACTIVE, "yellow"},
+    {Status::OPENED, "green"},
+    {Status::CLOSED, "gray"}
 };
 
-QString BuildStatusStyleSheet(const std::string& object_name, STATUS status);
-void SetGroupBoxStatus(QGroupBox* box, STATUS status);
+QString BuildStatusStyleSheet(const std::string& object_name, Status status);
+void SetGroupBoxStatus(QGroupBox* box, Status status);
 
-QString BuildButtonStyleSheet(STATUS status);
-void SetButtonStatus(QPushButton* button, STATUS status);
+QString BuildButtonStyleSheet(Status status);
+void SetButtonStatus(QPushButton* button, Status status);
 
 } // namespace VSCL

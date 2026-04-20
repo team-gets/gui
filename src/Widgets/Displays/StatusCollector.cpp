@@ -5,7 +5,7 @@
 
 namespace VSCL{
 
-QString BuildStatusStyleSheet(const std::string& object_name, STATUS status) {
+QString BuildStatusStyleSheet(const std::string& object_name, Status status) {
     std::string color = STATUS_COLOR_MAP.at(status);
     
     std::string sheet = std::format(
@@ -26,7 +26,7 @@ QString BuildStatusStyleSheet(const std::string& object_name, STATUS status) {
     return QString::fromStdString(sheet);
 }
 
-void SetGroupBoxStatus(QGroupBox *box, STATUS status) {
+void SetGroupBoxStatus(QGroupBox *box, Status status) {
     const std::string objectName = box->objectName().toStdString();
     QString sheet = BuildStatusStyleSheet(objectName, status);
 
@@ -37,7 +37,7 @@ void SetGroupBoxStatus(QGroupBox *box, STATUS status) {
 	box->update();
 }
 
-QString BuildButtonStyleSheet(STATUS status) {
+QString BuildButtonStyleSheet(Status status) {
     std::string color = STATUS_COLOR_MAP.at(status);
 
     std::string sheet = std::format(
@@ -48,7 +48,7 @@ QString BuildButtonStyleSheet(STATUS status) {
     return QString::fromStdString(sheet);
 }
 
-void SetButtonStatus(QPushButton* button, STATUS status) {
+void SetButtonStatus(QPushButton* button, Status status) {
     QString sheet = BuildButtonStyleSheet(status);
 
     button->setStyleSheet(sheet);

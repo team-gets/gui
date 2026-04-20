@@ -153,11 +153,11 @@ void Widgets::SetGridRowsMinimums() {
 void Widgets::SetupButtons() {
 	StandbyIndicator = new QPushButton(this);
 	StandbyIndicator->setText(tr("Standby"));
-	SetButtonStatus(StandbyIndicator, STATUS::STANDBY);
+	SetButtonStatus(StandbyIndicator, Status::STANDBY);
 
 	ArmedIndicator = new QPushButton(this);
 	ArmedIndicator->setText(tr("Disarmed"));
-	SetButtonStatus(ArmedIndicator, STATUS::DISARMED);
+	SetButtonStatus(ArmedIndicator, Status::DISARMED);
 	// connect(ArmedIndicator, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
 
 	InitiateButton = new QPushButton(this);
@@ -175,7 +175,7 @@ void Widgets::SetupStatusColumn() {
 	StatusColumn = new QGroupBox(tr("Operate"), this);
 	StatusColumn->setObjectName("statusColumn");
 
-	SetGroupBoxStatus(StatusColumn, STATUS::DISARMED);
+	SetGroupBoxStatus(StatusColumn, Status::DISARMED);
 
 	MajorLayout->addWidget(StatusColumn, 1, 0, 1, 2);
 
@@ -329,13 +329,13 @@ void Widgets::OnArmedButtonPressed() {
 	if (BArmedButtonActive) {
 		// Armed state - Red
 		ArmedIndicator->setText(tr("Armed"));
-		SetButtonStatus(ArmedIndicator, STATUS::ARMED);
-		SetGroupBoxStatus(StatusColumn, STATUS::ARMED);
+		SetButtonStatus(ArmedIndicator, Status::ARMED);
+		SetGroupBoxStatus(StatusColumn, Status::ARMED);
 	} else {
 		// Disarmed state - Yellow
 		ArmedIndicator->setText(tr("Disarmed"));
-		SetButtonStatus(ArmedIndicator, STATUS::DISARMED);
-		SetGroupBoxStatus(StatusColumn, STATUS::DISARMED);
+		SetButtonStatus(ArmedIndicator, Status::DISARMED);
+		SetGroupBoxStatus(StatusColumn, Status::DISARMED);
 	}
 } // void Widgets::OnArmedButtonPressed()
 // }}}

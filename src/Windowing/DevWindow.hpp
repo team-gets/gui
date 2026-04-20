@@ -21,7 +21,7 @@ class DevWindow : public QMainWindow {
 public:
     DevWindow();
 
-	enum SETTING {
+	enum Setting {
 		QML_VIEW,
 		NUMERIC_TESTING
 	};
@@ -38,7 +38,7 @@ private slots:
     void About();
 
 private:
-	SETTING CurrentSetting = SETTING::NUMERIC_TESTING;
+	Setting CurrentSetting = Setting::NUMERIC_TESTING;
 	QStackedWidget* Stacker;
 
 	/*

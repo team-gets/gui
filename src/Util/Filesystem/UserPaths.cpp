@@ -43,7 +43,7 @@ bool MakeStandardAppPaths() {
 	if (!fs::exists(app_dir)) { fs::create_directories(app_dir); }
 	bool all_success = true;
 
-	std::for_each(StandardPaths.begin(), StandardPaths.end(),
+	std::for_each(STANDARD_PATHS.begin(), STANDARD_PATHS.end(),
 		[&](const fs::path& subdir) {
 
 		fs::path full_path = app_dir / subdir;

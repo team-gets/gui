@@ -5,11 +5,11 @@
 namespace VSCL {
 
 NumericTestWidget::NumericTestWidget(
-		QWidget* parent, QWidget* whatToTest,
+		QWidget* parent, QWidget* what_to_test,
 		std::function<void(int)> method)
 	: QWidget(parent)
 	, TesterSpinbox(new QDoubleSpinBox(this))
-	, WidgetBeingTested(whatToTest) {
+	, WidgetBeingTested(what_to_test) {
 
 	QGridLayout* grid = new QGridLayout(this);
 	grid->setContentsMargins(25, 25, 25, 25);

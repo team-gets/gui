@@ -6,28 +6,28 @@
 #include <QPushButton>
 
 namespace VSCL {
-enum class Status {
-    Armed,      // Red
-    Disarmed,   // White
-    Standby,    // White  # true/false of Standby
-    Active,    // Yellow
-    Opened,     // Green
-    Closed      // Grey 
+enum class STATUS {
+    ARMED,      // Red
+    DISARMED,   // White
+    STANDBY,    // White  # true/false of Standby
+    ACTIVE,    // Yellow
+    OPENED,     // Green
+    CLOSED      // Grey 
 };
 
-static const std::map<Status, std::string> StatusColorMap = {
-    {Status::Armed, "red"},
-    {Status::Disarmed, "#fbfbfb"}, 
-    {Status::Standby, "#fbfbfb"},
-    {Status::Active, "yellow"},
-    {Status::Opened, "green"},
-    {Status::Closed, "gray"}
+static const std::map<STATUS, std::string> STATUS_COLOR_MAP = {
+    {STATUS::ARMED, "red"},
+    {STATUS::DISARMED, "#fbfbfb"}, 
+    {STATUS::STANDBY, "#fbfbfb"},
+    {STATUS::ACTIVE, "yellow"},
+    {STATUS::OPENED, "green"},
+    {STATUS::CLOSED, "gray"}
 };
 
-QString buildStatusStyleSheet(const std::string& objectName, Status status);
-void setGroupBoxStatus(QGroupBox* box, Status status);
+QString BuildStatusStyleSheet(const std::string& object_name, STATUS status);
+void SetGroupBoxStatus(QGroupBox* box, STATUS status);
 
-QString buildButtonStyleSheet(Status status);
-void setButtonStatus(QPushButton* button, Status status);
+QString BuildButtonStyleSheet(STATUS status);
+void SetButtonStatus(QPushButton* button, STATUS status);
 
 } // namespace VSCL

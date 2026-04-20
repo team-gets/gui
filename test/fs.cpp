@@ -12,7 +12,7 @@
 
 static constexpr std::string_view CONFIG_PATH_NAME = VSCL::FS::GetStandardPath("config");
 static void CoutManyNames(void) {
-	std::ranges::for_each(VSCL::FS::StandardPaths, [](const std::string_view& str){
+	std::ranges::for_each(VSCL::FS::STANDARD_PATHS, [](const std::string_view& str){
 		std::cout << str << "\n";
 	});
 }
@@ -32,7 +32,7 @@ int main(void) {
 	CoutManyNames();
 
 	std::cout << "Checking for path existences: \n";
-	std::for_each(VSCL::FS::StandardPaths.begin(), VSCL::FS::StandardPaths.end(),
+	std::for_each(VSCL::FS::STANDARD_PATHS.begin(), VSCL::FS::STANDARD_PATHS.end(),
 		[&](const std::string_view& apppath){
 		std::filesystem::path subdir = whereapp / apppath;
 		std::cout << (subdir) << " exists? ";

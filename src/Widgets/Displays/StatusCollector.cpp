@@ -5,8 +5,8 @@
 
 namespace VSCL{
 
-QString buildStatusStyleSheet(const std::string& objectName, Status status) {
-    std::string color = StatusColorMap.at(status);
+QString BuildStatusStyleSheet(const std::string& object_name, STATUS status) {
+    std::string color = STATUS_COLOR_MAP.at(status);
     
     std::string sheet = std::format(
         "QGroupBox#{} {{"
@@ -19,16 +19,16 @@ QString buildStatusStyleSheet(const std::string& objectName, Status status) {
         "  subcontrol-position: top left;"
         "  padding: 0 0px;"
         "}}",
-    objectName,
+    object_name,
     color
     );  
 
     return QString::fromStdString(sheet);
 }
 
-void setGroupBoxStatus(QGroupBox *box, Status status) {
+void SetGroupBoxStatus(QGroupBox *box, STATUS status) {
     const std::string objectName = box->objectName().toStdString();
-    QString sheet = buildStatusStyleSheet(objectName, status);
+    QString sheet = BuildStatusStyleSheet(objectName, status);
 
     box->setStyleSheet(sheet);
 
@@ -37,8 +37,8 @@ void setGroupBoxStatus(QGroupBox *box, Status status) {
 	box->update();
 }
 
-QString buildButtonStyleSheet(Status status) {
-    std::string color = StatusColorMap.at(status);
+QString BuildButtonStyleSheet(STATUS status) {
+    std::string color = STATUS_COLOR_MAP.at(status);
 
     std::string sheet = std::format(
         " QPushButton {{ background-color: {}; color: black; }}",
@@ -48,8 +48,8 @@ QString buildButtonStyleSheet(Status status) {
     return QString::fromStdString(sheet);
 }
 
-void setButtonStatus(QPushButton* button, Status status) {
-    QString sheet = buildButtonStyleSheet(status);
+void SetButtonStatus(QPushButton* button, STATUS status) {
+    QString sheet = BuildButtonStyleSheet(status);
 
     button->setStyleSheet(sheet);
 

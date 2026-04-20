@@ -12,11 +12,11 @@ void EmbeddablePlot2D::AddPoint(uint8_t idx, double time, double quantity, bool 
 	oldTime.push_back(time);
 	oldQty.push_back(quantity);
 	
-	Plot::AxisInfo axInfo = this->GetAxisInfoView(Plot::Axis::Time);
+	Plot::AxisInfo axInfo = this->GetAxisInfoView(Plot::AXIS::TIME);
     double maxTime = oldTime.back();
     double minTime = std::max(0.0, maxTime - 10.0);
     axInfo.Range = { minTime, minTime + 10.0 };
-    SetAxis(Plot::Axis::Time, axInfo);
+    SetAxis(Plot::AXIS::TIME, axInfo);
 
 	if (update) Plot();
 }
@@ -43,12 +43,12 @@ void EmbeddablePlot2D::AddPoints(
 		const std::vector<double>& times, const std::vector<double>& quantities, bool update) {
 			AddPoints(0, times, quantities, update); }
 
-void EmbeddablePlot2D::SetAxis(const Axis axis, const AxisInfo& info) {
+void EmbeddablePlot2D::SetAxis(const AXIS axis, const AxisInfo& info) {
 	switch (axis) {
-	case Axis::Time:
+	case AXIS::TIME:
 		TimeAxis = info;
 		break;
-	case Axis::Quantity:
+	case AXIS::QUANTITY:
 		QuantityAxis = info;
 		break;
 	}
@@ -69,12 +69,12 @@ void EmbeddablePlot2D::EraseAllData() {
 	Plot();
 }
 
-const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
+const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(AXIS axis) const {
 	switch (axis) {
-	case Axis::Time:
+	case AXIS::TIME:
 		return TimeAxis;
 		break;
-	case Axis::Quantity:
+	case AXIS::QUANTITY:
 	default:
 		return QuantityAxis;
 		break;
@@ -89,7 +89,7 @@ void EmbeddablePlot2D::AddSeries(std::string& name) {
 	Series.push_back(serie);
 	Plot();
 }
-void EmbeddablePlot2D::AddSeries(const SeriesInfo& newInfo) { Series.push_back(newInfo); Plot(); };
+void EmbeddablePlot2D::AddSeries(const SeriesInfo& new_info) { Series.push_back(new_info); Plot(); };
 
 SeriesInfo EmbeddablePlot2D::GetSeriesByName(std::string& name) {
 	for (const SeriesInfo& serie : Series) {
@@ -113,10 +113,10 @@ const SeriesInfo& EmbeddablePlot2D::GetSeriesViewByName(std::string& name) const
 	return Series[0];
 }
 
-void EmbeddablePlot2D::SetSeries(std::string& name, SeriesInfo& newInfo) {
+void EmbeddablePlot2D::SetSeries(std::string& name, SeriesInfo& new_info) {
 	for (SeriesInfo& serie : Series) {
 		if (serie.Name == name) {
-			serie = newInfo;
+			serie = new_info;
 			return;
 		}
 	}
@@ -124,7 +124,7 @@ void EmbeddablePlot2D::SetSeries(std::string& name, SeriesInfo& newInfo) {
 	std::cout << "Warning: Series of name " << name << " not found. Doing nothing.\n";
 }
 
-void EmbeddablePlot2D::SetSeries(uint8_t idx, SeriesInfo& newInfo) { Series[idx] = newInfo; }
+void EmbeddablePlot2D::SetSeries(uint8_t idx, SeriesInfo& new_info) { Series[idx] = new_info; }
 
 void EmbeddablePlot2D::RemoveSeries(uint8_t idx) { Series.erase(Series.begin() + idx); }
 void EmbeddablePlot2D::RemoveSeries(std::string& name) {

@@ -46,14 +46,14 @@ QPoint AttitudeDial::HandEndingCenteredNominal() const {
 	return Origin + QPoint{ linex, liney };
 }
 
-void AttitudeDial::SetRangeType(RangeType newRangeType) {
-	RangeTypeMode = newRangeType;
+void AttitudeDial::SetRangeType(RANGE_TYPE new_range_type) {
+	RangeTypeMode = new_range_type;
 	
 	switch (RangeTypeMode) {
-	case RangeType::LowestNominal:
+	case RANGE_TYPE::LOWEST_NOMINAL:
 		RangeHandlerFunction = std::bind(&AttitudeDial::HandEndingLowestNominal, this);
 		break;
-	case RangeType::CenteredNominal:
+	case RANGE_TYPE::CENTERED_NOMINAL:
 	default:
 		RangeHandlerFunction = std::bind(&AttitudeDial::HandEndingCenteredNominal, this);
 		break;
@@ -85,12 +85,12 @@ void AttitudeDial::PaintTicks(QPainter* painter) {
 		case 3: // major
 			ticker[0] = 0.85;
 			tickcolor = Palette.MajorTick;
-			cossin = MajorTicks[i];
+			cossin = MAJOR_TICKS[i];
 			break;
 		default: // minor
 			ticker[0] = 0.95;
 			tickcolor = Palette.MinorTick;
-			cossin = MinorTicks[i - 4];
+			cossin = MINOR_TICKS[i - 4];
 			break;
 		}
 
@@ -127,7 +127,7 @@ void AttitudeDial::PaintCap(QPainter* painter) {
 	painter->drawEllipse(Origin, r, r);
 } // AttitudeDial::PaintCap()
 
-void AttitudeDial::SetPalette(AttitudeDialPalette& newPalette) { Palette = newPalette; }
+void AttitudeDial::SetPalette(AttitudeDialPalette& new_palette) { Palette = new_palette; }
 AttitudeDialPalette AttitudeDial::GetPalette() const { return Palette; }
 const AttitudeDialPalette& AttitudeDial::GetPaletteView() const { return Palette; }
 

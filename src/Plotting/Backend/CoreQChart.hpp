@@ -17,13 +17,13 @@ public:
 	PlotQChart(QWidget* parent);
 	virtual ~PlotQChart();
 
-	virtual void SetAxis(const Axis axis, const AxisInfo& info) override;
+	virtual void SetAxis(const AXIS axis, const AxisInfo& info) override;
 	virtual void SetTitle(const std::string& title) override;
 	virtual void Plot() override;
 	virtual void EraseAllData() override;
 	
 	virtual void AddSeries() override;
-	virtual void AddSeries(const SeriesInfo& newInfo) override;
+	virtual void AddSeries(const SeriesInfo& new_info) override;
 
 private:
 	QChart* PlotChart;

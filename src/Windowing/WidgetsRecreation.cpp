@@ -4,7 +4,7 @@
 
 #include "WidgetsRecreation.hpp"
 #include "Plotting/Backend/CoreQChart.hpp"
-#include "Widgets/Displays/statusCollector.hpp"
+#include "Widgets/Displays/StatusCollector.hpp"
 
 // stupid temp thing {{{
 static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {

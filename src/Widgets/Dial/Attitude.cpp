@@ -46,14 +46,14 @@ QPoint AttitudeDial::HandEndingCenteredNominal() const {
 	return Origin + QPoint{ linex, liney };
 }
 
-void AttitudeDial::SetRangeType(RANGE_TYPE new_range_type) {
+void AttitudeDial::SetRangeType(RangeType new_range_type) {
 	RangeTypeMode = new_range_type;
 	
 	switch (RangeTypeMode) {
-	case RANGE_TYPE::LOWEST_NOMINAL:
+	case RangeType::LOWEST_NOMINAL:
 		RangeHandlerFunction = std::bind(&AttitudeDial::HandEndingLowestNominal, this);
 		break;
-	case RANGE_TYPE::CENTERED_NOMINAL:
+	case RangeType::CENTERED_NOMINAL:
 	default:
 		RangeHandlerFunction = std::bind(&AttitudeDial::HandEndingCenteredNominal, this);
 		break;

@@ -6,12 +6,12 @@
 
 namespace VSCL::Plot {
 
-enum class AXIS : std::uint8_t {
+enum class Axis : std::uint8_t {
 	TIME = 0,
 	QUANTITY = 1,
 };
 
-enum class AXIS_SCALING : std::uint8_t {
+enum class AxisScaling : std::uint8_t {
 	LINEAR = 0,
 	LOG10 = 1,
 	LN = 2,
@@ -19,8 +19,8 @@ enum class AXIS_SCALING : std::uint8_t {
 };
 
 struct AxisInfo {
-	AXIS InfoOf;
-	AXIS_SCALING Scaling = AXIS_SCALING::LINEAR;
+	Axis InfoOf;
+	AxisScaling Scaling = AxisScaling::LINEAR;
 
 	std::array<double, 2> Range = { 0.0, 1.0 };
 	double MajorSpacing = 1;

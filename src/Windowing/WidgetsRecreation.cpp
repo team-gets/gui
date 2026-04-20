@@ -240,8 +240,8 @@ void Widgets::SetupMultiPlot() {
 		p->AddSeries(info);
 
 		justWtv.Title = name;
-		p->SetAxis(Plot::AXIS::QUANTITY, justWtv);
-		p->SetAxis(Plot::AXIS::TIME, axInfo);
+		p->SetAxis(Plot::Axis::QUANTITY, justWtv);
+		p->SetAxis(Plot::Axis::TIME, axInfo);
 
 		angle++;
 		color++;
@@ -256,7 +256,7 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 	axInfo.Range = { 0, 10 };
 	axInfo.MajorSpacing = 1;
 	axInfo.MinorSpacing = 0.5;
-	Plot->SetAxis(Plot::AXIS::TIME, axInfo);
+	Plot->SetAxis(Plot::Axis::TIME, axInfo);
 
 	Plot::SeriesInfo rollInfo;
 	rollInfo.Name = "Roll";

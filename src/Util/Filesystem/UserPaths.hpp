@@ -8,7 +8,7 @@
 
 namespace VSCL::FS {
 
-enum class USER_PATH : uint8_t {
+enum class UserPath : uint8_t {
 	DATA, CONFIG, SCRIPT
 };
 

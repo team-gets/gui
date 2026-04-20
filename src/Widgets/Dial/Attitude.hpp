@@ -25,11 +25,11 @@ public:
 	AttitudeDialPalette GetPalette() const;
 	const AttitudeDialPalette& GetPaletteView() const;
 
-	enum class RANGE_TYPE : uint8_t {
+	enum class RangeType : uint8_t {
 		CENTERED_NOMINAL,
 		LOWEST_NOMINAL
 	};
-	void SetRangeType(RANGE_TYPE new_range_type);
+	void SetRangeType(RangeType new_range_type);
 
 	virtual void paintEvent(QPaintEvent* event) override;
 
@@ -42,7 +42,7 @@ private:
 
 	AttitudeDialPalette Palette;
 	std::array<double, 2> Range = { -180, 180 };
-	RANGE_TYPE RangeTypeMode = RANGE_TYPE::CENTERED_NOMINAL;
+	RangeType RangeTypeMode = RangeType::CENTERED_NOMINAL;
 	QPoint HandEndingLowestNominal() const;
 	QPoint HandEndingCenteredNominal() const;
 	std::function<QPoint(const AttitudeDial&)> RangeHandlerFunction = nullptr;

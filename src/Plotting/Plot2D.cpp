@@ -12,11 +12,11 @@ void EmbeddablePlot2D::AddPoint(uint8_t idx, double time, double quantity, bool 
 	oldTime.push_back(time);
 	oldQty.push_back(quantity);
 	
-	Plot::AxisInfo axInfo = this->GetAxisInfoView(Plot::AXIS::TIME);
+	Plot::AxisInfo axInfo = this->GetAxisInfoView(Plot::Axis::TIME);
     double maxTime = oldTime.back();
     double minTime = std::max(0.0, maxTime - 10.0);
     axInfo.Range = { minTime, minTime + 10.0 };
-    SetAxis(Plot::AXIS::TIME, axInfo);
+    SetAxis(Plot::Axis::TIME, axInfo);
 
 	if (update) Plot();
 }
@@ -43,12 +43,12 @@ void EmbeddablePlot2D::AddPoints(
 		const std::vector<double>& times, const std::vector<double>& quantities, bool update) {
 			AddPoints(0, times, quantities, update); }
 
-void EmbeddablePlot2D::SetAxis(const AXIS axis, const AxisInfo& info) {
+void EmbeddablePlot2D::SetAxis(const Axis axis, const AxisInfo& info) {
 	switch (axis) {
-	case AXIS::TIME:
+	case Axis::TIME:
 		TimeAxis = info;
 		break;
-	case AXIS::QUANTITY:
+	case Axis::QUANTITY:
 		QuantityAxis = info;
 		break;
 	}
@@ -69,12 +69,12 @@ void EmbeddablePlot2D::EraseAllData() {
 	Plot();
 }
 
-const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(AXIS axis) const {
+const AxisInfo& EmbeddablePlot2D::GetAxisInfoView(Axis axis) const {
 	switch (axis) {
-	case AXIS::TIME:
+	case Axis::TIME:
 		return TimeAxis;
 		break;
-	case AXIS::QUANTITY:
+	case Axis::QUANTITY:
 	default:
 		return QuantityAxis;
 		break;

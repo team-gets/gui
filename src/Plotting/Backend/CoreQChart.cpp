@@ -20,7 +20,7 @@ PlotQChart::PlotQChart(QWidget* parent)
 	LogTimeAxisQt->setLinePenColor(QColorConstants::Black);
 	LogTimeAxisQt->setLabelFormat("%g");
 	LogTimeAxisQt->setGridLineVisible(false);
-	SetAxis(AXIS::TIME, GetAxisInfoView(AXIS::TIME));
+	SetAxis(Axis::TIME, GetAxisInfoView(Axis::TIME));
 
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
 	QuantityAxisQt->setLinePenColor(QColorConstants::Black);
@@ -30,7 +30,7 @@ PlotQChart::PlotQChart(QWidget* parent)
 	LogQuantityAxisQt->setLinePenColor(QColorConstants::Black);
 	LogQuantityAxisQt->setLabelFormat("%g");
 	LogQuantityAxisQt->setGridLineVisible(false);
-	SetAxis(AXIS::QUANTITY, GetAxisInfoView(AXIS::QUANTITY));
+	SetAxis(Axis::QUANTITY, GetAxisInfoView(Axis::QUANTITY));
 
 	PlotChart->legend()->setVisible(false);
 	PlotChart->setTheme(QChart::ChartThemeLight);
@@ -45,7 +45,7 @@ PlotQChart::~PlotQChart() {
 		delete PlotChart;
 }
 
-void PlotQChart::SetAxis(const AXIS axis, const AxisInfo& info) {
+void PlotQChart::SetAxis(const Axis axis, const AxisInfo& info) {
 	EmbeddablePlot2D::SetAxis(axis, info);
 	const AxisInfo& ax = GetAxisInfoView(axis);
 
@@ -55,11 +55,11 @@ void PlotQChart::SetAxis(const AXIS axis, const AxisInfo& info) {
 	double lobd = ax.Range[0];
 
 	switch (axis) {
-	case AXIS::TIME:
+	case Axis::TIME:
 		axlinqt = TimeAxisQt;
 		axlogqt = LogTimeAxisQt;
 		break;
-	case AXIS::QUANTITY:
+	case Axis::QUANTITY:
 	default:
 		axlinqt = QuantityAxisQt;
 		axlogqt = LogQuantityAxisQt;
@@ -69,7 +69,7 @@ void PlotQChart::SetAxis(const AXIS axis, const AxisInfo& info) {
 	if (!axlinqt || !axlogqt) { return; };
 
 	switch (ax.Scaling) {
-	case AXIS_SCALING::LOG10:
+	case AxisScaling::LOG10:
 		axlinqt->setVisible(false);
 		axlogqt->setVisible();
 
@@ -79,7 +79,7 @@ void PlotQChart::SetAxis(const AXIS axis, const AxisInfo& info) {
 		axqt = axlogqt;
 		break;
 
-	case AXIS_SCALING::LN:
+	case AxisScaling::LN:
 		axlinqt->setVisible(false);
 		axlogqt->setVisible();
 
@@ -89,7 +89,7 @@ void PlotQChart::SetAxis(const AXIS axis, const AxisInfo& info) {
 		axqt = axlogqt;
 		break;
 
-	case AXIS_SCALING::LINEAR:
+	case AxisScaling::LINEAR:
 	default:
 		axlogqt->setVisible(false);
 		axlinqt->setVisible();
@@ -135,13 +135,13 @@ void PlotQChart::Plot() {
 		serie->setColor(QColor::fromRgbF(color[0], color[1], color[2], 1.0));
 
 		switch (sinfo.Style) {
-		case LINE_STYLE::DASHED:
+		case LineStyle::DASHED:
 			std::cerr << "Dashed lines not implemented for Qt Charts.\n";
 			break;
-		case LINE_STYLE::DOTTED:
+		case LineStyle::DOTTED:
 			std::cerr << "Dotted lines not implemented for Qt Charts.\n";
 			break;
-		case LINE_STYLE::SOLID:
+		case LineStyle::SOLID:
 		default:
 			break;
 		}

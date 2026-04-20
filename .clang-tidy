@@ -9,10 +9,12 @@ CheckOptions:
   readability-identifier-naming.FunctionCase: CamelCase
   readability-identifier-naming.MethodCase: CamelCase
   readability-identifier-naming.MemberCase: CamelCase
+  readability-identifier-naming.EnumCase: CamelCase
+  readability-identifier-naming.ScopedEnumCase: CamelCase
 
   readability-identifier-naming.ParameterCase: lower_case
   readability-identifier-naming.MacroDefinitionCase: UPPER_CASE
   readability-identifier-naming.GlobalConstantCase: UPPER_CASE
   readability-identifier-naming.GlobalConstantPointerCase: UPPER_CASE
-  readability-identifier-naming.EnumCase: UPPER_CASE
   readability-identifier-naming.EnumConstantCase: UPPER_CASE
+  readability-identifier-naming.ScopedEnumConstantCase: UPPER_CASE

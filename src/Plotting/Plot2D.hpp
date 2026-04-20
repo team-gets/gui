@@ -27,7 +27,7 @@ public:
 	void AddPoints(const std::vector<double>& times, const std::vector<double>& quantities, bool update = false);
 
 	// Set axis properites based on the struct
-	virtual void SetAxis(const AXIS axis, const AxisInfo& info);
+	virtual void SetAxis(const Axis axis, const AxisInfo& info);
 
 	// Set the main title
 	virtual void SetTitle(const std::string& title);
@@ -38,7 +38,7 @@ public:
 	// Clear data that was being stored.
 	virtual void EraseAllData();
 
-	const AxisInfo& GetAxisInfoView(AXIS axis) const;
+	const AxisInfo& GetAxisInfoView(Axis axis) const;
 
 	/*
 	 *	Series data.
@@ -82,8 +82,8 @@ public:
 
 private:	
 	std::string Title;
-	AxisInfo TimeAxis = { AXIS::TIME };
-	AxisInfo QuantityAxis = { AXIS::QUANTITY };
+	AxisInfo TimeAxis = { .InfoOf = Axis::TIME };
+	AxisInfo QuantityAxis = { .InfoOf = Axis::QUANTITY };
 
 	std::vector<SeriesInfo> Series;
 	bool DrawGrid = false;

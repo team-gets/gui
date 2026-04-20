@@ -16,7 +16,7 @@ static const std::map<std::string, ColorRGB> STANDARD_COLOR = {
 	{ "Blue",	ColorRGB{ 0.0, 0.0, 1.0 } },
 };
 
-enum class LINE_STYLE : uint8_t {
+enum class LineStyle : uint8_t {
 	SOLID = 1,
 	DASHED = 2,
 	DOTTED = 3,

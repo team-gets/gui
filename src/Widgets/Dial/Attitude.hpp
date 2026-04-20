@@ -21,15 +21,15 @@ public:
 	AttitudeDial(QWidget* parent);
 
 	void SetDialAngle(double value);
-	void SetPalette(AttitudeDialPalette& newPalette);
+	void SetPalette(AttitudeDialPalette& new_palette);
 	AttitudeDialPalette GetPalette() const;
 	const AttitudeDialPalette& GetPaletteView() const;
 
 	enum class RangeType : uint8_t {
-		CenteredNominal,
-		LowestNominal
+		CENTERED_NOMINAL,
+		LOWEST_NOMINAL
 	};
-	void SetRangeType(RangeType newRangeType);
+	void SetRangeType(RangeType new_range_type);
 
 	virtual void paintEvent(QPaintEvent* event) override;
 
@@ -42,7 +42,7 @@ private:
 
 	AttitudeDialPalette Palette;
 	std::array<double, 2> Range = { -180, 180 };
-	RangeType RangeTypeMode = RangeType::CenteredNominal;
+	RangeType RangeTypeMode = RangeType::CENTERED_NOMINAL;
 	QPoint HandEndingLowestNominal() const;
 	QPoint HandEndingCenteredNominal() const;
 	std::function<QPoint(const AttitudeDial&)> RangeHandlerFunction = nullptr;
@@ -52,11 +52,11 @@ private:
 	void PaintHand(QPainter* painter);
 	void PaintCap(QPainter* painter);
 
-	static constexpr std::array<std::array<double, 2>, 4> MajorTicks = {{
+	static constexpr std::array<std::array<double, 2>, 4> MAJOR_TICKS = {{
 		{ 1.0, 0.0 }, { 0.0, 1.0 }, { -1.0, 0.0 }, { 0.0, -1.0 }
 	}};
 
-	static constexpr std::array<std::array<double, 2>, 4> MinorTicks = {{
+	static constexpr std::array<std::array<double, 2>, 4> MINOR_TICKS = {{
 		{ 0.7071067811865475, 0.7071067811865475 }, { 0.7071067811865475, -0.7071067811865475 },
 		{ -0.7071067811865475, -0.7071067811865475 }, { -0.7071067811865475, 0.7071067811865475 } 
 	}};

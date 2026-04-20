@@ -9,7 +9,7 @@ class NumericTestWidget : public QWidget {
 	Q_OBJECT;
 
 public:
-	NumericTestWidget(QWidget* parent, QWidget* whatToTest,
+	NumericTestWidget(QWidget* parent, QWidget* what_to_test,
 			std::function<void(int)> method);
 
 	virtual void setVisible(bool visible) override;

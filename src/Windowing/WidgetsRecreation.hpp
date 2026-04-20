@@ -62,7 +62,7 @@ private:
 	QPushButton* InitiateButton;
 	QPushButton* LogOpenButton;
 	QPushButton* AbortButton;
-	bool bArmedButtonActive = false;  // Track armed button state
+	bool ArmedButtonActive = false;  // Track armed button state
 	Util::FontAdjustment ButtonFontAdjustment{ 12 };
 	void SetupButtons();
 	void SetupStatusColumn();

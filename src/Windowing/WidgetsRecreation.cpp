@@ -324,9 +324,9 @@ void Widgets::CreateActions() {
 } // void Widgets::CreateActions()
 
 void Widgets::OnArmedButtonPressed() {
-	BArmedButtonActive = !BArmedButtonActive;
+	ArmedButtonActive = !ArmedButtonActive;
 	
-	if (BArmedButtonActive) {
+	if (ArmedButtonActive) {
 		// Armed state - Red
 		ArmedIndicator->setText(tr("Armed"));
 		SetButtonStatus(ArmedIndicator, Status::ARMED);

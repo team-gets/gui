@@ -24,7 +24,7 @@ static const std::map<Status, std::string> STATUS_COLOR_MAP = {
     {Status::CLOSED, "gray"}
 };
 
-QString BuildStatusStyleSheet(const std::string& object_name, Status status);
+QString BuildStatusStyleSheet(const QString& object_name, Status status);
 void SetGroupBoxStatus(QGroupBox* box, Status status);
 
 QString BuildButtonStyleSheet(Status status);

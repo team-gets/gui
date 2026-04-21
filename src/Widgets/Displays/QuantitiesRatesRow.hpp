@@ -39,8 +39,15 @@ private:
 	QLabel* RateLabel;
 
 	void AdjustFontSize();
-	static constexpr Util::FontAdjustment TITLE_FONT_ADJUSTMENT { 8, false };
-	static constexpr Util::FontAdjustment NUMERIC_FONT_ADJUSTMENT { 8, false };
+	static constexpr Util::FontAdjustment TITLE_FONT_ADJUSTMENT {
+		.PxSizeAtMinimum = 8,
+		.AdjustToWidth = false
+	};
+
+	static constexpr Util::FontAdjustment NUMERIC_FONT_ADJUSTMENT {
+		.PxSizeAtMinimum = 8,
+		.AdjustToWidth = false
+	};
 
 }; // class QtyRateDisplay
 } // namespace VSCL

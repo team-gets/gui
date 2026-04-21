@@ -49,13 +49,13 @@ public:
 	// Add a named series.
 	void AddSeries(std::string& name);
 	// Add a series using the following info.
-	virtual void AddSeries(const SeriesInfo& newInfo);
+	virtual void AddSeries(const SeriesInfo& new_info);
 
 	SeriesInfo GetSeriesByName(std::string& name);
 	const SeriesInfo& GetSeriesViewByName(std::string& name) const;
 
-	void SetSeries(std::string& name, SeriesInfo& newInfo);
-	void SetSeries(uint8_t idx, SeriesInfo& newInfo);
+	void SetSeries(std::string& name, SeriesInfo& new_info);
+	void SetSeries(uint8_t idx, SeriesInfo& new_info);
 
 	// Remove the series at the given index.
 	void RemoveSeries(uint8_t idx);
@@ -78,12 +78,12 @@ public:
 	virtual void SetColor(ColorRGB& color);
 
 	bool GetDrawGridState() { return DrawGrid; };
-	void SetDrawGridState(bool newState) { DrawGrid = newState; };
+	void SetDrawGridState(bool new_state) { DrawGrid = new_state; };
 
 private:	
 	std::string Title;
-	AxisInfo TimeAxis = { Axis::Time };
-	AxisInfo QuantityAxis = { Axis::Quantity };
+	AxisInfo TimeAxis = { .InfoOf = Axis::TIME };
+	AxisInfo QuantityAxis = { .InfoOf = Axis::QUANTITY };
 
 	std::vector<SeriesInfo> Series;
 	bool DrawGrid = false;

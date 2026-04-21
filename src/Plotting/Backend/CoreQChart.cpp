@@ -20,7 +20,7 @@ PlotQChart::PlotQChart(QWidget* parent)
 	LogTimeAxisQt->setLinePenColor(QColorConstants::Black);
 	LogTimeAxisQt->setLabelFormat("%g");
 	LogTimeAxisQt->setGridLineVisible(false);
-	SetAxis(Axis::Time, GetAxisInfoView(Axis::Time));
+	SetAxis(Axis::TIME, GetAxisInfoView(Axis::TIME));
 
 	PlotChart->addAxis(QuantityAxisQt, Qt::AlignLeft);
 	QuantityAxisQt->setLinePenColor(QColorConstants::Black);
@@ -30,7 +30,7 @@ PlotQChart::PlotQChart(QWidget* parent)
 	LogQuantityAxisQt->setLinePenColor(QColorConstants::Black);
 	LogQuantityAxisQt->setLabelFormat("%g");
 	LogQuantityAxisQt->setGridLineVisible(false);
-	SetAxis(Axis::Quantity, GetAxisInfoView(Axis::Quantity));
+	SetAxis(Axis::QUANTITY, GetAxisInfoView(Axis::QUANTITY));
 
 	PlotChart->legend()->setVisible(false);
 	PlotChart->setTheme(QChart::ChartThemeLight);
@@ -55,11 +55,11 @@ void PlotQChart::SetAxis(const Axis axis, const AxisInfo& info) {
 	double lobd = ax.Range[0];
 
 	switch (axis) {
-	case Axis::Time:
+	case Axis::TIME:
 		axlinqt = TimeAxisQt;
 		axlogqt = LogTimeAxisQt;
 		break;
-	case Axis::Quantity:
+	case Axis::QUANTITY:
 	default:
 		axlinqt = QuantityAxisQt;
 		axlogqt = LogQuantityAxisQt;
@@ -69,7 +69,7 @@ void PlotQChart::SetAxis(const Axis axis, const AxisInfo& info) {
 	if (!axlinqt || !axlogqt) { return; };
 
 	switch (ax.Scaling) {
-	case AxisScaling::Log10:
+	case AxisScaling::LOG10:
 		axlinqt->setVisible(false);
 		axlogqt->setVisible();
 
@@ -79,7 +79,7 @@ void PlotQChart::SetAxis(const Axis axis, const AxisInfo& info) {
 		axqt = axlogqt;
 		break;
 
-	case AxisScaling::Ln:
+	case AxisScaling::LN:
 		axlinqt->setVisible(false);
 		axlogqt->setVisible();
 
@@ -89,7 +89,7 @@ void PlotQChart::SetAxis(const Axis axis, const AxisInfo& info) {
 		axqt = axlogqt;
 		break;
 
-	case AxisScaling::Linear:
+	case AxisScaling::LINEAR:
 	default:
 		axlogqt->setVisible(false);
 		axlinqt->setVisible();
@@ -135,13 +135,13 @@ void PlotQChart::Plot() {
 		serie->setColor(QColor::fromRgbF(color[0], color[1], color[2], 1.0));
 
 		switch (sinfo.Style) {
-		case LineStyle::Dashed:
+		case LineStyle::DASHED:
 			std::cerr << "Dashed lines not implemented for Qt Charts.\n";
 			break;
-		case LineStyle::Dotted:
+		case LineStyle::DOTTED:
 			std::cerr << "Dotted lines not implemented for Qt Charts.\n";
 			break;
-		case LineStyle::Solid:
+		case LineStyle::SOLID:
 		default:
 			break;
 		}
@@ -160,8 +160,8 @@ void PlotQChart::AddSeries() {
 	AddSeries({ });
 }
 
-void PlotQChart::AddSeries(const SeriesInfo& newInfo) {
-	EmbeddablePlot2D::AddSeries(newInfo);
+void PlotQChart::AddSeries(const SeriesInfo& new_info) {
+	EmbeddablePlot2D::AddSeries(new_info);
 
 	QLineSeries* newSeries = new QLineSeries(PlotChart);
 	PlotChart->addSeries(newSeries);

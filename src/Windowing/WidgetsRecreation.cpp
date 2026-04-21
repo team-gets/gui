@@ -4,9 +4,10 @@
 
 #include "WidgetsRecreation.hpp"
 #include "Plotting/Backend/CoreQChart.hpp"
+#include "Widgets/Displays/StatusCollector.hpp"
 
 // stupid temp thing {{{
-static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {
+static void StupidMakeData(VSCL::Plot::EmbeddablePlot2D* plot) {
 	double ph1, ph2, ph3;
 
 	std::srand(std::chrono::system_clock::now().time_since_epoch().count() + 1);
@@ -37,15 +38,13 @@ Widgets::Widgets() {
 
 	// Geometry and window characteristics
     setWindowTitle(tr("VSCL Gyroscopic Test Rig"));
-    setMinimumSize(Util::MinimumWidth, Util::MinimumHeight);
-    resize(Util::MinimumWidth, Util::MinimumHeight);
+    setMinimumSize(Util::MINIMUM_WIDTH, Util::MINIMUM_HEIGHT);
+    resize(Util::MINIMUM_WIDTH, Util::MINIMUM_HEIGHT);
 
 	// Set up the static layout
 	SetupCentralWidget();
 	SetupAttitudeDials();
-	// SetupTimeHistoryPlotQChart(); // <- old plot
 	SetupMultiPlot(); // <-new multiplot
-	SetupAttQtysRatesDisplay();
 	SetupButtons();
 	SetupStatusColumn();
 	SetGridColumnsMinimums();
@@ -68,17 +67,17 @@ void Widgets::resizeEvent(QResizeEvent* event) {
 
 void Widgets::SetRoll(double roll) {
 	RollDial->SetDialAngle(roll);
-	RollQtyRate->SetQuantity(roll);
+	// RollQtyRate->SetQuantity(roll);
 }
 
 void Widgets::SetPitch(double pitch) {
 	PitchDial->SetDialAngle(pitch);
-	PitchQtyRate->SetQuantity(pitch);
+	// PitchQtyRate->SetQuantity(pitch);
 }
 
 void Widgets::SetYaw(double yaw) {
 	YawDial->SetDialAngle(yaw);
-	YawQtyRate->SetQuantity(yaw);
+	// YawQtyRate->SetQuantity(yaw);
 }
 
 void Widgets::SetRollRate(double roll) {
@@ -92,7 +91,6 @@ void Widgets::SetPitchRate(double pitch) {
 void Widgets::SetYawRate(double yaw) {
 	YawQtyRate->SetRate(yaw);
 }
-
 
 // Layout and Widgets Setup {{{
 void Widgets::SetupCentralWidget() {
@@ -112,9 +110,9 @@ void Widgets::SetupCentralWidget() {
 
 void Widgets::SetupAttitudeDials() {
 	AttitudeDialRow = new QFrame(MajorContainer);
-	MajorLayout->addWidget(AttitudeDialRow, 0, 0);
+	MajorLayout->addWidget(AttitudeDialRow, 0, 1);
 
-	AttitudeDialOrganizer = new QHBoxLayout(AttitudeDialRow);
+	AttitudeDialOrganizer = new QVBoxLayout(AttitudeDialRow);
 	AttitudeDialOrganizer->setContentsMargins(20, 20, 20, 20);
 	AttitudeDialRow->setLayout(AttitudeDialOrganizer);
 
@@ -138,58 +136,60 @@ void Widgets::SetupAttitudeDials() {
 void Widgets::SetGridColumnsMinimums() {
 	if (!MajorLayout) { return; };
 	const QRect& dims = centralWidget()->geometry();
-	MajorLayout->setColumnMinimumWidth(0, 2 * dims.width() / 3);
-	MajorLayout->setColumnMinimumWidth(1, dims.width() / 3);
+	MajorLayout->setColumnMinimumWidth(0,  4 * dims.width() / 5);
+	MajorLayout->setColumnMinimumWidth(1, 1 * dims.width() / 5);
 } // void Widgets::SetGridColumnsMinimums()
 
 void Widgets::SetGridRowsMinimums() {
 	if (!MajorLayout) { return; }
 	const QRect& dims = centralWidget()->geometry();
-	MajorLayout->setRowMinimumHeight(0, dims.height() / 3);
-	MajorLayout->setRowMinimumHeight(1, 2 * dims.height() / 3);
+	MajorLayout->setRowMinimumHeight(0, 4 * dims.height() / 5);
+	MajorLayout->setRowMinimumHeight(1, 1 * dims.height() / 5);
 } // void Widgets::SetGridRowsMinimums()
 
 // Buttons {{{
 void Widgets::SetupButtons() {
-	LoadTestRoutineButton = new QPushButton(this);
-	LoadTestRoutineButton->setText(tr("Load Test Routine"));
+	StandbyIndicator = new QPushButton(this);
+	StandbyIndicator->setText(tr("Standby"));
+	SetButtonStatus(StandbyIndicator, Status::STANDBY);
 
-	ArmedButton = new QPushButton(this);
-	ArmedButton->setText(tr("Disarmed"));
-	ArmedButton->setStyleSheet(" QPushButton { background-color: Yellow; color: Black; } } ");
-	connect(ArmedButton, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
+	ArmedIndicator = new QPushButton(this);
+	ArmedIndicator->setText(tr("Disarmed"));
+	SetButtonStatus(ArmedIndicator, Status::DISARMED);
+	// testing below
+	// connect(ArmedIndicator, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
 
-	QuantityCalculatorButton = new QPushButton(this);
-	QuantityCalculatorButton->setText(tr("Calculate Quantity"));
-
-	LogOpenButton = new QPushButton(this);
-	LogOpenButton->setText(tr("Open Log"));
+	InitiateButton = new QPushButton(this);
+	InitiateButton->setText(tr("Initiate"));
 
 	AbortButton = new QPushButton(this);
 	AbortButton->setText(tr("Abort"));
-	AbortButton->setStyleSheet(" QPushButton { background-color: red } ");
+	AbortButton->setStyleSheet("color: red");
+
+	AbortFont.setBold(true);
 } // void Widgets::SetupButtons()
 
 void Widgets::SetupStatusColumn() {
 	StatusColumn = new QGroupBox(tr("Operate"), this);
-	MajorLayout->addWidget(StatusColumn, 1, 1);
+	StatusColumn->setObjectName("statusColumn");
+
+	SetGroupBoxStatus(StatusColumn, Status::DISARMED);
+
+	MajorLayout->addWidget(StatusColumn, 1, 0, 1, 2);
 
 	QSizePolicy vhexpanding;
 	vhexpanding.setVerticalPolicy(QSizePolicy::MinimumExpanding);
 	vhexpanding.setHorizontalPolicy(QSizePolicy::MinimumExpanding);
 
-	StatusColumnOrganizer = new QVBoxLayout(StatusColumn);
-	LoadTestRoutineButton->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(LoadTestRoutineButton);
+	StatusColumnOrganizer = new QHBoxLayout(StatusColumn);
+	StandbyIndicator->setSizePolicy(vhexpanding);
+	StatusColumnOrganizer->addWidget(StandbyIndicator);
 
-	ArmedButton->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(ArmedButton);
+	ArmedIndicator->setSizePolicy(vhexpanding);
+	StatusColumnOrganizer->addWidget(ArmedIndicator);
 
-	QuantityCalculatorButton->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(QuantityCalculatorButton);
-
-	LogOpenButton->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(LogOpenButton);
+	InitiateButton->setSizePolicy(vhexpanding);
+	StatusColumnOrganizer->addWidget(InitiateButton);
 
 	AbortButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(AbortButton);
@@ -199,18 +199,19 @@ void Widgets::SetupStatusColumn() {
 
 void Widgets::SetAllButtonTextSize() {
 	ButtonFont.setPixelSize(ButtonFontAdjustment.AdjustPxSize(window()));
-	LoadTestRoutineButton->setFont(ButtonFont);
-	ArmedButton->setFont(ButtonFont);
-	QuantityCalculatorButton->setFont(ButtonFont);
-	LogOpenButton->setFont(ButtonFont);
-	AbortButton->setFont(ButtonFont);
+	StandbyIndicator->setFont(ButtonFont);
+	ArmedIndicator->setFont(ButtonFont);
+	InitiateButton->setFont(ButtonFont);
 	StatusColumn->setFont(ButtonFont);
+
+	AbortFont.setPixelSize(AbortFontAdjustment.AdjustPxSize(window()));
+	AbortButton->setFont(AbortFont);
 } // void Widgets::SetAllButtonTextSize()
 // }}}
 
 void Widgets::SetupMultiPlot() {
 	Plots = new MultiPlotContainer(this, 3);
-	MajorLayout->addWidget(Plots, 1, 0);
+	MajorLayout->addWidget(Plots, 0, 0);
 	QList<Plot::EmbeddablePlot2D*> allPlots = Plots->GetPlots();
 
 	Plot::AxisInfo axInfo;
@@ -223,7 +224,7 @@ void Widgets::SetupMultiPlot() {
 
 	std::array<std::string, 3> RPY = {"Roll", "Pitch", "Yaw"};
 	auto angle = RPY.begin();
-	auto color = Plot::StandardColor.begin();
+	auto color = Plot::STANDARD_COLOR.begin();
 
 	for (Plot::EmbeddablePlot2D* p : allPlots) {
 		std::string name = *angle;
@@ -235,8 +236,8 @@ void Widgets::SetupMultiPlot() {
 		p->AddSeries(info);
 
 		justWtv.Title = name;
-		p->SetAxis(Plot::Axis::Quantity, justWtv);
-		p->SetAxis(Plot::Axis::Time, axInfo);
+		p->SetAxis(Plot::Axis::QUANTITY, justWtv);
+		p->SetAxis(Plot::Axis::TIME, axInfo);
 
 		angle++;
 		color++;
@@ -251,30 +252,30 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 	axInfo.Range = { 0, 10 };
 	axInfo.MajorSpacing = 1;
 	axInfo.MinorSpacing = 0.5;
-	Plot->SetAxis(Plot::Axis::Time, axInfo);
+	Plot->SetAxis(Plot::Axis::TIME, axInfo);
 
 	Plot::SeriesInfo rollInfo;
 	rollInfo.Name = "Roll";
-	rollInfo.Color = Plot::StandardColor.at("Red");
+	rollInfo.Color = Plot::STANDARD_COLOR.at("Red");
 
 	Plot::SeriesInfo pitchInfo;
 	pitchInfo.Name = "Pitch";
-	pitchInfo.Color = Plot::StandardColor.at("Green");
+	pitchInfo.Color = Plot::STANDARD_COLOR.at("Green");
 
 	Plot::SeriesInfo yawInfo;
 	yawInfo.Name = "Yaw";
-	yawInfo.Color = Plot::StandardColor.at("Blue");
+	yawInfo.Color = Plot::STANDARD_COLOR.at("Blue");
 
 	Plot->AddSeries(rollInfo);
 	Plot->AddSeries(pitchInfo);
 	Plot->AddSeries(yawInfo);
 
-	stupid_make_data(Plot);
+	StupidMakeData(Plot);
 } // void Widgets::SetupTimeHistoryPlotQChart()
 
 void Widgets::SetupAttQtysRatesDisplay() {
 	AttQtysRates = new QtyRateDisplay(tr(""), this);
-	MajorLayout->addWidget(AttQtysRates, 0, 1);
+	MajorLayout->addWidget(AttQtysRates, 1, 0);
 	
 	RollQtyRate = new QtyRateRow(tr("Roll"), AttQtysRates);
 	RollQtyRate->SetQuantityUnits("°");
@@ -319,16 +320,18 @@ void Widgets::CreateActions() {
 } // void Widgets::CreateActions()
 
 void Widgets::OnArmedButtonPressed() {
-	bArmedButtonActive = !bArmedButtonActive;
+	ArmedButtonActive = !ArmedButtonActive;
 	
-	if (bArmedButtonActive) {
-		// Active state - green color
-		ArmedButton->setText(tr("Armed"));
-		ArmedButton->setStyleSheet(" QPushButton { background-color: red; color: white; } } ");
+	if (ArmedButtonActive) {
+		// Armed state - Red
+		ArmedIndicator->setText(tr("Armed"));
+		SetButtonStatus(ArmedIndicator, Status::ARMED);
+		SetGroupBoxStatus(StatusColumn, Status::ARMED);
 	} else {
-		// Inactive state - default color
-		ArmedButton->setText(tr("Disarmed"));
-		ArmedButton->setStyleSheet(" QPushButton { background-color: Yellow; color: Black; } } ");
+		// Disarmed state - Yellow
+		ArmedIndicator->setText(tr("Disarmed"));
+		SetButtonStatus(ArmedIndicator, Status::DISARMED);
+		SetGroupBoxStatus(StatusColumn, Status::DISARMED);
 	}
 } // void Widgets::OnArmedButtonPressed()
 // }}}

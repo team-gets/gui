@@ -6,8 +6,8 @@
 
 namespace VSCL::Util {
 
-static constexpr uint32_t MinimumWidth = 720;
-static constexpr uint32_t MinimumHeight = 480;
+static constexpr uint32_t MINIMUM_WIDTH = 720;
+static constexpr uint32_t MINIMUM_HEIGHT = 480;
 
 struct FontAdjustment {
 	/*
@@ -21,12 +21,12 @@ struct FontAdjustment {
 	 */
 	bool AdjustToWidth = false;
 
-	static const uint32_t AdjustPxSize(uint32_t pxAtMin, QWidget* win, bool adjustToWidth=false) {
-		uint32_t dim = adjustToWidth ? win->width() : win->height();
-		uint32_t adj = adjustToWidth ? MinimumWidth : MinimumHeight;
+	static const uint32_t AdjustPxSize(uint32_t px_at_min, QWidget* win, bool adjust_to_width=false) {
+		uint32_t dim = adjust_to_width ? win->width() : win->height();
+		uint32_t adj = adjust_to_width ? MINIMUM_WIDTH : MINIMUM_HEIGHT;
 		float delta = (float)(dim - adj) / (float)adj;
 
-		return pxAtMin * (uint32_t)std::ceil(1 + delta);
+		return px_at_min * (uint32_t)std::ceil(1 + delta);
 	}
 
 	const uint32_t AdjustPxSize(QWidget* win) const {

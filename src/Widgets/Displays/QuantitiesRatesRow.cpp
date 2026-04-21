@@ -28,8 +28,8 @@ void QtyRateRow::resizeEvent(QResizeEvent* event) {
 }
 
 void QtyRateRow::AdjustFontSize() {
-	uint32_t tpt = static_cast<uint32_t>(TitleFontAdjustment.AdjustPxSize(window()));
-	if (tpt <= TitleFontAdjustment.PxSizeAtMinimum) {
+	uint32_t tpt = static_cast<uint32_t>(TITLE_FONT_ADJUSTMENT.AdjustPxSize(window()));
+	if (tpt <= TITLE_FONT_ADJUSTMENT.PxSizeAtMinimum) {
 		setTitle(tr(""));
 		TitleFont.setPixelSize(1);
 	}
@@ -40,17 +40,17 @@ void QtyRateRow::AdjustFontSize() {
 
 	setFont(TitleFont);
 
-	LabelFont.setPixelSize(NumericFontAdjustment.AdjustPxSize(window()));
+	LabelFont.setPixelSize(NUMERIC_FONT_ADJUSTMENT.AdjustPxSize(window()));
 	QuantityLabel->setFont(LabelFont);
 	RateLabel->setFont(LabelFont);
 }
 
-void QtyRateRow::SetQuantity(double newQuantity) {
-	Quantity = newQuantity;
+void QtyRateRow::SetQuantity(double new_quantity) {
+	Quantity = new_quantity;
 	QuantityLabel->setText(QString::number(Quantity) + QuantityUnits);
 }
-void QtyRateRow::SetRate(double newRate) {
-	Rate = newRate;
+void QtyRateRow::SetRate(double new_rate) {
+	Rate = new_rate;
 	RateLabel->setText(QString::number(Rate) + RateUnits);
 }
 

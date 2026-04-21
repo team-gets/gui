@@ -14,6 +14,6 @@ struct SeriesInfo {
 
 	ColorRGB Color = {1.0, 0.0, 0.0};
 	double Alpha = 1.0;
-	LineStyle Style = LineStyle::Solid;
+	LineStyle Style = LineStyle::SOLID;
 };
 } // namespace VSCL::Plot

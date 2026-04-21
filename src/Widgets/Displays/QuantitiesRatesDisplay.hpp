@@ -17,7 +17,7 @@ public:
 	const QList<QtyRateRow*>& GetRowsView() const;
 
 protected:
-	void AddRow(QtyRateRow* newRow);
+	void AddRow(QtyRateRow* new_row);
 
 private:
 	QList<QtyRateRow*> Rows;

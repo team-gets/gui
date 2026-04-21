@@ -26,6 +26,9 @@ public:
 
 private:
 	QFont ButtonFont{ };
+	Util::FontAdjustment ButtonFontAdjustment{ .PxSizeAtMinimum=12 };
+	QFont AbortFont{ };
+	Util::FontAdjustment AbortFontAdjustment{ .PxSizeAtMinimum=12 };
 
 	QWidget* MajorContainer;
 	QGridLayout* MajorLayout;
@@ -34,7 +37,7 @@ private:
 	void SetGridRowsMinimums();
 
 	QFrame* AttitudeDialRow;
-	QHBoxLayout* AttitudeDialOrganizer;
+	QVBoxLayout* AttitudeDialOrganizer;
 
 	CompositeDial* RollDial;
 	CompositeDial* PitchDial;
@@ -56,17 +59,18 @@ private:
 
 	// im not entirely sure of this part
 	QGroupBox* StatusColumn;
-	QVBoxLayout* StatusColumnOrganizer;
-	QPushButton* LoadTestRoutineButton;
-	QPushButton* ArmedButton;
-	QPushButton* QuantityCalculatorButton;
+	QHBoxLayout* StatusColumnOrganizer;
+	QPushButton* StandbyIndicator;
+	QPushButton* ArmedIndicator;
+	QPushButton* InitiateButton;
 	QPushButton* LogOpenButton;
 	QPushButton* AbortButton;
-	bool bArmedButtonActive = false;  // Track armed button state
-	Util::FontAdjustment ButtonFontAdjustment{ 12 };
+	bool ArmedButtonActive = false;  // Track armed button state
+
 	void SetupButtons();
 	void SetupStatusColumn();
 	void SetAllButtonTextSize();
+
 private slots:
     void About();
 	void OnArmedButtonPressed();

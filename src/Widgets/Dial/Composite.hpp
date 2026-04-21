@@ -30,7 +30,10 @@ private:
 	QGridLayout* MajorOrganizer;
 	QLabel* DialNameLabel;
 	QFont DialNameFont{ };
-	Util::FontAdjustment TitleAdjustment{ 16, false };
+	Util::FontAdjustment TitleAdjustment{
+		.PxSizeAtMinimum=16,
+		.AdjustToWidth=false
+	};
 
 	QWidget* DialRateDuo;
 	QGridLayout* DuoOrganizer;

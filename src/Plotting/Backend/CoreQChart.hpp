@@ -23,7 +23,7 @@ public:
 	virtual void EraseAllData() override;
 	
 	virtual void AddSeries() override;
-	virtual void AddSeries(const SeriesInfo& newInfo) override;
+	virtual void AddSeries(const SeriesInfo& new_info) override;
 
 private:
 	QChart* PlotChart;

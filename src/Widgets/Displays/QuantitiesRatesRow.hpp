@@ -16,8 +16,8 @@ public:
 	QtyRateRow(const QString& title, QtyRateDisplay* parent);
 	virtual void resizeEvent(QResizeEvent* event);
 
-	void SetQuantity(double newQuantity);
-	void SetRate(double newRate);
+	void SetQuantity(double new_quantity);
+	void SetRate(double new_rate);
 
 	void SetQuantityUnits(const QString& units);
 	void SetRateUnits(const QString& units);
@@ -39,8 +39,15 @@ private:
 	QLabel* RateLabel;
 
 	void AdjustFontSize();
-	static constexpr Util::FontAdjustment TitleFontAdjustment { 8, false };
-	static constexpr Util::FontAdjustment NumericFontAdjustment { 8, false };
+	static constexpr Util::FontAdjustment TITLE_FONT_ADJUSTMENT {
+		.PxSizeAtMinimum = 8,
+		.AdjustToWidth = false
+	};
+
+	static constexpr Util::FontAdjustment NUMERIC_FONT_ADJUSTMENT {
+		.PxSizeAtMinimum = 8,
+		.AdjustToWidth = false
+	};
 
 }; // class QtyRateDisplay
 } // namespace VSCL

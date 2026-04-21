@@ -15,9 +15,9 @@ CompositeDial::CompositeDial(QWidget* parent)
 	this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 	this->setLayout(MajorOrganizer);
 	MajorOrganizer->setAlignment(Qt::AlignHCenter);
-	MajorOrganizer->setAlignment(DialNameLabel, Qt::AlignHCenter | Qt::AlignTop);
-	MajorOrganizer->addWidget(DialNameLabel, 0, 0, 1, 1);
-	MajorOrganizer->addWidget(DialRateDuo, 1, 0, 5, 1);
+	// MajorOrganizer->setAlignment(DialNameLabel, Qt::AlignCenter);
+	MajorOrganizer->addWidget(DialNameLabel, 0, 0);
+	MajorOrganizer->addWidget(DialRateDuo, 0, 1);
 
 	// Set dial-rate combo layout
 	DialRateDuo->setLayout(DuoOrganizer);
@@ -30,7 +30,7 @@ CompositeDial::CompositeDial(QWidget* parent)
 	DialNameLabel->setScaledContents(true);
 	DialNameLabel->setFont(DialNameFont);
 	DialNameLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-	DialNameLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
+	DialNameLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
 	// Set how the dial-rate combo resizes
 	QSizePolicy expandPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);

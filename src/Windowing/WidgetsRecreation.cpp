@@ -156,6 +156,7 @@ void Widgets::SetupButtons() {
 	ArmedIndicator = new QPushButton(this);
 	ArmedIndicator->setText(tr("Disarmed"));
 	SetButtonStatus(ArmedIndicator, Status::DISARMED);
+	// testing below
 	// connect(ArmedIndicator, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
 
 	InitiateButton = new QPushButton(this);

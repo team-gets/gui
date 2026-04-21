@@ -26,6 +26,9 @@ public:
 
 private:
 	QFont ButtonFont{ };
+	Util::FontAdjustment ButtonFontAdjustment{ .PxSizeAtMinimum=12 };
+	QFont AbortFont{ };
+	Util::FontAdjustment AbortFontAdjustment{ .PxSizeAtMinimum=12 };
 
 	QWidget* MajorContainer;
 	QGridLayout* MajorLayout;
@@ -63,10 +66,11 @@ private:
 	QPushButton* LogOpenButton;
 	QPushButton* AbortButton;
 	bool ArmedButtonActive = false;  // Track armed button state
-	Util::FontAdjustment ButtonFontAdjustment{ .PxSizeAtMinimum=12 };
+
 	void SetupButtons();
 	void SetupStatusColumn();
 	void SetAllButtonTextSize();
+
 private slots:
     void About();
 	void OnArmedButtonPressed();

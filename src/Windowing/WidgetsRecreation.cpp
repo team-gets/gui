@@ -44,9 +44,7 @@ Widgets::Widgets() {
 	// Set up the static layout
 	SetupCentralWidget();
 	SetupAttitudeDials();
-	// SetupTimeHistoryPlotQChart(); // <- old plot
 	SetupMultiPlot(); // <-new multiplot
-	// SetupAttQtysRatesDisplay(); // <- No need anymore
 	SetupButtons();
 	SetupStatusColumn();
 	SetGridColumnsMinimums();
@@ -163,12 +161,11 @@ void Widgets::SetupButtons() {
 	InitiateButton = new QPushButton(this);
 	InitiateButton->setText(tr("Initiate"));
 
-	// LogOpenButton = new QPushButton(this); 
-	// LogOpenButton->setText(tr("Open Log")); 
-
 	AbortButton = new QPushButton(this);
 	AbortButton->setText(tr("Abort"));
-	AbortButton->setStyleSheet(" QPushButton { background-color: red ; color: white} ");
+	AbortButton->setStyleSheet("color: red");
+
+	AbortFont.setBold(true);
 } // void Widgets::SetupButtons()
 
 void Widgets::SetupStatusColumn() {
@@ -193,9 +190,6 @@ void Widgets::SetupStatusColumn() {
 	InitiateButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(InitiateButton);
 
-	// LogOpenButton->setSizePolicy(vhexpanding);
-	// StatusColumnOrganizer->addWidget(LogOpenButton);
-
 	AbortButton->setSizePolicy(vhexpanding);
 	StatusColumnOrganizer->addWidget(AbortButton);
 
@@ -207,9 +201,10 @@ void Widgets::SetAllButtonTextSize() {
 	StandbyIndicator->setFont(ButtonFont);
 	ArmedIndicator->setFont(ButtonFont);
 	InitiateButton->setFont(ButtonFont);
-	// LogOpenButton->setFont(ButtonFont);
-	AbortButton->setFont(ButtonFont);
 	StatusColumn->setFont(ButtonFont);
+
+	AbortFont.setPixelSize(AbortFontAdjustment.AdjustPxSize(window()));
+	AbortButton->setFont(AbortFont);
 } // void Widgets::SetAllButtonTextSize()
 // }}}
 

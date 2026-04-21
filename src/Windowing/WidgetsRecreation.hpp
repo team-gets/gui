@@ -63,7 +63,7 @@ private:
 	QPushButton* LogOpenButton;
 	QPushButton* AbortButton;
 	bool ArmedButtonActive = false;  // Track armed button state
-	Util::FontAdjustment ButtonFontAdjustment{ 12 };
+	Util::FontAdjustment ButtonFontAdjustment{ .PxSizeAtMinimum=12 };
 	void SetupButtons();
 	void SetupStatusColumn();
 	void SetAllButtonTextSize();

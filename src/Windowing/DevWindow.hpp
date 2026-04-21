@@ -22,8 +22,8 @@ public:
     DevWindow();
 
 	enum Setting {
-		QMLView,
-		NumericTesting
+		QML_VIEW,
+		NUMERIC_TESTING
 	};
 
     void SetQMLFromPath(const QUrl& path);
@@ -38,7 +38,7 @@ private slots:
     void About();
 
 private:
-	Setting CurrentSetting = Setting::NumericTesting;
+	Setting CurrentSetting = Setting::NUMERIC_TESTING;
 	QStackedWidget* Stacker;
 
 	/*

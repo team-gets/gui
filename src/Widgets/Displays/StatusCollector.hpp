@@ -7,27 +7,27 @@
 
 namespace VSCL {
 enum class Status {
-    Armed,      // Red
-    Disarmed,   // White
-    Standby,    // White  # true/false of Standby
-    Active,    // Yellow
-    Opened,     // Green
-    Closed      // Grey 
+    ARMED,      // Red
+    DISARMED,   // White
+    STANDBY,    // White  # true/false of Standby
+    ACTIVE,    // Yellow
+    OPENED,     // Green
+    CLOSED      // Grey 
 };
 
-static const std::map<Status, std::string> StatusColorMap = {
-    {Status::Armed, "red"},
-    {Status::Disarmed, "#fbfbfb"}, 
-    {Status::Standby, "#fbfbfb"},
-    {Status::Active, "yellow"},
-    {Status::Opened, "green"},
-    {Status::Closed, "gray"}
+static const std::map<Status, std::string> STATUS_COLOR_MAP = {
+    {Status::ARMED, "red"},
+    {Status::DISARMED, "#fbfbfb"}, 
+    {Status::STANDBY, "#fbfbfb"},
+    {Status::ACTIVE, "yellow"},
+    {Status::OPENED, "green"},
+    {Status::CLOSED, "gray"}
 };
 
-QString buildStatusStyleSheet(const std::string& objectName, Status status);
-void setGroupBoxStatus(QGroupBox* box, Status status);
+QString BuildStatusStyleSheet(const std::string& object_name, Status status);
+void SetGroupBoxStatus(QGroupBox* box, Status status);
 
-QString buildButtonStyleSheet(Status status);
-void setButtonStatus(QPushButton* button, Status status);
+QString BuildButtonStyleSheet(Status status);
+void SetButtonStatus(QPushButton* button, Status status);
 
 } // namespace VSCL

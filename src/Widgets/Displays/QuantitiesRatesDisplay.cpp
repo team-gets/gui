@@ -11,6 +11,6 @@ QtyRateDisplay::QtyRateDisplay(const QString& title, QWidget* parent)
 };
 
 const QList<QtyRateRow*>& QtyRateDisplay::GetRowsView() const { return Rows; }
-void QtyRateDisplay::AddRow(QtyRateRow* newRow) { Rows.append(newRow); Organizer->addWidget(newRow); }
+void QtyRateDisplay::AddRow(QtyRateRow* new_row) { Rows.append(new_row); Organizer->addWidget(new_row); }
 
 } // namespace VSCL

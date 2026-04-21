@@ -4,10 +4,10 @@
 
 #include "WidgetsRecreation.hpp"
 #include "Plotting/Backend/CoreQChart.hpp"
-#include "Widgets/Displays/statusCollector.hpp"
+#include "Widgets/Displays/StatusCollector.hpp"
 
 // stupid temp thing {{{
-static void stupid_make_data(VSCL::Plot::EmbeddablePlot2D* plot) {
+static void StupidMakeData(VSCL::Plot::EmbeddablePlot2D* plot) {
 	double ph1, ph2, ph3;
 
 	std::srand(std::chrono::system_clock::now().time_since_epoch().count() + 1);
@@ -38,8 +38,8 @@ Widgets::Widgets() {
 
 	// Geometry and window characteristics
     setWindowTitle(tr("VSCL Gyroscopic Test Rig"));
-    setMinimumSize(Util::MinimumWidth, Util::MinimumHeight);
-    resize(Util::MinimumWidth, Util::MinimumHeight);
+    setMinimumSize(Util::MINIMUM_WIDTH, Util::MINIMUM_HEIGHT);
+    resize(Util::MINIMUM_WIDTH, Util::MINIMUM_HEIGHT);
 
 	// Set up the static layout
 	SetupCentralWidget();
@@ -153,12 +153,12 @@ void Widgets::SetGridRowsMinimums() {
 void Widgets::SetupButtons() {
 	StandbyIndicator = new QPushButton(this);
 	StandbyIndicator->setText(tr("Standby"));
-	setButtonStatus(StandbyIndicator, Status::Standby);
+	SetButtonStatus(StandbyIndicator, Status::STANDBY);
 
 	ArmedIndicator = new QPushButton(this);
 	ArmedIndicator->setText(tr("Disarmed"));
-	setButtonStatus(ArmedIndicator, Status::Disarmed);
-	connect(ArmedIndicator, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
+	SetButtonStatus(ArmedIndicator, Status::DISARMED);
+	// connect(ArmedIndicator, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
 
 	InitiateButton = new QPushButton(this);
 	InitiateButton->setText(tr("Initiate"));
@@ -175,7 +175,7 @@ void Widgets::SetupStatusColumn() {
 	StatusColumn = new QGroupBox(tr("Operate"), this);
 	StatusColumn->setObjectName("statusColumn");
 
-	setGroupBoxStatus(StatusColumn, Status::Disarmed);
+	SetGroupBoxStatus(StatusColumn, Status::DISARMED);
 
 	MajorLayout->addWidget(StatusColumn, 1, 0, 1, 2);
 
@@ -228,7 +228,7 @@ void Widgets::SetupMultiPlot() {
 
 	std::array<std::string, 3> RPY = {"Roll", "Pitch", "Yaw"};
 	auto angle = RPY.begin();
-	auto color = Plot::StandardColor.begin();
+	auto color = Plot::STANDARD_COLOR.begin();
 
 	for (Plot::EmbeddablePlot2D* p : allPlots) {
 		std::string name = *angle;
@@ -240,8 +240,8 @@ void Widgets::SetupMultiPlot() {
 		p->AddSeries(info);
 
 		justWtv.Title = name;
-		p->SetAxis(Plot::Axis::Quantity, justWtv);
-		p->SetAxis(Plot::Axis::Time, axInfo);
+		p->SetAxis(Plot::Axis::QUANTITY, justWtv);
+		p->SetAxis(Plot::Axis::TIME, axInfo);
 
 		angle++;
 		color++;
@@ -256,25 +256,25 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 	axInfo.Range = { 0, 10 };
 	axInfo.MajorSpacing = 1;
 	axInfo.MinorSpacing = 0.5;
-	Plot->SetAxis(Plot::Axis::Time, axInfo);
+	Plot->SetAxis(Plot::Axis::TIME, axInfo);
 
 	Plot::SeriesInfo rollInfo;
 	rollInfo.Name = "Roll";
-	rollInfo.Color = Plot::StandardColor.at("Red");
+	rollInfo.Color = Plot::STANDARD_COLOR.at("Red");
 
 	Plot::SeriesInfo pitchInfo;
 	pitchInfo.Name = "Pitch";
-	pitchInfo.Color = Plot::StandardColor.at("Green");
+	pitchInfo.Color = Plot::STANDARD_COLOR.at("Green");
 
 	Plot::SeriesInfo yawInfo;
 	yawInfo.Name = "Yaw";
-	yawInfo.Color = Plot::StandardColor.at("Blue");
+	yawInfo.Color = Plot::STANDARD_COLOR.at("Blue");
 
 	Plot->AddSeries(rollInfo);
 	Plot->AddSeries(pitchInfo);
 	Plot->AddSeries(yawInfo);
 
-	stupid_make_data(Plot);
+	StupidMakeData(Plot);
 } // void Widgets::SetupTimeHistoryPlotQChart()
 
 void Widgets::SetupAttQtysRatesDisplay() {
@@ -324,18 +324,18 @@ void Widgets::CreateActions() {
 } // void Widgets::CreateActions()
 
 void Widgets::OnArmedButtonPressed() {
-	bArmedButtonActive = !bArmedButtonActive;
+	ArmedButtonActive = !ArmedButtonActive;
 	
-	if (bArmedButtonActive) {
+	if (ArmedButtonActive) {
 		// Armed state - Red
 		ArmedIndicator->setText(tr("Armed"));
-		setButtonStatus(ArmedIndicator, Status::Armed);
-		setGroupBoxStatus(StatusColumn, Status::Armed);
+		SetButtonStatus(ArmedIndicator, Status::ARMED);
+		SetGroupBoxStatus(StatusColumn, Status::ARMED);
 	} else {
 		// Disarmed state - Yellow
 		ArmedIndicator->setText(tr("Disarmed"));
-		setButtonStatus(ArmedIndicator, Status::Disarmed);
-		setGroupBoxStatus(StatusColumn, Status::Disarmed);
+		SetButtonStatus(ArmedIndicator, Status::DISARMED);
+		SetGroupBoxStatus(StatusColumn, Status::DISARMED);
 	}
 } // void Widgets::OnArmedButtonPressed()
 // }}}

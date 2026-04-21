@@ -13,7 +13,7 @@ DevWindow::DevWindow()
 	{
 
 	AttitudeDial* dial = new AttitudeDial(this);
-	NumericDisplaysTest = new NumericTestWidget(this, dial, [dial](int newValue) { dial->SetDialAngle(newValue); });
+	NumericDisplaysTest = new NumericTestWidget(this, dial, [dial](int new_value) { dial->SetDialAngle(new_value); });
 
     setCentralWidget(Stacker);
 	Stacker->addWidget(MainQuick);
@@ -40,13 +40,13 @@ void DevWindow::SetQMLFromPath(const QUrl& path) {
 
 void DevWindow::SwapSetting() {
 	switch (CurrentSetting) {
-	case DevWindow::NumericTesting:
+	case DevWindow::NUMERIC_TESTING:
 		Stacker->setCurrentIndex(1);
-		CurrentSetting = DevWindow::QMLView;
+		CurrentSetting = DevWindow::QML_VIEW;
 		break;
-	case DevWindow::QMLView:
+	case DevWindow::QML_VIEW:
 		Stacker->setCurrentIndex(0);
-		CurrentSetting = DevWindow::NumericTesting;
+		CurrentSetting = DevWindow::NUMERIC_TESTING;
 		break;
 	}
 }

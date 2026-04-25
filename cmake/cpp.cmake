@@ -12,7 +12,7 @@ set(UTIL_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Util")
 
 set(APP_SOURCES
 	"${CMAKE_SOURCE_DIR}/src/App/Main.cpp"
-	"${WINDOWING_SRC_DIR}/WidgetsRecreation.cpp")
+	"${WINDOWING_SRC_DIR}/MainWindow.cpp")
 
 set(DIAL_SOURCES
 	"${WIDGETS_SRC_DIR}/Dial/Attitude.cpp"

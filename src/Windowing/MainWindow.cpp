@@ -2,7 +2,7 @@
 #include <cmath>
 #include <chrono>
 
-#include "WidgetsRecreation.hpp"
+#include "Windowing/MainWindow.hpp"
 #include "Plotting/Backend/CoreQChart.hpp"
 #include "Widgets/Displays/StatusCollector.hpp"
 
@@ -27,8 +27,8 @@ static void StupidMakeData(VSCL::Plot::EmbeddablePlot2D* plot) {
 }
 // }}}
 
-namespace VSCL::FromPpt {
-Widgets::Widgets() {
+namespace VSCL {
+MainWindow::MainWindow() {
     // Set up menubar and statusbar
     CreateActions();
     CreateMenus();
@@ -55,45 +55,45 @@ Widgets::Widgets() {
 	SetRoll(-32);
 	SetPitch(5);
 	SetYaw(100);
-} // void Widgets::Widgets()
+} // void MainWindow::Widgets()
 
-void Widgets::resizeEvent(QResizeEvent* event) {
+void MainWindow::resizeEvent(QResizeEvent* event) {
 	QMainWindow::resizeEvent(event);
 
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
 	SetAllButtonTextSize();
-} // void Widgets::resizeEvent()
+} // void MainWindow::resizeEvent()
 
-void Widgets::SetRoll(double roll) {
+void MainWindow::SetRoll(double roll) {
 	RollDial->SetDialAngle(roll);
 	// RollQtyRate->SetQuantity(roll);
 }
 
-void Widgets::SetPitch(double pitch) {
+void MainWindow::SetPitch(double pitch) {
 	PitchDial->SetDialAngle(pitch);
 	// PitchQtyRate->SetQuantity(pitch);
 }
 
-void Widgets::SetYaw(double yaw) {
+void MainWindow::SetYaw(double yaw) {
 	YawDial->SetDialAngle(yaw);
 	// YawQtyRate->SetQuantity(yaw);
 }
 
-void Widgets::SetRollRate(double roll) {
+void MainWindow::SetRollRate(double roll) {
 	RollQtyRate->SetRate(roll);
 }
 
-void Widgets::SetPitchRate(double pitch) {
+void MainWindow::SetPitchRate(double pitch) {
 	PitchQtyRate->SetRate(pitch);
 }
 
-void Widgets::SetYawRate(double yaw) {
+void MainWindow::SetYawRate(double yaw) {
 	YawQtyRate->SetRate(yaw);
 }
 
 // Layout and Widgets Setup {{{
-void Widgets::SetupCentralWidget() {
+void MainWindow::SetupCentralWidget() {
 	MajorContainer = new QWidget(this);
 
 	QSizePolicy majorPolicy;
@@ -106,9 +106,9 @@ void Widgets::SetupCentralWidget() {
 	MajorContainer->setLayout(MajorLayout);
 
 	setCentralWidget(MajorContainer);
-} // void Widgets::SetupCentralWidget()
+} // void MainWindow::SetupCentralWidget()
 
-void Widgets::SetupAttitudeDials() {
+void MainWindow::SetupAttitudeDials() {
 	AttitudeDialRow = new QFrame(MajorContainer);
 	MajorLayout->addWidget(AttitudeDialRow, 0, 1);
 
@@ -131,24 +131,24 @@ void Widgets::SetupAttitudeDials() {
 	AttitudeDialOrganizer->addWidget(YawDial);
 
 	Dials = { RollDial, PitchDial, YawDial };
-} // void Widgets::SetupCentralWidget()
+} // void MainWindow::SetupCentralWidget()
 
-void Widgets::SetGridColumnsMinimums() {
+void MainWindow::SetGridColumnsMinimums() {
 	if (!MajorLayout) { return; };
 	const QRect& dims = centralWidget()->geometry();
 	MajorLayout->setColumnMinimumWidth(0,  4 * dims.width() / 5);
 	MajorLayout->setColumnMinimumWidth(1, 1 * dims.width() / 5);
-} // void Widgets::SetGridColumnsMinimums()
+} // void MainWindow::SetGridColumnsMinimums()
 
-void Widgets::SetGridRowsMinimums() {
+void MainWindow::SetGridRowsMinimums() {
 	if (!MajorLayout) { return; }
 	const QRect& dims = centralWidget()->geometry();
 	MajorLayout->setRowMinimumHeight(0, 4 * dims.height() / 5);
 	MajorLayout->setRowMinimumHeight(1, 1 * dims.height() / 5);
-} // void Widgets::SetGridRowsMinimums()
+} // void MainWindow::SetGridRowsMinimums()
 
 // Buttons {{{
-void Widgets::SetupButtons() {
+void MainWindow::SetupButtons() {
 	StandbyIndicator = new QPushButton(this);
 	StandbyIndicator->setText(tr("Standby"));
 	SetButtonStatus(StandbyIndicator, Status::STANDBY);
@@ -157,7 +157,7 @@ void Widgets::SetupButtons() {
 	ArmedIndicator->setText(tr("Disarmed"));
 	SetButtonStatus(ArmedIndicator, Status::DISARMED);
 	// testing below
-	// connect(ArmedIndicator, &QPushButton::clicked, this, &Widgets::OnArmedButtonPressed);
+	// connect(ArmedIndicator, &QPushButton::clicked, this, &MainWindow::OnArmedButtonPressed);
 
 	InitiateButton = new QPushButton(this);
 	InitiateButton->setText(tr("Initiate"));
@@ -167,9 +167,9 @@ void Widgets::SetupButtons() {
 	AbortButton->setStyleSheet("color: red");
 
 	AbortFont.setBold(true);
-} // void Widgets::SetupButtons()
+} // void MainWindow::SetupButtons()
 
-void Widgets::SetupStatusColumn() {
+void MainWindow::SetupStatusColumn() {
 	StatusColumn = new QGroupBox(tr("Operate"), this);
 	StatusColumn->setObjectName("statusColumn");
 
@@ -195,9 +195,9 @@ void Widgets::SetupStatusColumn() {
 	StatusColumnOrganizer->addWidget(AbortButton);
 
 	StatusColumn->setLayout(StatusColumnOrganizer);
-} // void Widgets::SetupStatusColumn()
+} // void MainWindow::SetupStatusColumn()
 
-void Widgets::SetAllButtonTextSize() {
+void MainWindow::SetAllButtonTextSize() {
 	ButtonFont.setPixelSize(ButtonFontAdjustment.AdjustPxSize(window()));
 	StandbyIndicator->setFont(ButtonFont);
 	ArmedIndicator->setFont(ButtonFont);
@@ -206,10 +206,10 @@ void Widgets::SetAllButtonTextSize() {
 
 	AbortFont.setPixelSize(AbortFontAdjustment.AdjustPxSize(window()));
 	AbortButton->setFont(AbortFont);
-} // void Widgets::SetAllButtonTextSize()
+} // void MainWindow::SetAllButtonTextSize()
 // }}}
 
-void Widgets::SetupMultiPlot() {
+void MainWindow::SetupMultiPlot() {
 	Plots = new MultiPlotContainer(this, 3);
 	MajorLayout->addWidget(Plots, 0, 0);
 	QList<Plot::EmbeddablePlot2D*> allPlots = Plots->GetPlots();
@@ -244,7 +244,7 @@ void Widgets::SetupMultiPlot() {
 	}
 } 
 
-void Widgets::SetupTimeHistoryPlotQChart() {
+void MainWindow::SetupTimeHistoryPlotQChart() {
 	Plot = new Plot::PlotQChart(this);
 	MajorLayout->addWidget(Plot, 1, 0);
 
@@ -271,9 +271,9 @@ void Widgets::SetupTimeHistoryPlotQChart() {
 	Plot->AddSeries(yawInfo);
 
 	StupidMakeData(Plot);
-} // void Widgets::SetupTimeHistoryPlotQChart()
+} // void MainWindow::SetupTimeHistoryPlotQChart()
 
-void Widgets::SetupAttQtysRatesDisplay() {
+void MainWindow::SetupAttQtysRatesDisplay() {
 	AttQtysRates = new QtyRateDisplay(tr(""), this);
 	MajorLayout->addWidget(AttQtysRates, 1, 0);
 	
@@ -286,16 +286,16 @@ void Widgets::SetupAttQtysRatesDisplay() {
 	YawQtyRate = new QtyRateRow(tr("Yaw"), AttQtysRates);
 	YawQtyRate->SetQuantityUnits("°");
 	YawQtyRate->SetRateUnits("°/s");
-} // void Widgets::SetupAttQtyRatesDisplay()
+} // void MainWindow::SetupAttQtyRatesDisplay()
 
 // }}}
 // Menubar and Actions {{{
-void Widgets::About() {
+void MainWindow::About() {
     QMessageBox::about(this, tr("About"),
             tr("This is a recreation of the original UI layout provided."));
-} // void Widgets::About()
+} // void MainWindow::About()
 
-void Widgets::CreateMenus() {
+void MainWindow::CreateMenus() {
     FileMenu = menuBar()->addMenu(tr("&File"));
     FileMenu->addSeparator();
     FileMenu->addAction(ExitAct);
@@ -304,9 +304,9 @@ void Widgets::CreateMenus() {
 
     HelpMenu = menuBar()->addMenu(tr("&Help"));
     HelpMenu->addAction(AboutAct);
-} // void Widgets::CreateMenus()
+} // void MainWindow::CreateMenus()
 
-void Widgets::CreateActions() {
+void MainWindow::CreateActions() {
     ExitAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::ApplicationExit),
                           tr("Exit"), this);
     ExitAct->setShortcuts(QKeySequence::Quit);
@@ -316,10 +316,10 @@ void Widgets::CreateActions() {
 	AboutAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::HelpAbout),
                            tr("&About"), this);
     AboutAct->setStatusTip(tr("Show the application's About box"));
-    connect(AboutAct, &QAction::triggered, this, &Widgets::About);
-} // void Widgets::CreateActions()
+    connect(AboutAct, &QAction::triggered, this, &MainWindow::About);
+} // void MainWindow::CreateActions()
 
-void Widgets::OnArmedButtonPressed() {
+void MainWindow::OnArmedButtonPressed() {
 	ArmedButtonActive = !ArmedButtonActive;
 	
 	if (ArmedButtonActive) {
@@ -333,7 +333,7 @@ void Widgets::OnArmedButtonPressed() {
 		SetButtonStatus(ArmedIndicator, Status::DISARMED);
 		SetGroupBoxStatus(StatusColumn, Status::DISARMED);
 	}
-} // void Widgets::OnArmedButtonPressed()
+} // void MainWindow::OnArmedButtonPressed()
 // }}}
-} // namespace VSCL::FromPpt
+} // namespace VSCL
 // vim: foldmethod=marker

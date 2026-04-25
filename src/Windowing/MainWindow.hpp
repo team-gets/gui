@@ -10,11 +10,11 @@
 #include "Util/Sizing.hpp"
 #include "Widgets/Displays/MultiPlotContainer.hpp"
 
-namespace VSCL::FromPpt {
-class Widgets : public QMainWindow {
+namespace VSCL {
+class MainWindow : public QMainWindow {
 
 public:
-    Widgets();
+    MainWindow();
 	virtual void resizeEvent(QResizeEvent* event) override;
 	
 	void SetRoll(double roll);
@@ -87,5 +87,5 @@ private:
     QAction* AboutAct;
 // }}}
 }; // class Widgets
-} // namespace VSCL::FromPpt
+} // namespace VSCL
 // vim: foldmethod=marker

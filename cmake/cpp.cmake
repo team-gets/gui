@@ -11,15 +11,8 @@ set(PLOTTING_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Plotting")
 set(UTIL_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Util")
 
 set(APP_SOURCES
-	"${CMAKE_SOURCE_DIR}/src/App/Main.cpp")
-
-# sorry
-set(OTHER_APP_SOURCES
-	"${CMAKE_SOURCE_DIR}/src/App/testMultiplot.cpp")
-
-set(WINDOWING_SOURCES
-	"${WINDOWING_SRC_DIR}/DevWindow.cpp"
-	"${WINDOWING_SRC_DIR}/NumericTestWidget.cpp")
+	"${CMAKE_SOURCE_DIR}/src/App/Main.cpp"
+	"${WINDOWING_SRC_DIR}/WidgetsRecreation.cpp")
 
 set(DIAL_SOURCES
 	"${WIDGETS_SRC_DIR}/Dial/Attitude.cpp"

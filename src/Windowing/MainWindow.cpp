@@ -51,20 +51,22 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 } // void MainWindow::resizeEvent()
 // Layout and Widgets Setup {{{
 void MainWindow::SetupCentralWidget() {
+	setCentralWidget(MajorContainer);
+
+	MajorContainer->setLayout(MajorLayout);
+	MajorLayout->setContentsMargins(35, 35, 35, 35);
+
 	QSizePolicy majorPolicy;
 	majorPolicy.setHorizontalPolicy(QSizePolicy::MinimumExpanding);
 	majorPolicy.setVerticalPolicy(QSizePolicy::MinimumExpanding);
 	MajorContainer->setSizePolicy(majorPolicy);
 
-	MajorLayout->setContentsMargins(35, 35, 35, 35);
-	MajorContainer->setLayout(MajorLayout);
-
-	setCentralWidget(MajorContainer);
+	MajorLayout->addWidget(Plots, 0, 0);
+	MajorLayout->addWidget(AttitudeDialRow, 0, 1);
+	MajorLayout->addWidget(ActionsRow, 1, 0, 1, 2);
 } // void MainWindow::SetupCentralWidget()
 
 void MainWindow::SetupAttitudeDials() {
-	MajorLayout->addWidget(AttitudeDialRow, 0, 1);
-
 	AttitudeDialOrganizer->setContentsMargins(20, 20, 20, 20);
 	AttitudeDialRow->setLayout(AttitudeDialOrganizer);
 
@@ -94,10 +96,9 @@ void MainWindow::SetupButtons() {
 } // void MainWindow::SetupButtons()
 
 void MainWindow::SetupActionsRow() {
-	ActionsRow->setObjectName("statusColumn");
+	ActionsRow->setObjectName("StatusRow");
 
 	SetGroupBoxStatus(ActionsRow, Status::DISARMED);
-	MajorLayout->addWidget(ActionsRow, 1, 0, 1, 2);
 
 	QSizePolicy vhexpanding;
 	vhexpanding.setVerticalPolicy(QSizePolicy::MinimumExpanding);
@@ -132,7 +133,6 @@ void MainWindow::SetAllButtonTextSize() {
 // }}}
 
 void MainWindow::SetupMultiPlot() {
-	MajorLayout->addWidget(Plots, 0, 0);
 	QList<Plot::EmbeddablePlot2D*> all_plts = Plots->GetPlots();
 
 	Plot::AxisInfo time_info;
@@ -191,6 +191,7 @@ void MainWindow::CreateMenus() {
 } // void MainWindow::CreateMenus()
 
 void MainWindow::CreateActions() {
+	// File Menu
 	LoadAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::DocumentOpen),
 						  tr("Load Routine"), this);
 	LoadAct->setShortcuts(QKeySequence::Open);
@@ -203,6 +204,10 @@ void MainWindow::CreateActions() {
     ExitAct->setStatusTip(tr("Exit the application"));
     connect(ExitAct, &QAction::triggered, this, &QWidget::close);
 
+	// Edit Menu
+
+
+	// Help Menu
 	AboutAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::HelpAbout),
                            tr("&About"), this);
     AboutAct->setStatusTip(tr("Show the application's About box"));

@@ -1,31 +1,6 @@
-#include <cstdlib>
-#include <cmath>
-#include <chrono>
-
 #include "Windowing/MainWindow.hpp"
 #include "Plotting/Backend/CoreQChart.hpp"
 #include "Widgets/Displays/StatusCollector.hpp"
-
-// stupid temp thing {{{
-static void StupidMakeData(VSCL::Plot::EmbeddablePlot2D* plot) {
-	double ph1, ph2, ph3;
-
-	std::srand(std::chrono::system_clock::now().time_since_epoch().count() + 1);
-	ph1 = std::rand() % 12;
-	std::srand(std::chrono::system_clock::now().time_since_epoch().count() + 3);
-	ph2 = std::rand() % 12;
-	std::srand(std::chrono::system_clock::now().time_since_epoch().count() + 2);
-	ph3 = std::rand() % 12;
-
-	for (int i = 0; i < 100; i++) {
-		plot->AddPoint(0, i/10.0, std::cos(0.1 * i + ph1/12) / 2.0 + 0.5);
-		plot->AddPoint(1, i/10.0, std::sin(0.1 * i - ph2/12) / 2.0 + 0.5);
-		plot->AddPoint(2, i/10.0, std::cos(0.1 * i + ph3/12) / 2.0 + 0.5);
-	}
-
-	plot->Plot();
-}
-// }}}
 
 namespace VSCL {
 MainWindow::MainWindow()
@@ -35,6 +10,8 @@ MainWindow::MainWindow()
 	, RollDial(new CompositeDial(AttitudeDialRow))
 	, PitchDial(new CompositeDial(AttitudeDialRow))
 	, YawDial(new CompositeDial(AttitudeDialRow))
+
+	, Plots(new MultiPlotContainer(MajorContainer, 3))
 
 	, ActionsRow(new QGroupBox(tr("Operate"), MajorContainer))
 	, StandbyIndicator(new QPushButton(ActionsRow))
@@ -46,28 +23,21 @@ MainWindow::MainWindow()
 	, AttitudeDialOrganizer(new QVBoxLayout(AttitudeDialRow))
 	, ActionsRowOrganizer(new QHBoxLayout(ActionsRow))
 {
-    // Set up menubar and statusbar
-    CreateActions();
-    CreateMenus();
-
-    QString message = tr("Test Rig Operations");
-    statusBar()->showMessage(message);
-
-	// Geometry and window characteristics
-    setWindowTitle(tr("VSCL Gyroscopic Test Rig"));
-    setMinimumSize(Util::MINIMUM_WIDTH, Util::MINIMUM_HEIGHT);
-    resize(Util::MINIMUM_WIDTH, Util::MINIMUM_HEIGHT);
 
 	// Set up the static layout
 	SetupCentralWidget();
 	SetupAttitudeDials();
-	SetupMultiPlot(); // <-new multiplot
+	SetupMultiPlot();
 	SetupButtons();
 	SetupActionsRow();
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
 
 	SetAllButtonTextSize();
+
+    // Set up menubar and statusbar
+    CreateActions();
+    CreateMenus();
 } // void MainWindow::Widgets()
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
@@ -105,19 +75,15 @@ void MainWindow::SetupAttitudeDials() {
 	AttitudeDialOrganizer->addWidget(RollDial);
 	AttitudeDialOrganizer->addWidget(PitchDial);
 	AttitudeDialOrganizer->addWidget(YawDial);
-
-	Dials = { RollDial, PitchDial, YawDial };
 } // void MainWindow::SetupCentralWidget()
 
 void MainWindow::SetGridColumnsMinimums() {
-	if (!MajorLayout) { return; };
 	const QRect& dims = centralWidget()->geometry();
 	MajorLayout->setColumnMinimumWidth(0,  4 * dims.width() / 5);
 	MajorLayout->setColumnMinimumWidth(1, 1 * dims.width() / 5);
 } // void MainWindow::SetGridColumnsMinimums()
 
 void MainWindow::SetGridRowsMinimums() {
-	if (!MajorLayout) { return; }
 	const QRect& dims = centralWidget()->geometry();
 	MajorLayout->setRowMinimumHeight(0, 4 * dims.height() / 5);
 	MajorLayout->setRowMinimumHeight(1, 1 * dims.height() / 5);
@@ -142,11 +108,9 @@ void MainWindow::SetupButtons() {
 } // void MainWindow::SetupButtons()
 
 void MainWindow::SetupActionsRow() {
-	ActionsRow = new QGroupBox();
 	ActionsRow->setObjectName("statusColumn");
 
 	SetGroupBoxStatus(ActionsRow, Status::DISARMED);
-
 	MajorLayout->addWidget(ActionsRow, 1, 0, 1, 2);
 
 	QSizePolicy vhexpanding;
@@ -181,7 +145,6 @@ void MainWindow::SetAllButtonTextSize() {
 // }}}
 
 void MainWindow::SetupMultiPlot() {
-	Plots = new MultiPlotContainer(this, 3);
 	MajorLayout->addWidget(Plots, 0, 0);
 	QList<Plot::EmbeddablePlot2D*> allPlots = Plots->GetPlots();
 
@@ -214,35 +177,6 @@ void MainWindow::SetupMultiPlot() {
 		color++;
 	}
 } 
-
-void MainWindow::SetupTimeHistoryPlotQChart() {
-	Plot = new Plot::PlotQChart(this);
-	MajorLayout->addWidget(Plot, 1, 0);
-
-	Plot::AxisInfo axInfo;
-	axInfo.Range = { 0, 10 };
-	axInfo.MajorSpacing = 1;
-	axInfo.MinorSpacing = 0.5;
-	Plot->SetAxis(Plot::Axis::TIME, axInfo);
-
-	Plot::SeriesInfo rollInfo;
-	rollInfo.Name = "Roll";
-	rollInfo.Color = Plot::STANDARD_COLOR.at("Red");
-
-	Plot::SeriesInfo pitchInfo;
-	pitchInfo.Name = "Pitch";
-	pitchInfo.Color = Plot::STANDARD_COLOR.at("Green");
-
-	Plot::SeriesInfo yawInfo;
-	yawInfo.Name = "Yaw";
-	yawInfo.Color = Plot::STANDARD_COLOR.at("Blue");
-
-	Plot->AddSeries(rollInfo);
-	Plot->AddSeries(pitchInfo);
-	Plot->AddSeries(yawInfo);
-
-	StupidMakeData(Plot);
-} // void MainWindow::SetupTimeHistoryPlotQChart()
 // }}}
 // Menubar and Actions {{{
 void MainWindow::About() {

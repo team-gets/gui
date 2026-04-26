@@ -24,23 +24,13 @@ private:
 	Util::FontAdjustment AbortFontAdjustment{ .PxSizeAtMinimum=12 };
 
 	QWidget* MajorContainer;
-	void SetupCentralWidget();
-	void SetGridColumnsMinimums();
-	void SetGridRowsMinimums();
 
 	QFrame* AttitudeDialRow;
-
 	CompositeDial* RollDial;
 	CompositeDial* PitchDial;
 	CompositeDial* YawDial;
-	std::array<CompositeDial*, 3> Dials;
-	void SetupAttitudeDials();
 
-	Plot::EmbeddablePlot2D* Plot;
 	MultiPlotContainer* Plots;
-	void SetupMultiPlot(); 
-
-	void SetupTimeHistoryPlotQChart();
 
 	QGroupBox* ActionsRow;
 	QPushButton* StandbyIndicator;
@@ -53,6 +43,12 @@ private:
 	QVBoxLayout* AttitudeDialOrganizer;
 	QHBoxLayout* ActionsRowOrganizer;
 
+	void SetupCentralWidget();
+	void SetGridColumnsMinimums();
+	void SetGridRowsMinimums();
+	void SetupAttitudeDials();
+	void SetupMultiPlot(); 
+	void SetupTimeHistoryPlotQChart();
 	void SetupButtons();
 	void SetupActionsRow();
 	void SetAllButtonTextSize();

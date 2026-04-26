@@ -1,5 +1,4 @@
 #include "Windowing/MainWindow.hpp"
-#include "Plotting/Backend/CoreQChart.hpp"
 #include "Widgets/Displays/StatusCollector.hpp"
 
 namespace VSCL {
@@ -7,9 +6,9 @@ MainWindow::MainWindow()
 	: MajorContainer(new QWidget)
 
 	, AttitudeDialRow(new QFrame(MajorContainer))
-	, RollDial(new CompositeDial(AttitudeDialRow))
-	, PitchDial(new CompositeDial(AttitudeDialRow))
-	, YawDial(new CompositeDial(AttitudeDialRow))
+	, RollDial(new CompositeDial(tr("Roll"), AttitudeDialRow))
+	, PitchDial(new CompositeDial(tr("Pitch"), AttitudeDialRow))
+	, YawDial(new CompositeDial(tr("Yaw"), AttitudeDialRow))
 
 	, Plots(new MultiPlotContainer(MajorContainer, 3))
 
@@ -29,8 +28,6 @@ MainWindow::MainWindow()
 	SetupMultiPlot();
 	SetupButtons();
 	SetupActionsRow();
-	SetGridColumnsMinimums();
-	SetGridRowsMinimums();
 
 	SetAllButtonTextSize();
 
@@ -42,8 +39,12 @@ MainWindow::MainWindow()
 void MainWindow::resizeEvent(QResizeEvent* event) {
 	QMainWindow::resizeEvent(event);
 
-	SetGridColumnsMinimums();
-	SetGridRowsMinimums();
+	const QRect& dims = centralWidget()->geometry();
+	MajorLayout->setColumnMinimumWidth(	0, 4 * dims.width()  / 5);
+	MajorLayout->setColumnMinimumWidth(	1, 1 * dims.width()  / 5);
+	MajorLayout->setRowMinimumHeight(	0, 4 * dims.height() / 5);
+	MajorLayout->setRowMinimumHeight(	1, 1 * dims.height() / 5);
+
 	SetAllButtonTextSize();
 } // void MainWindow::resizeEvent()
 
@@ -75,18 +76,6 @@ void MainWindow::SetupAttitudeDials() {
 	AttitudeDialOrganizer->addWidget(PitchDial);
 	AttitudeDialOrganizer->addWidget(YawDial);
 } // void MainWindow::SetupCentralWidget()
-
-void MainWindow::SetGridColumnsMinimums() {
-	const QRect& dims = centralWidget()->geometry();
-	MajorLayout->setColumnMinimumWidth(0,  4 * dims.width() / 5);
-	MajorLayout->setColumnMinimumWidth(1, 1 * dims.width() / 5);
-} // void MainWindow::SetGridColumnsMinimums()
-
-void MainWindow::SetGridRowsMinimums() {
-	const QRect& dims = centralWidget()->geometry();
-	MajorLayout->setRowMinimumHeight(0, 4 * dims.height() / 5);
-	MajorLayout->setRowMinimumHeight(1, 1 * dims.height() / 5);
-} // void MainWindow::SetGridRowsMinimums()
 
 // Buttons {{{
 void MainWindow::SetupButtons() {
@@ -133,6 +122,7 @@ void MainWindow::SetupActionsRow() {
 
 void MainWindow::SetAllButtonTextSize() {
 	ButtonFont.setPixelSize(ButtonFontAdjustment.AdjustPxSize(window()));
+
 	StandbyIndicator->setFont(ButtonFont);
 	ArmedIndicator->setFont(ButtonFont);
 	InitiateButton->setFont(ButtonFont);
@@ -141,6 +131,20 @@ void MainWindow::SetAllButtonTextSize() {
 	AbortFont.setPixelSize(AbortFontAdjustment.AdjustPxSize(window()));
 	AbortButton->setFont(AbortFont);
 } // void MainWindow::SetAllButtonTextSize()
+
+void MainWindow::OnArmedButtonPressed() {
+	ArmedButtonActive = !ArmedButtonActive;
+	
+	if (ArmedButtonActive) {
+		ArmedIndicator->setText(tr("Armed"));
+		SetButtonStatus(ArmedIndicator, Status::ARMED);
+		SetGroupBoxStatus(ActionsRow, Status::ARMED);
+	} else {
+		ArmedIndicator->setText(tr("Disarmed"));
+		SetButtonStatus(ArmedIndicator, Status::DISARMED);
+		SetGroupBoxStatus(ActionsRow, Status::DISARMED);
+	}
+} // void MainWindow::OnArmedButtonPressed()
 // }}}
 
 void MainWindow::SetupMultiPlot() {
@@ -206,22 +210,6 @@ void MainWindow::CreateActions() {
     AboutAct->setStatusTip(tr("Show the application's About box"));
     connect(AboutAct, &QAction::triggered, this, &MainWindow::About);
 } // void MainWindow::CreateActions()
-
-void MainWindow::OnArmedButtonPressed() {
-	ArmedButtonActive = !ArmedButtonActive;
-	
-	if (ArmedButtonActive) {
-		// Armed state - Red
-		ArmedIndicator->setText(tr("Armed"));
-		SetButtonStatus(ArmedIndicator, Status::ARMED);
-		SetGroupBoxStatus(ActionsRow, Status::ARMED);
-	} else {
-		// Disarmed state - Yellow
-		ArmedIndicator->setText(tr("Disarmed"));
-		SetButtonStatus(ArmedIndicator, Status::DISARMED);
-		SetGroupBoxStatus(ActionsRow, Status::DISARMED);
-	}
-} // void MainWindow::OnArmedButtonPressed()
 // }}}
 } // namespace VSCL
 // vim: foldmethod=marker

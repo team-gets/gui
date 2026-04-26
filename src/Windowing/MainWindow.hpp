@@ -3,9 +3,8 @@
 #include <QtWidgets>
 
 #include "Widgets/Dial/Composite.hpp"
-#include "Plotting/Plot2D.hpp"
-#include "Util/Sizing.hpp"
 #include "Widgets/Displays/MultiPlotContainer.hpp"
+#include "Util/Sizing.hpp"
 
 namespace VSCL {
 class MainWindow : public QMainWindow {
@@ -15,11 +14,6 @@ public:
 	virtual void resizeEvent(QResizeEvent* event) override;
 	
 private:
-	QFont ButtonFont{ };
-	Util::FontAdjustment ButtonFontAdjustment{ .PxSizeAtMinimum=12 };
-	QFont AbortFont{ };
-	Util::FontAdjustment AbortFontAdjustment{ .PxSizeAtMinimum=12 };
-
 	QWidget* MajorContainer;
 
 	QFrame* AttitudeDialRow;
@@ -40,9 +34,12 @@ private:
 	QVBoxLayout* AttitudeDialOrganizer;
 	QHBoxLayout* ActionsRowOrganizer;
 
+	QFont ButtonFont{ };
+	Util::FontAdjustment ButtonFontAdjustment{ .PxSizeAtMinimum=12 };
+	QFont AbortFont{ };
+	Util::FontAdjustment AbortFontAdjustment{ .PxSizeAtMinimum=12 };
+
 	void SetupCentralWidget();
-	void SetGridColumnsMinimums();
-	void SetGridRowsMinimums();
 	void SetupAttitudeDials();
 	void SetupMultiPlot(); 
 	void SetupTimeHistoryPlotQChart();
@@ -64,7 +61,6 @@ private:
 
     QAction* ExitAct;
     QAction* AboutAct;
-// }}}
-}; // class Widgets
+}; // class MainWindow }}}
 } // namespace VSCL
 // vim: foldmethod=marker

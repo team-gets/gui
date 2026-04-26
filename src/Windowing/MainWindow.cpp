@@ -1,4 +1,5 @@
 #include "Windowing/MainWindow.hpp"
+#include "Util/Filesystem/UserPaths.hpp"
 #include "Widgets/Displays/StatusCollector.hpp"
 
 namespace VSCL {
@@ -26,15 +27,16 @@ MainWindow::MainWindow()
 	SetupCentralWidget();
 	SetupAttitudeDials();
 	SetupMultiPlot();
-	SetupButtons();
-	SetupActionsRow();
 
+	SetupActionsRow();
+	SetupButtons();
 	SetAllButtonTextSize();
 
     // Set up menubar and statusbar
     CreateActions();
     CreateMenus();
-} // void MainWindow::Widgets()
+
+} // void MainWindow::MainWindow()
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
 	QMainWindow::resizeEvent(event);
@@ -47,7 +49,6 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 
 	SetAllButtonTextSize();
 } // void MainWindow::resizeEvent()
-
 // Layout and Widgets Setup {{{
 void MainWindow::SetupCentralWidget() {
 	QSizePolicy majorPolicy;
@@ -184,11 +185,20 @@ void MainWindow::SetupMultiPlot() {
 // Menubar and Actions {{{
 void MainWindow::About() {
     QMessageBox::about(this, tr("About"),
-            tr("This is a recreation of the original UI layout provided."));
+            tr("Operations of the test rig are performed graphically through this application. "
+               "For more information, check the README."));
 } // void MainWindow::About()
+
+void MainWindow::LoadTestRoutine() {
+	QString fname = QFileDialog::getOpenFileName(this,
+			tr("Load Routine"),
+			QString::fromStdString(FS::GetUserAppData().string()),
+			tr("Python Files (*.py)"));
+}
 
 void MainWindow::CreateMenus() {
     FileMenu = menuBar()->addMenu(tr("&File"));
+    FileMenu->addAction(LoadAct);
     FileMenu->addSeparator();
     FileMenu->addAction(ExitAct);
 
@@ -199,6 +209,12 @@ void MainWindow::CreateMenus() {
 } // void MainWindow::CreateMenus()
 
 void MainWindow::CreateActions() {
+	LoadAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::DocumentOpen),
+						  tr("Load Routine"), this);
+	LoadAct->setShortcuts(QKeySequence::Open);
+	LoadAct->setStatusTip(tr("Load a test routine from Python"));
+	connect(LoadAct, &QAction::triggered, this, &MainWindow::LoadTestRoutine);
+
     ExitAct = new QAction(QIcon::fromTheme(QIcon::ThemeIcon::ApplicationExit),
                           tr("Exit"), this);
     ExitAct->setShortcuts(QKeySequence::Quit);

@@ -25,8 +25,9 @@ qt_add_executable(testrig_gui WIN32
 	${APP_SOURCES} ${WIDGET_SOURCES})
 target_include_directories(testrig_gui PRIVATE ${STD_APP_INCLUDES})
 target_compile_warn_all(testrig_gui)
-target_link_libraries(testrig_gui PRIVATE VSCL::Plot::QChart)
 target_link_libraries(testrig_gui PRIVATE ${STD_APP_QT6_DEPS})
+target_link_libraries(testrig_gui PRIVATE VSCL::Plot::QChart)
+target_link_libraries(testrig_gui PRIVATE VSCL::FS)
 add_executable(VSCL::TestrigGUI ALIAS testrig_gui)
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/test")

@@ -43,12 +43,13 @@ private:
 	void SetupAttitudeDials();
 	void SetupMultiPlot(); 
 	void SetupTimeHistoryPlotQChart();
-	void SetupButtons();
 	void SetupActionsRow();
+	void SetupButtons();
 	void SetAllButtonTextSize();
 
 private slots:
     void About();
+	void LoadTestRoutine();
 	void OnArmedButtonPressed();
 
 private:
@@ -59,6 +60,7 @@ private:
     QMenu* EditMenu;
     QMenu* HelpMenu;
 
+    QAction* LoadAct;
     QAction* ExitAct;
     QAction* AboutAct;
 }; // class MainWindow }}}

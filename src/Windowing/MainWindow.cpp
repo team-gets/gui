@@ -19,7 +19,7 @@ MainWindow::MainWindow()
 	, InitiateButton(new QPushButton(ActionsRow))
 	, AbortButton(new QPushButton(ActionsRow))
 
-	, MajorLayout(new QGridLayout(this))
+	, MajorLayout(new QGridLayout) // Parented when SetupCentralWidget()
 	, AttitudeDialOrganizer(new QVBoxLayout(AttitudeDialRow))
 	, ActionsRowOrganizer(new QHBoxLayout(ActionsRow))
 {

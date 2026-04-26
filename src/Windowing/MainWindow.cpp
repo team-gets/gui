@@ -85,11 +85,8 @@ void MainWindow::SetupButtons() {
 
 	ArmedIndicator->setText(tr("Disarmed"));
 	SetButtonStatus(ArmedIndicator, Status::DISARMED);
-	// testing below
-	// connect(ArmedIndicator, &QPushButton::clicked, this, &MainWindow::OnArmedButtonPressed);
 
 	InitiateButton->setText(tr("Initiate"));
-
 	AbortButton->setText(tr("Abort"));
 	AbortButton->setStyleSheet("color: red");
 
@@ -132,20 +129,6 @@ void MainWindow::SetAllButtonTextSize() {
 	AbortFont.setPixelSize(AbortFontAdjustment.AdjustPxSize(window()));
 	AbortButton->setFont(AbortFont);
 } // void MainWindow::SetAllButtonTextSize()
-
-void MainWindow::OnArmedButtonPressed() {
-	ArmedButtonActive = !ArmedButtonActive;
-	
-	if (ArmedButtonActive) {
-		ArmedIndicator->setText(tr("Armed"));
-		SetButtonStatus(ArmedIndicator, Status::ARMED);
-		SetGroupBoxStatus(ActionsRow, Status::ARMED);
-	} else {
-		ArmedIndicator->setText(tr("Disarmed"));
-		SetButtonStatus(ArmedIndicator, Status::DISARMED);
-		SetGroupBoxStatus(ActionsRow, Status::DISARMED);
-	}
-} // void MainWindow::OnArmedButtonPressed()
 // }}}
 
 void MainWindow::SetupMultiPlot() {
@@ -194,6 +177,7 @@ void MainWindow::LoadTestRoutine() {
 			tr("Load Routine"),
 			QString::fromStdString(FS::GetUserAppData().string()),
 			tr("Python Files (*.py)"));
+	// TODO: IMPL ME
 }
 
 void MainWindow::CreateMenus() {

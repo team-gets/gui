@@ -9,6 +9,8 @@
 namespace VSCL {
 class MainWindow : public QMainWindow {
 
+	Q_OBJECT;
+
 public:
     MainWindow();
 	virtual void resizeEvent(QResizeEvent* event) override;
@@ -47,10 +49,10 @@ private:
 	void SetupButtons();
 	void SetAllButtonTextSize();
 
+// Actions
 private slots:
     void About();
 	void LoadTestRoutine();
-	void OnArmedButtonPressed();
 
 private:
     void CreateActions();

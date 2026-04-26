@@ -1,4 +1,7 @@
 #include <fstream>
+#include <chrono>
+#include <format>
+
 #include "UserPaths.hpp"
 #include "State.hpp"
 
@@ -17,6 +20,7 @@ stdfs::path GetStateFile() {
 YAML::Node SerializeStateToYAML(const VSCL::State& state) {
 	YAML::Node top_lvl;
 	top_lvl["LatestSocket"] = state.LatestSocket.string();
+	top_lvl["LatestRecord"] = std::format("{}", std::chrono::utc_clock::now());
 
 	return top_lvl;
 }

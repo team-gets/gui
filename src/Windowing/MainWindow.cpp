@@ -133,36 +133,34 @@ void MainWindow::SetAllButtonTextSize() {
 
 void MainWindow::SetupMultiPlot() {
 	MajorLayout->addWidget(Plots, 0, 0);
-	QList<Plot::EmbeddablePlot2D*> allPlots = Plots->GetPlots();
+	QList<Plot::EmbeddablePlot2D*> all_plts = Plots->GetPlots();
 
-	Plot::AxisInfo axInfo;
-	axInfo.Range = { 0, 10 };
+	Plot::AxisInfo time_info;
+	time_info.Range = { 0, 10 };
 
-	Plot::AxisInfo justWtv;
-	justWtv.Range = {-180, 180};
-	justWtv.MajorSpacing = 180;
-	justWtv.MinorSpacing = 45;
+	Plot::AxisInfo ang_info;
+	ang_info.Range = {-180, 180};
+	ang_info.MajorSpacing = 180;
+	ang_info.MinorSpacing = 45;
 
-	std::array<std::string, 3> RPY = {"Roll", "Pitch", "Yaw"};
-	auto angle = RPY.begin();
+	std::array<std::string_view, 3> angels = {"Roll", "Pitch", "Yaw"};
+	auto angle = angels.begin();
 	auto color = Plot::STANDARD_COLOR.begin();
 
-	for (Plot::EmbeddablePlot2D* p : allPlots) {
-		std::string name = *angle;
-		Plot::ColorRGB rgb = color->second;
-		Plot::SeriesInfo info;
-		info.Name = name;
-		info.Color = rgb;
+	std::ranges::for_each(all_plts,
+	[&](Plot::EmbeddablePlot2D* plt) {
+		Plot::SeriesInfo info {
+			.Name = std::string(*angle),
+			.Color = color->second
+		};
 
-		p->AddSeries(info);
-
-		justWtv.Title = name;
-		p->SetAxis(Plot::Axis::QUANTITY, justWtv);
-		p->SetAxis(Plot::Axis::TIME, axInfo);
+		plt->AddSeries(info);
+		plt->SetAxis(Plot::Axis::QUANTITY, ang_info);
+		plt->SetAxis(Plot::Axis::TIME, time_info);
 
 		angle++;
 		color++;
-	}
+	});
 } 
 // }}}
 // Menubar and Actions {{{

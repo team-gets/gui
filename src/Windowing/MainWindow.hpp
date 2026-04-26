@@ -1,11 +1,8 @@
 #pragma once
 
-#include <array>
 #include <QtWidgets>
 
 #include "Widgets/Dial/Composite.hpp"
-#include "Widgets/Displays/QuantitiesRatesDisplay.hpp"
-#include "Widgets/Displays/QuantitiesRatesRow.hpp"
 #include "Plotting/Plot2D.hpp"
 #include "Util/Sizing.hpp"
 #include "Widgets/Displays/MultiPlotContainer.hpp"
@@ -37,7 +34,7 @@ private:
 	QPushButton* ArmedIndicator;
 	QPushButton* InitiateButton;
 	QPushButton* AbortButton;
-	bool ArmedButtonActive = false;  // Track armed button state
+	bool ArmedButtonActive = false;
 
 	QGridLayout* MajorLayout;
 	QVBoxLayout* AttitudeDialOrganizer;

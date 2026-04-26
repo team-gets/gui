@@ -23,7 +23,6 @@ MainWindow::MainWindow()
 	, AttitudeDialOrganizer(new QVBoxLayout(AttitudeDialRow))
 	, ActionsRowOrganizer(new QHBoxLayout(ActionsRow))
 {
-
 	// Set up the static layout
 	SetupCentralWidget();
 	SetupAttitudeDials();

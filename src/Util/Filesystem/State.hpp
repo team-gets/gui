@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>
-#include <chrono>
 #include "yaml-cpp/yaml.h"
 
 namespace VSCL {

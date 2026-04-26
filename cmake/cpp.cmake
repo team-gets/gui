@@ -11,7 +11,7 @@ set(PLOTTING_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Plotting")
 set(UTIL_SRC_DIR "${CMAKE_SOURCE_DIR}/src/Util")
 
 set(APP_SOURCES
-	"${CMAKE_SOURCE_DIR}/src/App/Main.cpp"
+	"${CMAKE_SOURCE_DIR}/src/Main.cpp"
 	"${WINDOWING_SRC_DIR}/MainWindow.cpp")
 
 set(DIAL_SOURCES
@@ -45,33 +45,3 @@ set(STD_APP_QT6_DEPS
 	Qt6::Quick
 	Qt6::Widgets
 	Qt6::QuickWidgets)
-
-function(target_compile_warn_all IN_TARGET_NAME)
-	if (MSVC)
-		target_compile_options(${IN_TARGET_NAME} PRIVATE "/W4")
-	else()
-		target_compile_options(${IN_TARGET_NAME} PRIVATE "-Wall")
-	endif()
-endfunction(target_compile_warn_all)
-
-function(add_subdirectory_silence_warnings IN_DIRECTORY)
-	get_directory_property(oldCompileOpts COMPILE_OPTIONS)
-
-	if (MSVC)
-		add_compile_options("/W0")
-	else()
-		add_compile_options("-w")
-	endif()
-	add_subdirectory("${IN_DIRECTORY}" EXCLUDE_FROM_ALL)
-
-	set_directory_properties(PROPERTIES COMPILE_OPTIONS "${oldCompileOpts}")
-endfunction(add_subdirectory_silence_warnings IN_DIRECTORY)
-
-function(target_copy_dll IN_TARGET)
-	if (WIN32)
-		add_custom_command(TARGET ${IN_TARGET} POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E copy_if_different
-			$<TARGET_RUNTIME_DLLS:${IN_TARGET}> $<TARGET_FILE_DIR:${IN_TARGET}>
-		COMMAND_EXPAND_LISTS)
-	endif()
-endfunction(target_copy_dll IN_TARGET)

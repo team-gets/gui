@@ -14,6 +14,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 include(FetchContent)
 include("./cmake/cpp.cmake")
+include(target_compile_warn_all)
+include(target_copy_dll)
 
 qt_standard_project_setup(REQUIRES 6.10)
 find_package(yaml-cpp)

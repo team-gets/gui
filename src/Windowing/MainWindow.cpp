@@ -28,7 +28,24 @@ static void StupidMakeData(VSCL::Plot::EmbeddablePlot2D* plot) {
 // }}}
 
 namespace VSCL {
-MainWindow::MainWindow() {
+MainWindow::MainWindow()
+	: MajorContainer(new QWidget)
+
+	, AttitudeDialRow(new QFrame(MajorContainer))
+	, RollDial(new CompositeDial(AttitudeDialRow))
+	, PitchDial(new CompositeDial(AttitudeDialRow))
+	, YawDial(new CompositeDial(AttitudeDialRow))
+
+	, ActionsRow(new QGroupBox(tr("Operate"), MajorContainer))
+	, StandbyIndicator(new QPushButton(ActionsRow))
+	, ArmedIndicator(new QPushButton(ActionsRow))
+	, InitiateButton(new QPushButton(ActionsRow))
+	, AbortButton(new QPushButton(ActionsRow))
+
+	, MajorLayout(new QGridLayout(this))
+	, AttitudeDialOrganizer(new QVBoxLayout(AttitudeDialRow))
+	, ActionsRowOrganizer(new QHBoxLayout(ActionsRow))
+{
     // Set up menubar and statusbar
     CreateActions();
     CreateMenus();
@@ -46,15 +63,11 @@ MainWindow::MainWindow() {
 	SetupAttitudeDials();
 	SetupMultiPlot(); // <-new multiplot
 	SetupButtons();
-	SetupStatusColumn();
+	SetupActionsRow();
 	SetGridColumnsMinimums();
 	SetGridRowsMinimums();
 
 	SetAllButtonTextSize();
-
-	SetRoll(-32);
-	SetPitch(5);
-	SetYaw(100);
 } // void MainWindow::Widgets()
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
@@ -65,43 +78,13 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 	SetAllButtonTextSize();
 } // void MainWindow::resizeEvent()
 
-void MainWindow::SetRoll(double roll) {
-	RollDial->SetDialAngle(roll);
-	// RollQtyRate->SetQuantity(roll);
-}
-
-void MainWindow::SetPitch(double pitch) {
-	PitchDial->SetDialAngle(pitch);
-	// PitchQtyRate->SetQuantity(pitch);
-}
-
-void MainWindow::SetYaw(double yaw) {
-	YawDial->SetDialAngle(yaw);
-	// YawQtyRate->SetQuantity(yaw);
-}
-
-void MainWindow::SetRollRate(double roll) {
-	RollQtyRate->SetRate(roll);
-}
-
-void MainWindow::SetPitchRate(double pitch) {
-	PitchQtyRate->SetRate(pitch);
-}
-
-void MainWindow::SetYawRate(double yaw) {
-	YawQtyRate->SetRate(yaw);
-}
-
 // Layout and Widgets Setup {{{
 void MainWindow::SetupCentralWidget() {
-	MajorContainer = new QWidget(this);
-
 	QSizePolicy majorPolicy;
 	majorPolicy.setHorizontalPolicy(QSizePolicy::MinimumExpanding);
 	majorPolicy.setVerticalPolicy(QSizePolicy::MinimumExpanding);
 	MajorContainer->setSizePolicy(majorPolicy);
 
-	MajorLayout = new QGridLayout(MajorContainer);
 	MajorLayout->setContentsMargins(35, 35, 35, 35);
 	MajorContainer->setLayout(MajorLayout);
 
@@ -109,10 +92,8 @@ void MainWindow::SetupCentralWidget() {
 } // void MainWindow::SetupCentralWidget()
 
 void MainWindow::SetupAttitudeDials() {
-	AttitudeDialRow = new QFrame(MajorContainer);
 	MajorLayout->addWidget(AttitudeDialRow, 0, 1);
 
-	AttitudeDialOrganizer = new QVBoxLayout(AttitudeDialRow);
 	AttitudeDialOrganizer->setContentsMargins(20, 20, 20, 20);
 	AttitudeDialRow->setLayout(AttitudeDialOrganizer);
 
@@ -121,13 +102,8 @@ void MainWindow::SetupAttitudeDials() {
 	dialsPolicy.setVerticalPolicy(QSizePolicy::MinimumExpanding);
 	AttitudeDialRow->setSizePolicy(dialsPolicy);
 
-	RollDial = new CompositeDial(QString("Roll"), AttitudeDialRow);
 	AttitudeDialOrganizer->addWidget(RollDial);
-
-	PitchDial = new CompositeDial(QString("Pitch"), AttitudeDialRow);
 	AttitudeDialOrganizer->addWidget(PitchDial);
-
-	YawDial = new CompositeDial(QString("Yaw"), AttitudeDialRow);
 	AttitudeDialOrganizer->addWidget(YawDial);
 
 	Dials = { RollDial, PitchDial, YawDial };
@@ -149,60 +125,55 @@ void MainWindow::SetGridRowsMinimums() {
 
 // Buttons {{{
 void MainWindow::SetupButtons() {
-	StandbyIndicator = new QPushButton(this);
 	StandbyIndicator->setText(tr("Standby"));
 	SetButtonStatus(StandbyIndicator, Status::STANDBY);
 
-	ArmedIndicator = new QPushButton(this);
 	ArmedIndicator->setText(tr("Disarmed"));
 	SetButtonStatus(ArmedIndicator, Status::DISARMED);
 	// testing below
 	// connect(ArmedIndicator, &QPushButton::clicked, this, &MainWindow::OnArmedButtonPressed);
 
-	InitiateButton = new QPushButton(this);
 	InitiateButton->setText(tr("Initiate"));
 
-	AbortButton = new QPushButton(this);
 	AbortButton->setText(tr("Abort"));
 	AbortButton->setStyleSheet("color: red");
 
 	AbortFont.setBold(true);
 } // void MainWindow::SetupButtons()
 
-void MainWindow::SetupStatusColumn() {
-	StatusColumn = new QGroupBox(tr("Operate"), this);
-	StatusColumn->setObjectName("statusColumn");
+void MainWindow::SetupActionsRow() {
+	ActionsRow = new QGroupBox();
+	ActionsRow->setObjectName("statusColumn");
 
-	SetGroupBoxStatus(StatusColumn, Status::DISARMED);
+	SetGroupBoxStatus(ActionsRow, Status::DISARMED);
 
-	MajorLayout->addWidget(StatusColumn, 1, 0, 1, 2);
+	MajorLayout->addWidget(ActionsRow, 1, 0, 1, 2);
 
 	QSizePolicy vhexpanding;
 	vhexpanding.setVerticalPolicy(QSizePolicy::MinimumExpanding);
 	vhexpanding.setHorizontalPolicy(QSizePolicy::MinimumExpanding);
 
-	StatusColumnOrganizer = new QHBoxLayout(StatusColumn);
 	StandbyIndicator->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(StandbyIndicator);
+	ActionsRowOrganizer->addWidget(StandbyIndicator);
 
 	ArmedIndicator->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(ArmedIndicator);
+	ActionsRowOrganizer->addWidget(ArmedIndicator);
 
 	InitiateButton->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(InitiateButton);
+	ActionsRowOrganizer->addWidget(InitiateButton);
 
 	AbortButton->setSizePolicy(vhexpanding);
-	StatusColumnOrganizer->addWidget(AbortButton);
+	ActionsRowOrganizer->addWidget(AbortButton);
 
-	StatusColumn->setLayout(StatusColumnOrganizer);
-} // void MainWindow::SetupStatusColumn()
+	ActionsRow->setLayout(ActionsRowOrganizer);
+} // void MainWindow::SetupActionsRow()
 
 void MainWindow::SetAllButtonTextSize() {
 	ButtonFont.setPixelSize(ButtonFontAdjustment.AdjustPxSize(window()));
 	StandbyIndicator->setFont(ButtonFont);
 	ArmedIndicator->setFont(ButtonFont);
 	InitiateButton->setFont(ButtonFont);
-	StatusColumn->setFont(ButtonFont);
+	ActionsRow->setFont(ButtonFont);
 
 	AbortFont.setPixelSize(AbortFontAdjustment.AdjustPxSize(window()));
 	AbortButton->setFont(AbortFont);
@@ -272,22 +243,6 @@ void MainWindow::SetupTimeHistoryPlotQChart() {
 
 	StupidMakeData(Plot);
 } // void MainWindow::SetupTimeHistoryPlotQChart()
-
-void MainWindow::SetupAttQtysRatesDisplay() {
-	AttQtysRates = new QtyRateDisplay(tr(""), this);
-	MajorLayout->addWidget(AttQtysRates, 1, 0);
-	
-	RollQtyRate = new QtyRateRow(tr("Roll"), AttQtysRates);
-	RollQtyRate->SetQuantityUnits("°");
-	RollQtyRate->SetRateUnits("°/s");
-	PitchQtyRate = new QtyRateRow(tr("Pitch"), AttQtysRates);
-	PitchQtyRate->SetQuantityUnits("°");
-	PitchQtyRate->SetRateUnits("°/s");
-	YawQtyRate = new QtyRateRow(tr("Yaw"), AttQtysRates);
-	YawQtyRate->SetQuantityUnits("°");
-	YawQtyRate->SetRateUnits("°/s");
-} // void MainWindow::SetupAttQtyRatesDisplay()
-
 // }}}
 // Menubar and Actions {{{
 void MainWindow::About() {
@@ -326,12 +281,12 @@ void MainWindow::OnArmedButtonPressed() {
 		// Armed state - Red
 		ArmedIndicator->setText(tr("Armed"));
 		SetButtonStatus(ArmedIndicator, Status::ARMED);
-		SetGroupBoxStatus(StatusColumn, Status::ARMED);
+		SetGroupBoxStatus(ActionsRow, Status::ARMED);
 	} else {
 		// Disarmed state - Yellow
 		ArmedIndicator->setText(tr("Disarmed"));
 		SetButtonStatus(ArmedIndicator, Status::DISARMED);
-		SetGroupBoxStatus(StatusColumn, Status::DISARMED);
+		SetGroupBoxStatus(ActionsRow, Status::DISARMED);
 	}
 } // void MainWindow::OnArmedButtonPressed()
 // }}}

@@ -17,13 +17,6 @@ public:
     MainWindow();
 	virtual void resizeEvent(QResizeEvent* event) override;
 	
-	void SetRoll(double roll);
-	void SetPitch(double pitch);
-	void SetYaw(double yaw);
-	void SetRollRate(double roll);
-	void SetPitchRate(double pitch);
-	void SetYawRate(double yaw);
-
 private:
 	QFont ButtonFont{ };
 	Util::FontAdjustment ButtonFontAdjustment{ .PxSizeAtMinimum=12 };
@@ -31,13 +24,11 @@ private:
 	Util::FontAdjustment AbortFontAdjustment{ .PxSizeAtMinimum=12 };
 
 	QWidget* MajorContainer;
-	QGridLayout* MajorLayout;
 	void SetupCentralWidget();
 	void SetGridColumnsMinimums();
 	void SetGridRowsMinimums();
 
 	QFrame* AttitudeDialRow;
-	QVBoxLayout* AttitudeDialOrganizer;
 
 	CompositeDial* RollDial;
 	CompositeDial* PitchDial;
@@ -51,24 +42,19 @@ private:
 
 	void SetupTimeHistoryPlotQChart();
 
-	QtyRateDisplay* AttQtysRates;
-	QtyRateRow* RollQtyRate;
-	QtyRateRow* PitchQtyRate;
-	QtyRateRow* YawQtyRate;
-	void SetupAttQtysRatesDisplay();
-
-	// im not entirely sure of this part
-	QGroupBox* StatusColumn;
-	QHBoxLayout* StatusColumnOrganizer;
+	QGroupBox* ActionsRow;
 	QPushButton* StandbyIndicator;
 	QPushButton* ArmedIndicator;
 	QPushButton* InitiateButton;
-	QPushButton* LogOpenButton;
 	QPushButton* AbortButton;
 	bool ArmedButtonActive = false;  // Track armed button state
 
+	QGridLayout* MajorLayout;
+	QVBoxLayout* AttitudeDialOrganizer;
+	QHBoxLayout* ActionsRowOrganizer;
+
 	void SetupButtons();
-	void SetupStatusColumn();
+	void SetupActionsRow();
 	void SetAllButtonTextSize();
 
 private slots:

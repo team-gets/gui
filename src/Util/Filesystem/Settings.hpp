@@ -5,7 +5,7 @@ namespace VSCL {
 struct DataSettings {
 	// Where to output recorded data
 	std::filesystem::path OutputDirectory =
-		FS::GetUserAppData() / FS::GetStandardPath("config");
+		FS::GetUserAppData() / FS::GetStandardPath("data");
 	
 	// Data csv log prefix
 	std::string LogPrefix = "run";

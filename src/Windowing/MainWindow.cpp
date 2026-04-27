@@ -13,7 +13,7 @@ MainWindow::MainWindow()
 
 	, Plots(new MultiPlotContainer(MajorContainer, 3))
 
-	, ActionsRow(new QGroupBox(tr("Operate"), MajorContainer))
+	, ActionsRow(new QGroupBox(tr(""), MajorContainer))
 	, StandbyIndicator(new QPushButton(ActionsRow))
 	, ArmedIndicator(new QPushButton(ActionsRow))
 	, InitiateButton(new QPushButton(ActionsRow))

@@ -11,11 +11,6 @@ QString BuildStatusStyleSheet(const QString& object_name, Status status) {
         "  border-radius: 5px;"
         "  margin-top: 20px;"
         "}"
-        " QGroupBox#statusColumn::title {"
-        "  subcontrol-origin: margin;"
-        "  subcontrol-position: top left;"
-        "  padding: 0 0px;"
-        "}"
         ).arg(object_name).arg(QString::fromStdString(color));
 }
 
